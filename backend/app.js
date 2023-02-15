@@ -5,7 +5,7 @@ const cors = require("cors");
 const csurf = require("csurf");
 const helmet = require("helmet");
 const cookieParser = require("cookie-parser");
-const { environment } = require("./config");
+const { environment } = require("./config"); //if not specified, will look at the index file
 const routes = require("./routes");
 
 // true if the environment is in production
