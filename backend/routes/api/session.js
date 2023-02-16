@@ -27,6 +27,7 @@ router.post("/", async (req, res, next) => {
 });
 
 // Log out
+// remove the token cookie from the response and return a JSON success message.
 router.delete("/", (_req, res) => {
   res.clearCookie("token");
   return res.json({ message: "success" });
