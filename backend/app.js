@@ -7,7 +7,6 @@ const helmet = require("helmet");
 const cookieParser = require("cookie-parser");
 const { environment } = require("./config"); //if not specified, will look at the index file
 const routes = require("./routes");
-
 // catching Sequelize errors
 const { ValidationError } = require("sequelize");
 
@@ -54,7 +53,7 @@ app.use(routes); // Connect all the routes
 // make sure you are defining your error handlers after your route connections in app.js (i.e., after app.use(routes)).
 
 // Error middlewares - START
-// Catch unhandled requests and forward to error handler.
+// Catch unhandled requests 404 and forward to error handler.
 app.use((_req, _res, next) => {
   const err = new Error("The requested resource couldn't be found.");
   err.title = "Resource Not Found";
