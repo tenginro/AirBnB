@@ -1,6 +1,7 @@
 // backend/routes/api/index.js
 const router = require("express").Router();
 const { restoreUser } = require("../../utils/auth.js");
+// const { requireAuth } = require("../../utils/auth.js");
 
 // router.post("/test", function (req, res) {
 //   res.json({ requestBody: req.body });
@@ -27,7 +28,6 @@ router.use(restoreUser);
 // });
 
 // // GET /api/require-auth
-// const { requireAuth } = require("../../utils/auth.js");
 // router.get("/require-auth", requireAuth, (req, res) => {
 //   // If there is no session user, the route will return an error. Otherwise it will return the session user's information.
 //   return res.json(req.user);

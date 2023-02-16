@@ -1,11 +1,13 @@
 // backend/utils/auth.js
 const jwt = require("jsonwebtoken");
+
 const { jwtConfig } = require("../config");
 const { User } = require("../db/models");
 
 const { secret, expiresIn } = jwtConfig;
 
 // Sends a JWT Cookie
+// setting the JWT cookie after a user is logged in or signed up.
 const setTokenCookie = (res, user) => {
   // Create the token.
   const token = jwt.sign(
