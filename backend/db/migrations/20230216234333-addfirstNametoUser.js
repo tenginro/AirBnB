@@ -4,6 +4,7 @@
 
 const { DataTypes } = require("sequelize");
 
+// need these three lines in every migration files
 let options = {};
 if (process.env.NODE_ENV === "production") {
   options.schema = process.env.SCHEMA; // define your schema in options object
