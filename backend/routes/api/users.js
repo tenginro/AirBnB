@@ -27,9 +27,16 @@ const validateSignup = [
 
 // Sign up
 router.post("/", validateSignup, async (req, res) => {
-  const { email, password, username } = req.body;
+  const { email, password, username, firstName, lastName } = req.body;
   // call the signup static method on the User model
-  const user = await User.signup({ email, username, password });
+
+  const user = await User.signup({
+    email,
+    username,
+    firstName,
+    lastName,
+    password,
+  });
   // If the user is successfully created, then call setTokenCookie and return a JSON response with the user information
   await setTokenCookie(res, user);
 
