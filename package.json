@@ -21,8 +21,5 @@
   "bugs": {
     "url": "https://github.com/tenginro/AirBnB/issues"
   },
-  "homepage": "https://github.com/tenginro/AirBnB#readme",
-  "dependencies": {
-    "bcryptjs": "^2.4.3"
-  }
+  "homepage": "https://github.com/tenginro/AirBnB#readme"
 }
