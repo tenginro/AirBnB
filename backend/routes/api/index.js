@@ -5,7 +5,7 @@ const usersRouter = require("./users.js");
 const { restoreUser } = require("../../utils/auth.js");
 // const { requireAuth } = require("../../utils/auth.js");
 
-// router.post("/test", function (req, res) {
+// router.post("/test", requireAuth, function (req, res) {
 //   res.json({ requestBody: req.body });
 // });
 
