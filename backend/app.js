@@ -52,7 +52,7 @@ app.use(
 app.use(routes); // Connect all the routes
 // make sure you are defining your error handlers after your route connections in app.js (i.e., after app.use(routes)).
 
-// Error middlewares - START
+// Error handlers - START
 // Catch unhandled requests 404 and forward to error handler.
 app.use((_req, _res, next) => {
   const err = new Error("The requested resource couldn't be found.");
@@ -87,6 +87,6 @@ app.use((err, _req, res, _next) => {
     stack: isProduction ? null : err.stack,
   });
 });
-// Error middlewares - END
+// Error handlers - END
 
 module.exports = app;
