@@ -21,6 +21,7 @@ module.exports = {
     options.tableName = "Users";
     await queryInterface.addColumn(options, "firstName", {
       type: Sequelize.STRING,
+      allowNull: false,
     });
   },
 
