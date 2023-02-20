@@ -38,11 +38,23 @@ router.post("/", validateSignup, async (req, res) => {
     password,
   });
   // If the user is successfully created, then call setTokenCookie and return a JSON response with the user information
-  await setTokenCookie(res, user);
+  const token = await setTokenCookie(res, user);
 
-  return res.json({
-    user: user,
-  });
+  // // origin code from auth.me
+  // return res.json({
+  //   user: user,
+  // });
+
+  // to return one {}
+  const returnUser = {
+    id: user.id,
+    firstName: user.firstName,
+    lastName: user.lastName,
+    email: user.email,
+    username: user.username,
+    token: token,
+  };
+  return res.json(returnUser);
   // If the creation of the user is unsuccessful, then a Sequelize Validation error will be passed onto the next error-handling middleware.
 });
 
