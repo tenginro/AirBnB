@@ -8,6 +8,7 @@ let options = {};
 if (process.env.NODE_ENV === "production") {
   options.schema = process.env.SCHEMA; // define your schema in options object
 }
+options.tableName = "Spots";
 
 module.exports = {
   async up(queryInterface, Sequelize) {
@@ -20,7 +21,6 @@ module.exports = {
      *   isBetaMember: false
      * }], {});
      */
-    options.tableName = "Spots";
     await queryInterface.bulkInsert(options, [
       {
         ownerId: 1,
@@ -97,7 +97,6 @@ module.exports = {
      * Example:
      * await queryInterface.bulkDelete('People', null, {});
      */
-    options.tableName = "Spots";
     const Op = Sequelize.Op;
     await queryInterface.bulkDelete(
       options,

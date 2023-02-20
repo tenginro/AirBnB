@@ -1,14 +1,13 @@
 "use strict";
 
 /** @type {import('sequelize-cli').Migration} */
-
 const bcrypt = require("bcryptjs");
 
 let options = {};
 if (process.env.NODE_ENV === "production") {
   options.schema = process.env.SCHEMA; // define your schema in options object
 }
-options.tableName = "SpotImages";
+options.tableName = "Reviews";
 
 module.exports = {
   async up(queryInterface, Sequelize) {
@@ -24,33 +23,21 @@ module.exports = {
     await queryInterface.bulkInsert(options, [
       {
         spotId: 1,
-        url: "image1.url",
-        preview: true,
-      },
-      {
-        spotId: 1,
-        url: "image2.url",
-        preview: false,
+        userId: 2,
+        review: "good",
+        stars: 4,
       },
       {
         spotId: 2,
-        url: "image3.url",
-        preview: true,
+        userId: 3,
+        review: "bad",
+        stars: 2,
       },
       {
         spotId: 3,
-        url: "image4.url",
-        preview: true,
-      },
-      {
-        spotId: 2,
-        url: "image5.url",
-        preview: false,
-      },
-      {
-        spotId: 3,
-        url: "image6.url",
-        preview: false,
+        userId: 1,
+        review: "great",
+        stars: 5,
       },
     ]);
   },
@@ -66,15 +53,8 @@ module.exports = {
     await queryInterface.bulkDelete(
       options,
       {
-        url: {
-          [Op.in]: [
-            "image1.url",
-            "image2.url",
-            "image3.url",
-            "image4.url",
-            "image5.url",
-            "image6.url",
-          ],
+        id: {
+          [Op.in]: [1, 2, 3],
         },
       },
       {}

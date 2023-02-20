@@ -8,7 +8,7 @@ let options = {};
 if (process.env.NODE_ENV === "production") {
   options.schema = process.env.SCHEMA; // define your schema in options object
 }
-options.tableName = "SpotImages";
+options.tableName = "Bookings";
 
 module.exports = {
   async up(queryInterface, Sequelize) {
@@ -24,33 +24,21 @@ module.exports = {
     await queryInterface.bulkInsert(options, [
       {
         spotId: 1,
-        url: "image1.url",
-        preview: true,
-      },
-      {
-        spotId: 1,
-        url: "image2.url",
-        preview: false,
+        userId: 2,
+        startDate: "2020-02-20",
+        endDate: "2020-02-21",
       },
       {
         spotId: 2,
-        url: "image3.url",
-        preview: true,
+        userId: 3,
+        startDate: "2021-03-21",
+        endDate: "2021-03-22",
       },
       {
         spotId: 3,
-        url: "image4.url",
-        preview: true,
-      },
-      {
-        spotId: 2,
-        url: "image5.url",
-        preview: false,
-      },
-      {
-        spotId: 3,
-        url: "image6.url",
-        preview: false,
+        userId: 1,
+        startDate: "2020-10-13",
+        endDate: "2020-10-14",
       },
     ]);
   },
@@ -66,15 +54,8 @@ module.exports = {
     await queryInterface.bulkDelete(
       options,
       {
-        url: {
-          [Op.in]: [
-            "image1.url",
-            "image2.url",
-            "image3.url",
-            "image4.url",
-            "image5.url",
-            "image6.url",
-          ],
+        id: {
+          [Op.in]: [1, 2, 3],
         },
       },
       {}
