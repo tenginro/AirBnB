@@ -63,11 +63,18 @@ router.delete("/", (_req, res) => {
 
 // Restore session user
 // If there is not a session, it will return a JSON with an empty object. To get the session user, connect the restoreUser middleware.
-router.get("/", restoreUser, (req, res) => {
+router.get("/", restoreUser, requireAuth, (req, res) => {
   const { user } = req;
   if (user) {
-    return res.json({
-      user: user.toSafeObject(),
+    return res.status(200).json({
+      // user: user.toSafeObject(),
+      user: {
+        id: user.id,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        email: user.email,
+        username: user.username,
+      },
     });
   } else return res.json({ user: null });
 });
