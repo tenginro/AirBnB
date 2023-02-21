@@ -145,4 +145,26 @@ router.get("/current", requireAuth, async (req, res) => {
   });
 });
 
+// edit a review
+router.put("/:reviewId", requireAuth, validateNewReview, async (req, res) => {
+  const reviewId = req.params.reviewId;
+  const existingReview = await Review.findOne({
+    where: {
+      id: reviewId,
+    },
+  });
+  if (!existingReview) {
+    return res.status(404).json({
+      message: "Review couldn't be found",
+      statusCode: 404,
+    });
+  }
+  const { review, stars } = req.body;
+  await existingReview.update({
+    review,
+    stars,
+  });
+  return res.status(200).json(existingReview);
+});
+
 module.exports = router;

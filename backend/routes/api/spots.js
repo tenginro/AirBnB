@@ -247,7 +247,8 @@ router.put("/:spotId", requireAuth, validateNewSpot, async (req, res) => {
   }
   const { address, city, state, country, lat, lng, name, description, price } =
     req.body;
-  const newSpot = await Spot.create({
+
+  await spot.update({
     ownerId,
     address,
     city,
@@ -259,7 +260,8 @@ router.put("/:spotId", requireAuth, validateNewSpot, async (req, res) => {
     description,
     price,
   });
-  return res.status(200).json(newSpot);
+
+  return res.status(200).json(spot);
 });
 
 // get details of a spot from a spotId
