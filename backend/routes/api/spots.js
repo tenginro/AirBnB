@@ -38,6 +38,17 @@ const validateNewSpot = [
   handleValidationErrors,
 ];
 
+const validateNewReview = [
+  check("review")
+    .exists({ checkFalsy: true })
+    .withMessage("Review text is required"),
+  check("stars")
+    .exists({ checkFalsy: true })
+    .isInt({ max: 5, min: 1 })
+    .withMessage("Stars must be an integer from 1 to 5"),
+  handleValidationErrors,
+];
+
 // helper functions
 const spotsWithRatingImg = async (spots, arr) => {
   for (let i in spots) {
@@ -105,6 +116,48 @@ router.post("/:spotId/images", requireAuth, async (req, res) => {
     preview: newImage.preview,
   });
 });
+
+// create a review for a spot
+router.post(
+  "/:spotId/reviews",
+  requireAuth,
+  validateNewReview,
+  async (req, res) => {
+    const spotId = req.params.spotId;
+    const userId = req.user.id;
+    const spot = await Spot.findOne({
+      where: {
+        id: spotId,
+      },
+    });
+    if (!spot) {
+      return res.status(404).json({
+        message: "Spot couldn't be found",
+        statusCode: 404,
+      });
+    }
+    const existingReview = await Review.findOne({
+      where: {
+        spotId: spotId,
+        userId: userId,
+      },
+    });
+    if (existingReview) {
+      return res.status(403).json({
+        message: "User already has a review for this spot",
+        statusCode: 403,
+      });
+    }
+    const { review, stars } = req.body;
+    const newReview = await Review.create({
+      userId,
+      spotId,
+      review,
+      stars,
+    });
+    return res.status(201).json(newReview);
+  }
+);
 
 // get all spots owned by current user
 // Interesting - needs to put this endpoint above /:spotId
