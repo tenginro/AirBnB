@@ -106,6 +106,53 @@ router.post("/:spotId/images", requireAuth, async (req, res) => {
   });
 });
 
+// edit a spot
+router.put("/:spotId", requireAuth, async (req, res) => {
+  const spotId = req.params.spotId;
+  const spot = await Spot.findOne({
+    where: {
+      id: spotId,
+    },
+  });
+  const ownerId = spot.ownerId;
+  const userId = req.user.id;
+  if (parseInt(ownerId) !== parseInt(userId)) {
+    return res.status(403).json({
+      message: "Forbidden",
+      statusCode: 403,
+    });
+  }
+  const { address, city, state, country, lat, lng, name, description, price } =
+    req.body;
+  const newSpot = await Spot.create({
+    ownerId,
+    address,
+    city,
+    state,
+    country,
+    lat,
+    lng,
+    name,
+    description,
+    price,
+  });
+  return res.status(200).json(newSpot);
+});
+
+// get all spots owned by current user
+// Interesting - needs to put this endpoint above /:spotId
+router.get("/current", requireAuth, async (req, res) => {
+  const ownerId = req.user.id;
+  const spots = await Spot.findAll({
+    where: {
+      ownerId: ownerId,
+    },
+  });
+  let arr = [];
+  await spotsWithRatingImg(spots, arr);
+  return res.status(200).json({ Spots: arr });
+});
+
 // get details of a spot from a spotId
 router.get("/:spotId", async (req, res) => {
   const id = req.params.spotId;
@@ -146,19 +193,6 @@ router.get("/:spotId", async (req, res) => {
     Owner: owner,
   };
   return res.status(200).json(returnSpot);
-});
-
-// get all spots owned by current user
-router.get("/current", requireAuth, async (req, res) => {
-  const ownerId = req.user.id;
-  const spots = await Spot.findAll({
-    where: {
-      ownerId: ownerId,
-    },
-  });
-  let arr = [];
-  arr = await spotsWithRatingImg(spots, arr);
-  return res.status(200).json({ Spots: arr });
 });
 
 // post new spot
