@@ -3,7 +3,14 @@ const { check } = require("express-validator");
 const router = express.Router();
 
 const { setTokenCookie, requireAuth } = require("../../utils/auth");
-const { User, Spot, Review, SpotImage, sequelize } = require("../../db/models");
+const {
+  User,
+  Spot,
+  Review,
+  ReviewImage,
+  SpotImage,
+  sequelize,
+} = require("../../db/models");
 const { handleValidationErrors } = require("../../utils/validation");
 
 require("dotenv").config();
@@ -86,6 +93,49 @@ const spotsWithRatingImg = async (spots, arr) => {
   }
   return arr;
 };
+
+// get reviews for a spot
+router.get("/:spotId/reviews", async (req, res) => {
+  const spotId = req.params.spotId;
+  const spot = await Spot.findOne({
+    where: {
+      id: spotId,
+    },
+  });
+  if (!spot) {
+    return res.status(404).json({
+      message: "Spot couldn't be found",
+      statusCode: 404,
+    });
+  }
+
+  const reviews = await Review.findAll({
+    where: {
+      spotId: spotId,
+    },
+  });
+  let arr = [];
+  for (let i in reviews) {
+    let review = reviews[i].toJSON();
+    arr.push(review);
+    console.log(arr);
+    const user = await User.findOne({
+      where: {
+        id: review.userId,
+      },
+      attributes: ["id", "firstName", "lastName"],
+    });
+    const reviewImages = await ReviewImage.findAll({
+      where: {
+        reviewId: review.id,
+      },
+      attributes: ["id", "url"],
+    });
+    arr[i].User = user;
+    arr[i].ReviewImages = reviewImages;
+  }
+  return res.status(200).json({ Reviews: arr });
+});
 
 // post new spotImage
 router.post("/:spotId/images", requireAuth, async (req, res) => {
