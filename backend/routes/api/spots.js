@@ -219,7 +219,7 @@ router.post("/:spotId/bookings", requireAuth, async (req, res) => {
       statusCode: 403,
     });
   }
-  const conflicts = await Booking.findAll({
+  const conflict = await Booking.findOne({
     where: {
       spotId: spotId,
       // Question - any booking conflict
@@ -237,7 +237,7 @@ router.post("/:spotId/bookings", requireAuth, async (req, res) => {
       ],
     },
   });
-  if (conflicts.length > 0) {
+  if (conflict) {
     return res.status(403).json({
       message: "Sorry, this spot is already booked for the specified dates",
       statusCode: 403,
@@ -254,6 +254,62 @@ router.post("/:spotId/bookings", requireAuth, async (req, res) => {
     endDate,
   });
   return res.status(200).json(newBooking);
+});
+
+// get all bookings for a spot
+router.get("/:spotId/bookings", requireAuth, async (req, res) => {
+  const userId = req.user.id;
+  const spotId = req.params.spotId;
+  const spot = await Spot.findOne({
+    where: {
+      id: spotId,
+    },
+  });
+  if (!spot) {
+    return res.status(404).json({
+      message: "Spot couldn't be found",
+      statusCode: 404,
+    });
+  }
+  const bookings = await Booking.findAll({
+    where: {
+      spotId: spotId,
+    },
+    order: [["startDate"]],
+  });
+
+  let arr = [];
+  for (let i in bookings) {
+    let booking = bookings[i].toJSON();
+    const user = await User.findOne({
+      where: {
+        id: booking.userId,
+      },
+    });
+    // if the spot is owned by the user
+    if (parseInt(spot.ownerId) === parseInt(userId)) {
+      arr.push({
+        User: user,
+        id: booking.id,
+        spotId: booking.spotId,
+        userId: booking.userId,
+        startDate: booking.startDate,
+        endDate: booking.endDate,
+        createdAt: booking.createdAt,
+        updatedAt: booking.updatedAt,
+      });
+    } else {
+      arr.push({
+        spotId: booking.spotId,
+        startDate: booking.startDate,
+        endDate: booking.endDate,
+      });
+    }
+  }
+
+  return res.status(200).json({
+    Bookings: arr,
+  });
 });
 
 // create a review for a spot
