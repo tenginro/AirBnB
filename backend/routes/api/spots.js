@@ -112,7 +112,6 @@ router.get("/current", requireAuth, async (req, res) => {
       ownerId: ownerId,
     },
   });
-  console.log(JSON.stringify(spots, null, 2));
   let arr = [];
   arr = await spotsWithRatingImg(spots, arr);
   return res.status(200).json({ Spots: arr });
@@ -139,6 +138,7 @@ router.post("/", requireAuth, validateNewSpot, async (req, res) => {
 });
 
 // return all spots
+// Question: how did it get avgRating 4.5 in the response body in the readme file
 router.get("/", async (req, res) => {
   const spots = await Spot.findAll();
 
