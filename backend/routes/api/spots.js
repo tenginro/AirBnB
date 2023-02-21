@@ -1,13 +1,12 @@
 const express = require("express");
+const { check } = require("express-validator");
+const router = express.Router();
 
 const { setTokenCookie, requireAuth } = require("../../utils/auth");
 const { User, Spot, Review, SpotImage, sequelize } = require("../../db/models");
-const { check } = require("express-validator");
 const { handleValidationErrors } = require("../../utils/validation");
 
 require("dotenv").config();
-
-const router = express.Router();
 
 const validateNewSpot = [
   check("address")
@@ -38,6 +37,33 @@ const validateNewSpot = [
     .withMessage("Price per day is required"),
   handleValidationErrors,
 ];
+
+router.post("/:spotId/images", requireAuth, async (req, res) => {
+  const { url, preview } = req.body;
+  const spotId = req.params.spotId;
+  const spot = await Spot.findOne({
+    where: {
+      id: spotId,
+    },
+  });
+  if (!spot)
+    return res.status(404).json({
+      message: "Spot couldn't be found",
+      statusCode: 404,
+    });
+  const newImage = await SpotImage.create({
+    spotId: spotId,
+    url,
+    preview,
+  });
+
+  return res.status(200).json({
+    id: newImage.id,
+    url: newImage.url,
+    preview: newImage.preview,
+  });
+});
+
 // post new spot
 router.post("/", requireAuth, validateNewSpot, async (req, res) => {
   const { address, city, state, country, lat, lng, name, description, price } =
@@ -64,23 +90,18 @@ router.get("/", async (req, res) => {
 
   let arr = [];
   for (let spot of spots) {
-    // console.log("spotid", spot.id);
     let totalRating = await Review.sum("stars", {
       where: {
         spotId: spot.id,
       },
     });
-    // console.log(totalRating);
     let countRating = await Review.count({
       where: {
         spotId: spot.id,
       },
     });
-    // console.log(countRating);
     let avgRating = (totalRating / countRating).toFixed(1);
-    // console.log(avgRating);
-    // spot["avgRating"] = avgRating;
-    // console.log(spot.avgRating);
+
     let previewImage = await SpotImage.findOne({
       where: {
         spotId: spot.id,
@@ -88,8 +109,6 @@ router.get("/", async (req, res) => {
       },
     });
     if (previewImage) {
-      //   spot["previewImage"] = previewImage.url;
-      // } else spot["previewImage"] = "no preview image";
       arr.push({
         ...spot.toJSON(),
         avgRating: avgRating,
