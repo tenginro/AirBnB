@@ -106,14 +106,34 @@ router.post("/:spotId/images", requireAuth, async (req, res) => {
   });
 });
 
+// get all spots owned by current user
+// Interesting - needs to put this endpoint above /:spotId
+router.get("/current", requireAuth, async (req, res) => {
+  const ownerId = req.user.id;
+  const spots = await Spot.findAll({
+    where: {
+      ownerId: ownerId,
+    },
+  });
+  let arr = [];
+  await spotsWithRatingImg(spots, arr);
+  return res.status(200).json({ Spots: arr });
+});
+
 // edit a spot
-router.put("/:spotId", requireAuth, async (req, res) => {
+router.put("/:spotId", requireAuth, validateNewSpot, async (req, res) => {
   const spotId = req.params.spotId;
   const spot = await Spot.findOne({
     where: {
       id: spotId,
     },
   });
+  if (!spot) {
+    return res.status(404).json({
+      message: "Spot couldn't be found",
+      statusCode: 404,
+    });
+  }
   const ownerId = spot.ownerId;
   const userId = req.user.id;
   if (parseInt(ownerId) !== parseInt(userId)) {
@@ -137,20 +157,6 @@ router.put("/:spotId", requireAuth, async (req, res) => {
     price,
   });
   return res.status(200).json(newSpot);
-});
-
-// get all spots owned by current user
-// Interesting - needs to put this endpoint above /:spotId
-router.get("/current", requireAuth, async (req, res) => {
-  const ownerId = req.user.id;
-  const spots = await Spot.findAll({
-    where: {
-      ownerId: ownerId,
-    },
-  });
-  let arr = [];
-  await spotsWithRatingImg(spots, arr);
-  return res.status(200).json({ Spots: arr });
 });
 
 // get details of a spot from a spotId
