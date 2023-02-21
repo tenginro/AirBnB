@@ -38,35 +38,7 @@ const validateNewSpot = [
   handleValidationErrors,
 ];
 
-// post new spotImage
-router.post("/:spotId/images", requireAuth, async (req, res) => {
-  const { url, preview } = req.body;
-  const spotId = req.params.spotId;
-  const spot = await Spot.findOne({
-    where: {
-      id: spotId,
-    },
-  });
-  if (!spot) {
-    return res.status(404).json({
-      message: "Spot couldn't be found",
-      statusCode: 404,
-    });
-  }
-
-  const newImage = await SpotImage.create({
-    spotId: spotId,
-    url,
-    preview,
-  });
-
-  return res.status(200).json({
-    id: newImage.id,
-    url: newImage.url,
-    preview: newImage.preview,
-  });
-});
-
+// helper functions
 const spotsWithRatingImg = async (spots, arr) => {
   for (let i in spots) {
     arr.push({ ...spots[i].toJSON() });
@@ -103,6 +75,36 @@ const spotsWithRatingImg = async (spots, arr) => {
   }
   return arr;
 };
+
+// post new spotImage
+router.post("/:spotId/images", requireAuth, async (req, res) => {
+  const { url, preview } = req.body;
+  const spotId = req.params.spotId;
+  const spot = await Spot.findOne({
+    where: {
+      id: spotId,
+    },
+  });
+  if (!spot) {
+    return res.status(404).json({
+      message: "Spot couldn't be found",
+      statusCode: 404,
+    });
+  }
+
+  const newImage = await SpotImage.create({
+    spotId: spotId,
+    url,
+    preview,
+  });
+
+  return res.status(200).json({
+    // Question: does it supposed to be spotId instead of id
+    id: newImage.id,
+    url: newImage.url,
+    preview: newImage.preview,
+  });
+});
 
 // get all spots owned by current user
 router.get("/current", requireAuth, async (req, res) => {
