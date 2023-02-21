@@ -99,11 +99,53 @@ router.post("/:spotId/images", requireAuth, async (req, res) => {
   });
 
   return res.status(200).json({
-    // Question: does it supposed to be spotId instead of id
+    // Answered: is it supposed to be spotId instead of id? - no, its the id column of the spotImage
     id: newImage.id,
     url: newImage.url,
     preview: newImage.preview,
   });
+});
+
+// get details of a spot from a spotId
+router.get("/:spotId", async (req, res) => {
+  const id = req.params.spotId;
+  const spot = await Spot.findOne({
+    where: {
+      id: id,
+    },
+  });
+  if (!spot) {
+    return res.status(404).json({
+      message: "Spot couldn't be found",
+      statusCode: 404,
+    });
+  }
+
+  const numReviews = await Review.count({
+    where: {
+      spotId: id,
+    },
+  });
+  const totalReviews = await Review.sum("stars", {
+    where: {
+      spotId: id,
+    },
+  });
+  const avgStarRating = (totalReviews / numReviews).toFixed(1);
+
+  const spotImages = await spot.getSpotImages({
+    attributes: ["id", "url", "preview"],
+  });
+  const owner = await spot.getUser({
+    attributes: ["id", "firstName", "lastName"],
+  });
+
+  const returnSpot = {
+    ...spot.toJSON(),
+    SpotImages: spotImages,
+    Owner: owner,
+  };
+  return res.status(200).json(returnSpot);
 });
 
 // get all spots owned by current user
