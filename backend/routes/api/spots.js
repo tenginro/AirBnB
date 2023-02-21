@@ -38,6 +38,7 @@ const validateNewSpot = [
   handleValidationErrors,
 ];
 
+// post new spotImage
 router.post("/:spotId/images", requireAuth, async (req, res) => {
   const { url, preview } = req.body;
   const spotId = req.params.spotId;
@@ -46,11 +47,13 @@ router.post("/:spotId/images", requireAuth, async (req, res) => {
       id: spotId,
     },
   });
-  if (!spot)
+  if (!spot) {
     return res.status(404).json({
       message: "Spot couldn't be found",
       statusCode: 404,
     });
+  }
+
   const newImage = await SpotImage.create({
     spotId: spotId,
     url,
@@ -62,6 +65,57 @@ router.post("/:spotId/images", requireAuth, async (req, res) => {
     url: newImage.url,
     preview: newImage.preview,
   });
+});
+
+const spotsWithRatingImg = async (spots, arr) => {
+  for (let i in spots) {
+    arr.push({ ...spots[i].toJSON() });
+    let totalRating = await Review.sum("stars", {
+      where: {
+        spotId: spots[i].id,
+      },
+    });
+    let countRating = await Review.count({
+      where: {
+        spotId: spots[i].id,
+      },
+    });
+
+    if (countRating === 0) {
+      arr[i].avgRating = "No reviews yet";
+    } else {
+      let avgRating = (totalRating / countRating).toFixed(1);
+      arr[i].avgRating = avgRating;
+    }
+
+    let previewImage = await SpotImage.findOne({
+      where: {
+        spotId: spots[i].id,
+        preview: true,
+      },
+    });
+
+    if (previewImage) {
+      arr[i].previewImage = previewImage.url;
+    } else {
+      arr[i].previewImage = "Preview image is not set yet";
+    }
+  }
+  return arr;
+};
+
+// get all spots owned by current user
+router.get("/current", requireAuth, async (req, res) => {
+  const ownerId = req.user.id;
+  const spots = await Spot.findAll({
+    where: {
+      ownerId: ownerId,
+    },
+  });
+  console.log(JSON.stringify(spots, null, 2));
+  let arr = [];
+  arr = await spotsWithRatingImg(spots, arr);
+  return res.status(200).json({ Spots: arr });
 });
 
 // post new spot
@@ -89,33 +143,8 @@ router.get("/", async (req, res) => {
   const spots = await Spot.findAll();
 
   let arr = [];
-  for (let spot of spots) {
-    let totalRating = await Review.sum("stars", {
-      where: {
-        spotId: spot.id,
-      },
-    });
-    let countRating = await Review.count({
-      where: {
-        spotId: spot.id,
-      },
-    });
-    let avgRating = (totalRating / countRating).toFixed(1);
+  arr = await spotsWithRatingImg(spots, arr);
 
-    let previewImage = await SpotImage.findOne({
-      where: {
-        spotId: spot.id,
-        preview: true,
-      },
-    });
-    if (previewImage) {
-      arr.push({
-        ...spot.toJSON(),
-        avgRating: avgRating,
-        previewImage: previewImage.url,
-      });
-    }
-  }
   return res.status(200).json({ Spots: arr });
 });
 
