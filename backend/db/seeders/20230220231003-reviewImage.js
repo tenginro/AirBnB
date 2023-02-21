@@ -33,6 +33,34 @@ module.exports = {
         reviewId: 3,
         url: "review3.url",
       },
+      {
+        reviewId: 4,
+        url: "review4.url",
+      },
+      {
+        reviewId: 5,
+        url: "review5.url",
+      },
+      {
+        reviewId: 6,
+        url: "review6.url",
+      },
+      {
+        reviewId: 7,
+        url: "review7.url",
+      },
+      {
+        reviewId: 8,
+        url: "review8.url",
+      },
+      {
+        reviewId: 9,
+        url: "review9.url",
+      },
+      {
+        reviewId: 10,
+        url: "review10.url",
+      },
     ]);
   },
 
@@ -47,8 +75,19 @@ module.exports = {
     await queryInterface.bulkDelete(
       options,
       {
-        reviewId: {
-          [Op.in]: [1, 2, 3],
+        url: {
+          [Op.in]: [
+            "review1.url",
+            "review2.url",
+            "review3.url",
+            "review4.url",
+            "review5.url",
+            "review6.url",
+            "review7.url",
+            "review8.url",
+            "review9.url",
+            "review10.url",
+          ],
         },
       },
       {}
