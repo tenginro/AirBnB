@@ -14,6 +14,7 @@ const {
 const { handleValidationErrors } = require("../../utils/validation");
 
 require("dotenv").config();
+const { Op } = require("sequelize");
 
 const validateNewReview = [
   check("review")

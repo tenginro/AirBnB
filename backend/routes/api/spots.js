@@ -6,14 +6,16 @@ const { setTokenCookie, requireAuth } = require("../../utils/auth");
 const {
   User,
   Spot,
+  SpotImage,
   Review,
   ReviewImage,
-  SpotImage,
+  Booking,
   sequelize,
 } = require("../../db/models");
 const { handleValidationErrors } = require("../../utils/validation");
 
 require("dotenv").config();
+const { Op } = require("sequelize");
 
 const validateNewSpot = [
   check("address")
@@ -53,6 +55,25 @@ const validateNewReview = [
     .exists({ checkFalsy: true })
     .isInt({ max: 5, min: 1 })
     .withMessage("Stars must be an integer from 1 to 5"),
+  handleValidationErrors,
+];
+
+const validateNewBooking = [
+  check("startDate")
+    .exists({ checkFalsy: true })
+    .withMessage("Start date is required"),
+  check("endDate")
+    .exists({ checkFalsy: true })
+    .withMessage("End date is required"),
+  // check("endDate").toDate(),
+  // check("startDate")
+  //   .custom((value, { req }) => {
+  //     if (value > req.body.endDate) {
+  //       throw new Error("endDate cannot be on or before startDate");
+  //     }
+  //     return true;
+  //   })
+  //   .withMessage("endDate cannot be on or before startDate"),
   handleValidationErrors,
 ];
 
@@ -165,6 +186,74 @@ router.post("/:spotId/images", requireAuth, async (req, res) => {
     url: newImage.url,
     preview: newImage.preview,
   });
+});
+
+// create a booking for a spot
+router.post("/:spotId/bookings", requireAuth, async (req, res) => {
+  const { startDate, endDate } = req.body;
+  if (endDate <= startDate) {
+    return res.status(400).json({
+      message: "Validation error",
+      statusCode: 400,
+      errors: {
+        endDate: "endDate cannot be on or before startDate",
+      },
+    });
+  }
+  const userId = req.user.id;
+  const spotId = req.params.spotId;
+  const spot = await Spot.findOne({
+    where: {
+      id: spotId,
+    },
+  });
+  if (!spot) {
+    return res.status(404).json({
+      message: "Spot couldn't be found",
+      statusCode: 404,
+    });
+  }
+  if (parseInt(spot.ownerId) === parseInt(userId)) {
+    return res.status(403).json({
+      message: "Forbidden",
+      statusCode: 403,
+    });
+  }
+  const conflicts = await Booking.findAll({
+    where: {
+      spotId: spotId,
+      // Question - any booking conflict
+      [Op.or]: [
+        {
+          startDate: {
+            [Op.between]: [startDate, endDate],
+          },
+        },
+        {
+          endDate: {
+            [Op.between]: [startDate, endDate],
+          },
+        },
+      ],
+    },
+  });
+  if (conflicts.length > 0) {
+    return res.status(403).json({
+      message: "Sorry, this spot is already booked for the specified dates",
+      statusCode: 403,
+      errors: {
+        startDate: "Start date conflicts with an existing booking",
+        endDate: "End date conflicts with an existing booking",
+      },
+    });
+  }
+  const newBooking = await Booking.create({
+    spotId,
+    userId,
+    startDate,
+    endDate,
+  });
+  return res.status(200).json(newBooking);
 });
 
 // create a review for a spot
