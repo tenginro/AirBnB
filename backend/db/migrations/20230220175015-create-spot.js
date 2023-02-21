@@ -61,6 +61,7 @@ module.exports = {
         createdAt: {
           allowNull: false,
           type: Sequelize.DATE,
+          // Question: the result returned from current timestamp or new date() is different from the response body in the readme file, is there another method we should be using?
           defaultValue: Sequelize.literal("CURRENT_TIMESTAMP"),
         },
         updatedAt: {

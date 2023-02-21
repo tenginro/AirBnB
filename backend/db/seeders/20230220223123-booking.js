@@ -40,6 +40,48 @@ module.exports = {
         startDate: "2020-10-13",
         endDate: "2020-10-14",
       },
+      {
+        spotId: 4,
+        userId: 1,
+        startDate: "2020-11-23",
+        endDate: "2020-11-24",
+      },
+      {
+        spotId: 5,
+        userId: 2,
+        startDate: "2020-09-03",
+        endDate: "2020-09-05",
+      },
+      {
+        spotId: 5,
+        userId: 3,
+        startDate: "2020-07-20",
+        endDate: "2020-07-21",
+      },
+      {
+        spotId: 4,
+        userId: 3,
+        startDate: "2021-06-20",
+        endDate: "2021-06-22",
+      },
+      {
+        spotId: 3,
+        userId: 3,
+        startDate: "2020-03-03",
+        endDate: "2020-03-04",
+      },
+      {
+        spotId: 1,
+        userId: 1,
+        startDate: "2018-10-13",
+        endDate: "2018-10-14",
+      },
+      {
+        spotId: 2,
+        userId: 2,
+        startDate: "2019-10-13",
+        endDate: "2019-10-14",
+      },
     ]);
   },
 
