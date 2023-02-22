@@ -139,7 +139,6 @@ router.get("/:spotId/reviews", async (req, res) => {
   for (let i in reviews) {
     let review = reviews[i].toJSON();
     arr.push(review);
-    console.log(arr);
     const user = await User.findOne({
       where: {
         id: review.userId,
@@ -213,7 +212,7 @@ router.post("/:spotId/bookings", requireAuth, async (req, res) => {
       statusCode: 404,
     });
   }
-  if (parseInt(spot.ownerId) === parseInt(userId)) {
+  if (spot.ownerId === userId) {
     return res.status(403).json({
       message: "Forbidden",
       statusCode: 403,
@@ -286,7 +285,7 @@ router.get("/:spotId/bookings", requireAuth, async (req, res) => {
       },
     });
     // if the spot is owned by the user
-    if (parseInt(spot.ownerId) === parseInt(userId)) {
+    if (spot.ownerId === userId) {
       arr.push({
         User: user,
         id: booking.id,
@@ -383,7 +382,7 @@ router.put("/:spotId", requireAuth, validateNewSpot, async (req, res) => {
   }
   const ownerId = spot.ownerId;
   const userId = req.user.id;
-  if (parseInt(ownerId) !== parseInt(userId)) {
+  if (ownerId !== userId) {
     return res.status(403).json({
       message: "Forbidden",
       statusCode: 403,

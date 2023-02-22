@@ -36,7 +36,7 @@ router.delete("/:imageId", requireAuth, async (req, res) => {
       id: img.reviewId,
     },
   });
-  if (parseInt(review.userId) !== parseInt(userId)) {
+  if (review.userId !== userId) {
     return res.status(403).json({
       message: "Forbidden",
       statusCode: 403,
