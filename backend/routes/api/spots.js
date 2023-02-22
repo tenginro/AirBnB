@@ -164,7 +164,8 @@ const spotsWithRatingImg = async (spots, arr) => {
     // convert string to number
     // Interesting - not working on live env
     // arr[i].avgRating = +avgRating.toFixed(1);
-    arr[i].avgRating = +(+avgRating).toFixed(1);
+    if (avgRating == 0) arr[i].avgRating = "No reviews yet";
+    else arr[i].avgRating = +(+avgRating).toFixed(1);
 
     let previewImage = await SpotImage.findOne({
       where: {
