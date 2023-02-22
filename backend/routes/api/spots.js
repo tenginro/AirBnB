@@ -65,6 +65,7 @@ const validateNewBooking = [
   check("endDate")
     .exists({ checkFalsy: true })
     .withMessage("End date is required"),
+  // // TODO lets try
   // check("endDate").toDate(),
   // check("startDate")
   //   .custom((value, { req }) => {
@@ -448,6 +449,35 @@ router.get("/:spotId", async (req, res) => {
     Owner: owner,
   };
   return res.status(200).json(returnSpot);
+});
+
+// delete a spot
+router.delete("/:spotId", requireAuth, async (req, res) => {
+  const userId = req.user.id;
+  const spotId = req.params.spotId;
+  const spot = await Spot.findOne({
+    where: {
+      id: spotId,
+    },
+  });
+  if (!spot) {
+    return res.status(404).json({
+      message: "Spot couldn't be found",
+      statusCode: 404,
+    });
+  }
+  // Interesting - not spot.userId but ownerId
+  if (spot.ownerId !== userId) {
+    return res.status(403).json({
+      message: "Forbidden",
+      statusCode: 403,
+    });
+  }
+  await spot.destroy();
+  return res.status(200).json({
+    message: "Successfully deleted",
+    statusCode: 200,
+  });
 });
 
 // post new spot
