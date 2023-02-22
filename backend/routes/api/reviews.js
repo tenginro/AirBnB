@@ -52,8 +52,7 @@ router.post(
         statusCode: 404,
       });
     }
-    //   review must belong to the current user
-    if (parseInt(review.userId) !== parseInt(req.user.id)) {
+    if (review.userId !== req.user.id) {
       return res.status(403).json({
         message: "Forbidden",
         statusCode: 403,
@@ -91,9 +90,8 @@ router.get("/current", requireAuth, async (req, res) => {
   });
   let arr = [];
   for (let i in reviews) {
-    let obj = reviews[i].toJSON();
-    console.log(reviews[i].toJSON());
-    arr.push(obj);
+    let review = reviews[i].toJSON();
+    arr.push(review);
     const user = await User.findOne({
       where: {
         id: userId,
@@ -119,7 +117,7 @@ router.get("/current", requireAuth, async (req, res) => {
     });
     const previewImage = await SpotImage.findOne({
       where: {
-        spotId: parseInt(spot.id),
+        spotId: spot.id,
         preview: true,
       },
       attributes: ["url"],
