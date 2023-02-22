@@ -224,7 +224,7 @@ router.get("/:spotId/reviews", async (req, res) => {
   return res.status(200).json({ Reviews: arr });
 });
 
-// post new spotImage
+// create new spotImage
 router.post("/:spotId/images", requireAuth, async (req, res) => {
   const { url, preview } = req.body;
   const spotId = req.params.spotId;
@@ -550,7 +550,7 @@ router.delete("/:spotId", requireAuth, async (req, res) => {
   });
 });
 
-// post new spot
+// create new spot
 router.post("/", requireAuth, validateNewSpot, async (req, res) => {
   const { address, city, state, country, lat, lng, name, description, price } =
     req.body;
@@ -567,7 +567,21 @@ router.post("/", requireAuth, validateNewSpot, async (req, res) => {
     description,
     price,
   });
-  return res.status(201).json(newSpot);
+  return res.status(201).json({
+    id: newSpot.id,
+    ownerId: newSpot.ownerId,
+    address: newSpot.address,
+    city: newSpot.city,
+    state: newSpot.state,
+    country: newSpot.country,
+    lat: +newSpot.lat,
+    lng: +newSpot.lng,
+    name: newSpot.name,
+    description: newSpot.description,
+    price: +newSpot.price,
+    updatedAt: dateFormat(newSpot.updatedAt),
+    createdAt: dateFormat(newSpot.createdAt),
+  });
 });
 
 // get all spots
