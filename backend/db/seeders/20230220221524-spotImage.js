@@ -55,7 +55,7 @@ module.exports = {
       {
         spotId: 4,
         url: "image7.url",
-        preview: false,
+        preview: true,
       },
       {
         spotId: 5,
@@ -65,7 +65,7 @@ module.exports = {
       {
         spotId: 5,
         url: "image9.url",
-        preview: false,
+        preview: true,
       },
       {
         spotId: 4,
