@@ -128,25 +128,32 @@ const validateNewBooking = [
 const spotsWithRatingImg = async (spots, arr) => {
   for (let i in spots) {
     let spot = spots[i].toJSON();
-    arr.push(spot);
-    let totalRating = await Review.sum("stars", {
-      where: {
-        spotId: spots[i].id,
-      },
-    });
-    let countRating = await Review.count({
-      where: {
-        spotId: spots[i].id,
-      },
+    arr.push({
+      id: spot.id,
+      ownerId: spot.ownerId,
+      address: spot.address,
+      city: spot.city,
+      state: spot.state,
+      country: spot.ownerId,
+      lat: +spot.lat,
+      lng: +spot.lng,
+      name: spot.name,
+      description: spot.description,
+      price: +spot.price,
+      createdAt: spot.createdAt,
+      updatedAt: spot.updatedAt,
     });
 
-    if (countRating === 0) {
-      arr[i].avgRating = "No reviews yet";
-    } else {
-      //TODO - lets try -  attributes: [[sequelize.fn('AVG', sequelize.col('rating')), 'avgRating']]
-      let avgRating = (totalRating / countRating).toFixed(1);
-      arr[i].avgRating = avgRating;
-    }
+    // use sequelize.fn to get average
+    let spotReviews = await Review.findAll({
+      where: {
+        spotId: spot.id,
+      },
+      attributes: [[sequelize.fn("AVG", sequelize.col("stars")), "avgRating"]],
+    });
+    let avgRating = spotReviews[0].toJSON().avgRating;
+    // convert string to number
+    arr[i].avgRating = +avgRating.toFixed(1);
 
     let previewImage = await SpotImage.findOne({
       where: {
