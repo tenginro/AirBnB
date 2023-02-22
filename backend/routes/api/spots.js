@@ -126,6 +126,7 @@ const validateNewBooking = [
 
 // helper functions
 const spotsWithRatingImg = async (spots, arr) => {
+  // console.log(typeof spots[0].lat);
   for (let i in spots) {
     let spot = spots[i].toJSON();
     arr.push(spot);
@@ -145,7 +146,7 @@ const spotsWithRatingImg = async (spots, arr) => {
     } else {
       //TODO - lets try -  attributes: [[sequelize.fn('AVG', sequelize.col('rating')), 'avgRating']]
       let avgRating = (totalRating / countRating).toFixed(1);
-      arr[i].avgRating = avgRating;
+      arr[i].avgRating = parseInt(avgRating);
     }
 
     let previewImage = await SpotImage.findOne({
