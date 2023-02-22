@@ -126,7 +126,7 @@ const validateNewBooking = [
 
 // helper functions
 
-// convert time to the format yyyy-mm-dd hh:mm:ss
+// Interesting - convert time to the format yyyy-mm-dd hh:mm:ss
 const dateFormat = (str) => {
   let string = new Date(str);
   let date = string.toISOString().split("T")[0];
@@ -168,7 +168,7 @@ const spotsWithRatingImg = async (spots, arr) => {
 
     let previewImage = await SpotImage.findOne({
       where: {
-        spotId: spots[i].id,
+        spotId: spot.id,
         preview: true,
       },
     });
