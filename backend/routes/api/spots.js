@@ -97,6 +97,7 @@ const spotsWithRatingImg = async (spots, arr) => {
     if (countRating === 0) {
       arr[i].avgRating = "No reviews yet";
     } else {
+      //TODO - lets try -  attributes: [[sequelize.fn('AVG', sequelize.col('rating')), 'avgRating']]
       let avgRating = (totalRating / countRating).toFixed(1);
       arr[i].avgRating = avgRating;
     }
@@ -500,14 +501,23 @@ router.post("/", requireAuth, validateNewSpot, async (req, res) => {
   return res.status(201).json(newSpot);
 });
 
-// return all spots
+// get all spots
 router.get("/", async (req, res) => {
-  const spots = await Spot.findAll();
+  let query = {};
 
+  const page = req.query.page === undefined ? 1 : parseInt(req.query.page);
+  if (page < 1) page = 1;
+  if (page > 10) page = 10;
+  const size = req.query.size === undefined ? 20 : parseInt(req.query.size);
+  if (size < 1) size = 1;
+  if (size > 20) size = 20;
+  query.limit = size;
+  query.offset = size * (page - 1);
+
+  const spots = await Spot.findAll(query);
   let arr = [];
   arr = await spotsWithRatingImg(spots, arr);
-
-  return res.status(200).json({ Spots: arr });
+  return res.status(200).json({ Spots: arr, page: page, size: size });
 });
 
 module.exports = router;
