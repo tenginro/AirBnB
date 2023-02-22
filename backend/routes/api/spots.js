@@ -222,7 +222,6 @@ router.post("/:spotId/bookings", requireAuth, async (req, res) => {
   const conflict = await Booking.findOne({
     where: {
       spotId: spotId,
-      // Question - any booking conflict
       [Op.or]: [
         {
           startDate: {
@@ -472,7 +471,6 @@ router.post("/", requireAuth, validateNewSpot, async (req, res) => {
 });
 
 // return all spots
-// Question: how did it get avgRating 4.5 in the response body in the readme file
 router.get("/", async (req, res) => {
   const spots = await Spot.findAll();
 

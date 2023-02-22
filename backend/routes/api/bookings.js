@@ -33,7 +33,6 @@ router.get("/current", requireAuth, async (req, res) => {
       where: {
         id: booking.spotId,
       },
-      //   TODO - can use scope
       attributes: [
         "id",
         "ownerId",
@@ -109,7 +108,7 @@ router.put("/:bookingId", requireAuth, async (req, res) => {
   const conflict = await Booking.findOne({
     where: {
       spotId: booking.spotId,
-      // Question - any booking conflict
+      // Question - to check any booking conflict, how will you check when we submit the project
       [Op.or]: [
         {
           startDate: {
