@@ -81,7 +81,7 @@ const validateNewBooking = [
 // helper functions
 const spotsWithRatingImg = async (spots, arr) => {
   for (let i in spots) {
-    let spot = spot[i].toJSON();
+    let spot = spots[i].toJSON();
     arr.push(spot);
     let totalRating = await Review.sum("stars", {
       where: {
