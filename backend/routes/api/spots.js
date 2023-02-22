@@ -143,7 +143,7 @@ const spotsWithRatingImg = async (spots, arr) => {
       address: spot.address,
       city: spot.city,
       state: spot.state,
-      country: spot.ownerId,
+      country: spot.country,
       lat: +spot.lat,
       lng: +spot.lng,
       name: spot.name,
