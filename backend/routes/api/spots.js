@@ -125,6 +125,15 @@ const validateNewBooking = [
 ];
 
 // helper functions
+
+// Interesting - convert time to the format yyyy-mm-dd hh:mm:ss
+const dateFormat = (str) => {
+  let string = new Date(str);
+  let date = string.toISOString().split("T")[0];
+  let time = string.toLocaleTimeString("en-GB");
+  return `${date} ${time}`;
+};
+
 const spotsWithRatingImg = async (spots, arr) => {
   for (let i in spots) {
     let spot = spots[i].toJSON();
@@ -140,8 +149,8 @@ const spotsWithRatingImg = async (spots, arr) => {
       name: spot.name,
       description: spot.description,
       price: +spot.price,
-      createdAt: spot.createdAt,
-      updatedAt: spot.updatedAt,
+      createdAt: dateFormat(spot.createdAt),
+      updatedAt: dateFormat(spot.updatedAt),
     });
 
     // use sequelize.fn to get average
@@ -159,7 +168,7 @@ const spotsWithRatingImg = async (spots, arr) => {
 
     let previewImage = await SpotImage.findOne({
       where: {
-        spotId: spots[i].id,
+        spotId: spot.id,
         preview: true,
       },
     });
