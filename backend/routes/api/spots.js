@@ -560,16 +560,15 @@ router.get("/", validateQuery, async (req, res) => {
     req.query;
 
   page = req.query.page === undefined ? 1 : parseInt(req.query.page);
-  // if (page < 1) page = 1;
+  // if (page < 1) page = 1;//already handled in the validation
   if (page > 10) page = 10;
   size = req.query.size === undefined ? 20 : parseInt(req.query.size);
-  // if (size < 1) size = 1;
+  // if (size < 1) size = 1;//already handled in the validation
   if (size > 20) size = 20;
   query.limit = size;
   query.offset = size * (page - 1);
 
   if (minLat || maxLat || minLng || maxLng || minPrice || maxPrice) {
-    console.log(Object.entries(req.query));
     let queryArr = [];
     if (minLat) queryArr.push({ lat: { [Op.gte]: parseInt(minLat) } });
     if (maxLat) queryArr.push({ lat: { [Op.lte]: parseInt(maxLat) } });
