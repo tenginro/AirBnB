@@ -97,4 +97,10 @@ router.post("/", validateSignup, async (req, res) => {
   // If the creation of the user is unsuccessful, then a Sequelize Validation error will be passed onto the next error-handling middleware.
 });
 
+// get all users
+router.get("/", async (req, res) => {
+  const users = await User.findAll();
+  return res.json(users);
+});
+
 module.exports = router;
