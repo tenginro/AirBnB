@@ -35,7 +35,6 @@ module.exports = {
         createdAt: {
           allowNull: false,
           type: Sequelize.DATE,
-          // TODO - all current_timestamp date format
           defaultValue: Sequelize.literal("CURRENT_TIMESTAMP"),
         },
         updatedAt: {
