@@ -240,6 +240,21 @@ router.post("/:spotId/images", requireAuth, async (req, res) => {
     });
   }
 
+  // allow only one preview image
+  if (preview === true) {
+    const existingPreview = await SpotImage.findOne({
+      where: {
+        spotId: spotId,
+        preview: true,
+      },
+    });
+    if (existingPreview) {
+      await existingPreview.update({
+        preview: false,
+      });
+    }
+  }
+
   const newImage = await SpotImage.create({
     spotId: spotId,
     url,
