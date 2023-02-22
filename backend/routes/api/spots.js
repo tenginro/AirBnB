@@ -125,6 +125,24 @@ const validateNewBooking = [
 ];
 
 // helper functions
+const spotFormat = (spot) => {
+  let newSpot = {
+    id: spot.id,
+    ownerId: spot.ownerId,
+    address: spot.address,
+    city: spot.city,
+    state: spot.state,
+    country: spot.country,
+    lat: +spot.lat,
+    lng: +spot.lng,
+    name: spot.name,
+    description: spot.description,
+    price: +spot.price,
+    createdAt: dateFormat(spot.createdAt),
+    updatedAt: dateFormat(spot.updatedAt),
+  };
+  return newSpot;
+};
 
 // Interesting - convert time to the format yyyy-mm-dd hh:mm:ss
 const dateFormat = (str) => {
@@ -137,21 +155,7 @@ const dateFormat = (str) => {
 const spotsWithRatingImg = async (spots, arr) => {
   for (let i in spots) {
     let spot = spots[i].toJSON();
-    arr.push({
-      id: spot.id,
-      ownerId: spot.ownerId,
-      address: spot.address,
-      city: spot.city,
-      state: spot.state,
-      country: spot.country,
-      lat: +spot.lat,
-      lng: +spot.lng,
-      name: spot.name,
-      description: spot.description,
-      price: +spot.price,
-      createdAt: dateFormat(spot.createdAt),
-      updatedAt: dateFormat(spot.updatedAt),
-    });
+    arr.push({ ...spotFormat(spot) });
 
     // use sequelize.fn to get average
     let spotReviews = await Review.findAll({
@@ -164,7 +168,8 @@ const spotsWithRatingImg = async (spots, arr) => {
     // convert string to number
     // Interesting - not working on live env
     // arr[i].avgRating = +avgRating.toFixed(1);
-    arr[i].avgRating = +(+avgRating).toFixed(1);
+    if (+avgRating === 0) arr[i].avgRating = "No reviews yet";
+    else arr[i].avgRating = +(+avgRating).toFixed(1);
 
     let previewImage = await SpotImage.findOne({
       where: {
@@ -529,7 +534,9 @@ router.get("/:spotId", async (req, res) => {
   });
 
   const returnSpot = {
-    ...spot.toJSON(),
+    ...spotFormat(spot),
+    numReviews: +numReviews || "No reviews yet",
+    avgStarRating: +avgStarRating || "No reviews yet",
     SpotImages: spotImages,
     Owner: owner,
   };
