@@ -60,15 +60,6 @@ const validateNewReview = [
 
 const validateQuery = [
   check("page")
-    // // .exists({ checkNull: true })
-    // // .notEmpty()
-    // // .bail()
-    // // stop running if any previous one failed
-    // .custom((value) => {
-    //   if (!value) return false;
-    //   return true;
-    // })
-    // .bail()
     // Interesting - .optional() - check only if it exists
     .optional()
     .isInt({ min: 1 })
@@ -111,16 +102,6 @@ const validateNewBooking = [
   check("endDate")
     .exists({ checkFalsy: true })
     .withMessage("End date is required"),
-  // // TODO lets try
-  // check("endDate").toDate(),
-  // check("startDate")
-  //   .custom((value, { req }) => {
-  //     if (value > req.body.endDate) {
-  //       throw new Error("endDate cannot be on or before startDate");
-  //     }
-  //     return true;
-  //   })
-  //   .withMessage("endDate cannot be on or before startDate"),
   handleValidationErrors,
 ];
 
@@ -280,8 +261,12 @@ router.post(
   requireAuth,
   validateNewBooking,
   async (req, res) => {
-    const { startDate, endDate } = req.body;
-    if (endDate <= startDate) {
+    let { startDate, endDate } = req.body;
+
+    let startDateTime = new Date(startDate);
+    let endDateTime = new Date(endDate);
+
+    if (endDateTime.getTime() <= startDateTime.getTime()) {
       return res.status(400).json({
         message: "Validation error",
         statusCode: 400,
@@ -290,6 +275,7 @@ router.post(
         },
       });
     }
+
     const userId = req.user.id;
     const spotId = req.params.spotId;
     const spot = await Spot.findOne({
@@ -339,10 +325,18 @@ router.post(
     const newBooking = await Booking.create({
       spotId,
       userId,
-      startDate,
-      endDate,
+      startDate: dateFormat(startDate).split(" ")[0],
+      endDate: dateFormat(endDate).split(" ")[0],
     });
-    return res.status(200).json(newBooking);
+    return res.status(200).json({
+      id: newBooking.id,
+      spotId: newBooking.spotId,
+      userId: newBooking.userId,
+      startDate: dateFormat(newBooking.startDate).split(" ")[0],
+      endDate: dateFormat(newBooking.endDate).split(" ")[0],
+      createdAt: dateFormat(newBooking.createdAt),
+      updatedAt: dateFormat(newBooking.updatedAt),
+    });
   }
 );
 
@@ -383,16 +377,16 @@ router.get("/:spotId/bookings", requireAuth, async (req, res) => {
         id: booking.id,
         spotId: booking.spotId,
         userId: booking.userId,
-        startDate: booking.startDate,
-        endDate: booking.endDate,
-        createdAt: booking.createdAt,
-        updatedAt: booking.updatedAt,
+        startDate: dateFormat(booking.startDate).split(" ")[0],
+        endDate: dateFormat(booking.endDate).split(" ")[0],
+        createdAt: dateFormat(booking.createdAt),
+        updatedAt: dateFormat(booking.updatedAt),
       });
     } else {
       arr.push({
         spotId: booking.spotId,
-        startDate: booking.startDate,
-        endDate: booking.endDate,
+        startDate: dateFormat(booking.startDate).split(" ")[0],
+        endDate: dateFormat(booking.endDate).split(" ")[0],
       });
     }
   }
