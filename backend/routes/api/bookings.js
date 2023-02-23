@@ -17,6 +17,32 @@ const { handleValidationErrors } = require("../../utils/validation");
 require("dotenv").config();
 const { Op } = require("sequelize");
 
+// helper function
+const dateFormat = (str) => {
+  let string = new Date(str);
+  let date = string.toISOString().split("T")[0];
+  let time = string.toLocaleTimeString("en-GB");
+  return `${date} ${time}`;
+};
+const spotFormat = (spot) => {
+  let newSpot = {
+    id: spot.id,
+    ownerId: spot.ownerId,
+    address: spot.address,
+    city: spot.city,
+    state: spot.state,
+    country: spot.country,
+    lat: +spot.lat,
+    lng: +spot.lng,
+    name: spot.name,
+    description: spot.description,
+    price: +spot.price,
+    // createdAt: dateFormat(spot.createdAt),
+    // updatedAt: dateFormat(spot.updatedAt),
+  };
+  return newSpot;
+};
+
 // get all current user's bookings
 router.get("/current", requireAuth, async (req, res) => {
   const userId = req.user.id;
@@ -56,14 +82,15 @@ router.get("/current", requireAuth, async (req, res) => {
       id: booking.id,
       spotId: booking.spotId,
       Spot: {
-        ...spot.toJSON(),
+        // ...spot.toJSON(),
+        ...spotFormat(spot),
         previewImage: spotImage.url,
       },
       userId: booking.userId,
-      startDate: booking.startDate,
-      endDate: booking.endDate,
-      createdAt: booking.createdAt,
-      updatedAt: booking.updatedAt,
+      startDate: dateFormat(booking.startDate).split(" ")[0],
+      endDate: dateFormat(booking.endDate).split(" ")[0],
+      createdAt: dateFormat(booking.createdAt),
+      updatedAt: dateFormat(booking.updatedAt),
     });
   }
   return res.status(200).json({
