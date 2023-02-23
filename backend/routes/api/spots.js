@@ -397,7 +397,11 @@ router.get("/:spotId/bookings", requireAuth, async (req, res) => {
     // if the spot is owned by the user
     if (spot.ownerId === userId) {
       arr.push({
-        User: user,
+        User: {
+          id: user.id,
+          firstName: user.firstName,
+          lastName: user.lastName,
+        },
         id: booking.id,
         spotId: booking.spotId,
         userId: booking.userId,
