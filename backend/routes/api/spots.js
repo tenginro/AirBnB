@@ -191,7 +191,15 @@ router.get("/:spotId/reviews", async (req, res) => {
   let arr = [];
   for (let i in reviews) {
     let review = reviews[i].toJSON();
-    arr.push(review);
+    arr.push({
+      id: review.id,
+      userId: review.userId,
+      spotId: review.spotId,
+      review: review.review,
+      stars: review.stars,
+      createdAt: dateFormat(review.createdAt),
+      updatedAt: dateFormat(review.updatedAt),
+    });
     const user = await User.findOne({
       where: {
         id: review.userId,
@@ -214,6 +222,7 @@ router.get("/:spotId/reviews", async (req, res) => {
 router.post("/:spotId/images", requireAuth, async (req, res) => {
   const { url, preview } = req.body;
   const spotId = req.params.spotId;
+  const userId = req.user.id;
   const spot = await Spot.findOne({
     where: {
       id: spotId,
@@ -225,7 +234,12 @@ router.post("/:spotId/images", requireAuth, async (req, res) => {
       statusCode: 404,
     });
   }
-
+  if (spot.ownerId !== userId) {
+    return res.status(403).json({
+      message: "Forbidden",
+      statusCode: 403,
+    });
+  }
   // allow only one preview image
   if (preview === true) {
     const existingPreview = await SpotImage.findOne({
@@ -265,7 +279,16 @@ router.post(
 
     let startDateTime = new Date(startDate);
     let endDateTime = new Date(endDate);
-
+    let today = new Date();
+    if (startDateTime <= today) {
+      return res.status(400).json({
+        message: "Validation error",
+        statusCode: 400,
+        errors: {
+          endDate: "startDate cannot be on or before today",
+        },
+      });
+    }
     if (endDateTime.getTime() <= startDateTime.getTime()) {
       return res.status(400).json({
         message: "Validation error",
@@ -434,7 +457,15 @@ router.post(
       review,
       stars,
     });
-    return res.status(201).json(newReview);
+    return res.status(201).json({
+      id: newReview.id,
+      userId: newReview.userId,
+      spotId: newReview.spotId,
+      review: newReview.review,
+      stars: newReview.stars,
+      createdAt: dateFormat(newReview.createdAt),
+      updatedAt: dateFormat(newReview.updatedAt),
+    });
   }
 );
 
@@ -490,7 +521,7 @@ router.put("/:spotId", requireAuth, validateNewSpot, async (req, res) => {
     price,
   });
 
-  return res.status(200).json(spot);
+  return res.status(200).json(spotFormat(spot));
 });
 
 // get details of a spot from a spotId
@@ -523,6 +554,7 @@ router.get("/:spotId", async (req, res) => {
   const spotImages = await spot.getSpotImages({
     attributes: ["id", "url", "preview"],
   });
+
   const owner = await spot.getUser({
     attributes: ["id", "firstName", "lastName"],
   });
@@ -531,7 +563,7 @@ router.get("/:spotId", async (req, res) => {
     ...spotFormat(spot),
     numReviews: +numReviews || "No reviews yet",
     avgStarRating: +avgStarRating || "No reviews yet",
-    SpotImages: spotImages,
+    SpotImages: spotImages.length === 0 ? "No spot images yet" : spotImages,
     Owner: owner,
   };
   return res.status(200).json(returnSpot);
@@ -552,7 +584,7 @@ router.delete("/:spotId", requireAuth, async (req, res) => {
       statusCode: 404,
     });
   }
-  // Interesting - not spot.userId but ownerId
+  // not spot.userId but ownerId
   if (spot.ownerId !== userId) {
     return res.status(403).json({
       message: "Forbidden",

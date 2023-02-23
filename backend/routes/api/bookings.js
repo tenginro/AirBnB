@@ -82,7 +82,6 @@ router.get("/current", requireAuth, async (req, res) => {
       id: booking.id,
       spotId: booking.spotId,
       Spot: {
-        // ...spot.toJSON(),
         ...spotFormat(spot),
         previewImage: spotImage.url,
       },
@@ -93,8 +92,13 @@ router.get("/current", requireAuth, async (req, res) => {
       updatedAt: dateFormat(booking.updatedAt),
     });
   }
+  if (arr.length > 0) {
+    return res.status(200).json({
+      Bookings: arr,
+    });
+  }
   return res.status(200).json({
-    Bookings: arr,
+    Bookings: "No bookings yet",
   });
 });
 
@@ -132,6 +136,12 @@ router.put("/:bookingId", requireAuth, async (req, res) => {
       statusCode: 404,
     });
   }
+  if (booking.userId !== userId) {
+    return res.status(403).json({
+      message: "Forbidden",
+      statusCode: 403,
+    });
+  }
   const conflict = await Booking.findOne({
     where: {
       spotId: booking.spotId,
@@ -163,7 +173,15 @@ router.put("/:bookingId", requireAuth, async (req, res) => {
     startDate,
     endDate,
   });
-  return res.status(200).json(booking);
+  return res.status(200).json({
+    id: booking.id,
+    spotId: booking.spotId,
+    userId: booking.userId,
+    startDate: dateFormat(booking.startDate).split(" ")[0],
+    endDate: dateFormat(booking.endDate).split(" ")[0],
+    createdAt: dateFormat(booking.createdAt),
+    updatedAt: dateFormat(booking.updatedAt),
+  });
 });
 
 // delete a booking
@@ -194,7 +212,7 @@ router.delete("/:bookingId", requireAuth, async (req, res) => {
   let start = new Date(booking.startDate);
   let end = new Date(booking.endDate);
   // Interesting - timezone!!!!
-  let endPlus = new Date(end.getTime() + 24 * 60 * 60 * 1000);
+  let endPlus = new Date(end.getTime() + 24 * 60 * 60 * 1000 - 1);
   let now = new Date();
 
   if (start.getTime() <= now.getTime() && endPlus.getTime() >= now.getTime()) {
