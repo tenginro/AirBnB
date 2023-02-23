@@ -87,7 +87,8 @@ app.use((err, _req, res, _next) => {
     message: err.message,
     statusCode: res.statusCode,
     errors: err.errors,
-    // stack: isProduction ? null : err.stack,
+    // leave it as it is
+    stack: isProduction ? null : err.stack,
   });
 });
 // Error handlers - END
