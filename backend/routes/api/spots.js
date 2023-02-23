@@ -147,8 +147,7 @@ const spotsWithRatingImg = async (spots, arr) => {
     });
     let avgRating = spotReviews[0].toJSON().avgRating;
     // convert string to number
-    // Interesting - not working on live env
-    // arr[i].avgRating = +avgRating.toFixed(1);
+    // Interesting - postgre wrap number in string
     if (+avgRating === 0) arr[i].avgRating = "No reviews yet";
     else arr[i].avgRating = +(+avgRating).toFixed(1);
 
