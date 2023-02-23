@@ -64,9 +64,8 @@ router.delete("/", (_req, res) => {
 // Restore session user
 // If there is not a session, it will return a JSON with an empty object. To get the session user, connect the restoreUser middleware.
 // Answered: shall i remove restoreUser here since it is applied globally? - Certainly
-// However, it keeps giving csrf error without the restoreUser middleware - Interesting
+// However, it keeps giving csrf error without the restoreUser middleware
 router.get("/", restoreUser, requireAuth, (req, res) => {
-  // router.get("/", requireAuth, (req, res) => {
   const { user } = req;
   if (user) {
     return res.status(200).json({

@@ -117,14 +117,7 @@ router.put("/:bookingId", requireAuth, async (req, res) => {
       },
     });
   }
-  const today = new Date();
-  const end = new Date(endDate);
-  if (end <= today) {
-    return res.status(403).json({
-      message: "Past bookings can't be modified",
-      statusCode: 403,
-    });
-  }
+
   const booking = await Booking.findOne({
     where: {
       id: bookingId,
@@ -139,6 +132,16 @@ router.put("/:bookingId", requireAuth, async (req, res) => {
   if (booking.userId !== userId) {
     return res.status(403).json({
       message: "Forbidden",
+      statusCode: 403,
+    });
+  }
+  const today = new Date();
+  const end = new Date(booking.endDate);
+  const endPlus = new Date(end.getTime() + 24 * 60 * 60 * 1000 - 1);
+
+  if (endPlus <= today) {
+    return res.status(403).json({
+      message: "Past bookings can't be modified",
       statusCode: 403,
     });
   }
