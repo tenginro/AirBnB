@@ -280,16 +280,16 @@ router.post(
     let startDateTime = new Date(startDate);
     let endDateTime = new Date(endDate);
     let today = new Date();
-    // with this validation, couldn't test delete booking that has been started
-    // if (startDateTime <= today) {
-    //   return res.status(400).json({
-    //     message: "Validation error",
-    //     statusCode: 400,
-    //     errors: {
-    //       endDate: "startDate cannot be on or before today",
-    //     },
-    //   });
-    // }
+    // with this validation, if there is no future bookingin the seeder file, couldn't test delete booking that has been started
+    if (startDateTime <= today) {
+      return res.status(400).json({
+        message: "Validation error",
+        statusCode: 400,
+        errors: {
+          endDate: "startDate cannot be on or before today",
+        },
+      });
+    }
     if (endDateTime.getTime() <= startDateTime.getTime()) {
       return res.status(400).json({
         message: "Validation error",
