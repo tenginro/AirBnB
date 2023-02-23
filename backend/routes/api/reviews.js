@@ -33,7 +33,15 @@ const validateNewReviewImage = [
   handleValidationErrors,
 ];
 
-// post a new reviewImage
+// helper function
+const dateFormat = (str) => {
+  let string = new Date(str);
+  let date = string.toISOString().split("T")[0];
+  let time = string.toLocaleTimeString("en-GB");
+  return `${date} ${time}`;
+};
+
+// create a new reviewImage
 router.post(
   "/:reviewId/images",
   requireAuth,
@@ -91,7 +99,15 @@ router.get("/current", requireAuth, async (req, res) => {
   let arr = [];
   for (let i in reviews) {
     let review = reviews[i].toJSON();
-    arr.push(review);
+    arr.push({
+      id: review.id,
+      userId: review.userId,
+      spotId: review.spotId,
+      review: review.review,
+      stars: review.stars,
+      createdAt: dateFormat(review.createdAt),
+      updatedAt: dateFormat(review.updatedAt),
+    });
     const user = await User.findOne({
       where: {
         id: userId,
@@ -137,16 +153,24 @@ router.get("/current", requireAuth, async (req, res) => {
     } else {
       arr[i].Spot = { ...spot.toJSON(), previewImage: previewImage.url };
     }
-    arr[i].ReviewImage = reviewImages;
+    if (reviewImages.length > 0) {
+      arr[i].ReviewImage = reviewImages;
+    } else arr[i].ReviewImage = "No review images yet";
+  }
+  if (arr.length > 0) {
+    return res.status(200).json({
+      Reviews: arr,
+    });
   }
   return res.status(200).json({
-    Reviews: arr,
+    Reviews: "No reviews yet",
   });
 });
 
 // edit a review
 router.put("/:reviewId", requireAuth, validateNewReview, async (req, res) => {
   const reviewId = req.params.reviewId;
+  const userId = req.user.id;
   const existingReview = await Review.findOne({
     where: {
       id: reviewId,
@@ -158,12 +182,26 @@ router.put("/:reviewId", requireAuth, validateNewReview, async (req, res) => {
       statusCode: 404,
     });
   }
+  if (existingReview.userId !== userId) {
+    return res.status(403).json({
+      message: "Forbidden",
+      statusCode: 403,
+    });
+  }
   const { review, stars } = req.body;
   await existingReview.update({
     review,
     stars,
   });
-  return res.status(200).json(existingReview);
+  return res.status(200).json({
+    id: existingReview.id,
+    userId: existingReview.userId,
+    spotId: existingReview.spotId,
+    review: existingReview.review,
+    stars: existingReview.stars,
+    createdAt: dateFormat(existingReview.createdAt),
+    updatedAt: dateFormat(existingReview.updatedAt),
+  });
 });
 
 // delete a review
