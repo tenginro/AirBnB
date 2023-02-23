@@ -439,6 +439,12 @@ router.post(
         statusCode: 404,
       });
     }
+    if (spot.ownerId === userId) {
+      return res.status(403).json({
+        message: "Forbidden",
+        statusCode: 403,
+      });
+    }
     const existingReview = await Review.findOne({
       where: {
         spotId: spotId,
