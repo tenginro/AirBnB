@@ -135,7 +135,6 @@ router.put("/:bookingId", requireAuth, async (req, res) => {
   const conflict = await Booking.findOne({
     where: {
       spotId: booking.spotId,
-      // Question - to check any booking conflict, how will you check when we submit the project
       [Op.or]: [
         {
           startDate: {
@@ -191,9 +190,14 @@ router.delete("/:bookingId", requireAuth, async (req, res) => {
       statusCode: 403,
     });
   }
-  const end = new Date(booking.endDate);
-  const now = new Date();
-  if (end > now) {
+
+  let start = new Date(booking.startDate);
+  let end = new Date(booking.endDate);
+  // Interesting - timezone!!!!
+  let endPlus = new Date(end.getTime() + 24 * 60 * 60 * 1000);
+  let now = new Date();
+
+  if (start.getTime() <= now.getTime() && endPlus.getTime() >= now.getTime()) {
     return res.status(403).json({
       message: "Bookings that have been started can't be deleted",
       statusCode: 403,
