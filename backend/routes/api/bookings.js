@@ -166,15 +166,31 @@ router.put("/:bookingId", requireAuth, async (req, res) => {
   const conflict = await Booking.findOne({
     where: {
       spotId: booking.spotId,
-      [Op.or]: [
+      [Op.and]: [
+        // {
+        //   startDate: {
+        //     [Op.between]: [startDate, endDate],
+        //   },
+        // },
+        // {
+        //   endDate: {
+        //     [Op.between]: [startDate, endDate],
+        //   },
+        // },
         {
           startDate: {
-            [Op.between]: [startDate, endDate],
+            [Op.lte]: startDate,
+          },
+          endDate: {
+            [Op.gte]: startDate,
           },
         },
         {
+          startDate: {
+            [Op.lte]: endDate,
+          },
           endDate: {
-            [Op.between]: [startDate, endDate],
+            [Op.gte]: endDate,
           },
         },
       ],
@@ -190,6 +206,47 @@ router.put("/:bookingId", requireAuth, async (req, res) => {
       },
     });
   }
+  const startDateConflict = await Booking.findOne({
+    where: {
+      spotId: booking.spotId,
+      startDate: {
+        [Op.lte]: startDate,
+      },
+      endDate: {
+        [Op.gte]: startDate,
+      },
+    },
+  });
+  if (startDateConflict) {
+    return res.status(403).json({
+      message: "Sorry, this spot is already booked for the specified dates",
+      statusCode: 403,
+      errors: {
+        startDate: "Start date conflicts with an existing booking",
+      },
+    });
+  }
+  const endDateConflict = await Booking.findOne({
+    where: {
+      spotId: booking.spotId,
+      startDate: {
+        [Op.lte]: endDate,
+      },
+      endDate: {
+        [Op.gte]: endDate,
+      },
+    },
+  });
+  if (endDateConflict) {
+    return res.status(403).json({
+      message: "Sorry, this spot is already booked for the specified dates",
+      statusCode: 403,
+      errors: {
+        endDate: "End date conflicts with an existing booking",
+      },
+    });
+  }
+
   await booking.update({
     startDate,
     endDate,
