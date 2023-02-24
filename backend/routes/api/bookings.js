@@ -50,11 +50,12 @@ router.get("/current", requireAuth, async (req, res) => {
     where: {
       userId: userId,
     },
-    order: [["startDate"]],
+    order: [["startDate", "ASC"]],
   });
   let arr = [];
   for (let i in bookings) {
     let booking = bookings[i].toJSON();
+
     const spot = await Spot.findOne({
       where: {
         id: booking.spotId,
@@ -72,18 +73,22 @@ router.get("/current", requireAuth, async (req, res) => {
         "price",
       ],
     });
+
     const spotImage = await SpotImage.findOne({
       where: {
         spotId: spot.id,
         preview: true,
       },
     });
+
     arr.push({
       id: booking.id,
       spotId: booking.spotId,
       Spot: {
         ...spotFormat(spot),
-        previewImage: spotImage.url,
+        previewImage: spotImage
+          ? spotImage.url
+          : "Preview image is not set yet",
       },
       userId: booking.userId,
       startDate: dateFormat(booking.startDate).split(" ")[0],
@@ -108,7 +113,20 @@ router.put("/:bookingId", requireAuth, async (req, res) => {
   const bookingId = req.params.bookingId;
 
   const { startDate, endDate } = req.body;
-  if (endDate <= startDate) {
+  let startDateTime = new Date(startDate);
+  let endDateTime = new Date(endDate);
+  let now = new Date();
+
+  if (startDateTime <= now) {
+    return res.status(400).json({
+      message: "Validation error",
+      statusCode: 400,
+      errors: {
+        endDate: "startDate cannot be on or before today",
+      },
+    });
+  }
+  if (endDateTime <= startDateTime) {
     return res.status(400).json({
       message: "Validation error",
       statusCode: 400,
