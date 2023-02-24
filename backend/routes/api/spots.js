@@ -105,6 +105,14 @@ const validateNewBooking = [
   handleValidationErrors,
 ];
 
+const validateSpotImage = [
+  check("url").exists({ checkFalsy: true }).withMessage("url is required"),
+  check("preview")
+    .exists({ checkFalsy: true })
+    .withMessage("preview is required"),
+  handleValidationErrors,
+];
+
 // helper functions
 const spotFormat = (spot) => {
   let newSpot = {
@@ -218,55 +226,60 @@ router.get("/:spotId/reviews", async (req, res) => {
 });
 
 // create new spotImage
-router.post("/:spotId/images", requireAuth, async (req, res) => {
-  const { url, preview } = req.body;
-  const spotId = req.params.spotId;
-  const userId = req.user.id;
-  const spot = await Spot.findOne({
-    where: {
-      id: spotId,
-    },
-  });
-  if (!spot) {
-    return res.status(404).json({
-      message: "Spot couldn't be found",
-      statusCode: 404,
-    });
-  }
-  if (spot.ownerId !== userId) {
-    return res.status(403).json({
-      message: "Forbidden",
-      statusCode: 403,
-    });
-  }
-  // allow only one preview image
-  if (preview === true) {
-    const existingPreview = await SpotImage.findOne({
+router.post(
+  "/:spotId/images",
+  requireAuth,
+  validateSpotImage,
+  async (req, res) => {
+    const { url, preview } = req.body;
+    const spotId = req.params.spotId;
+    const userId = req.user.id;
+    const spot = await Spot.findOne({
       where: {
-        spotId: spotId,
-        preview: true,
+        id: spotId,
       },
     });
-    if (existingPreview) {
-      await existingPreview.update({
-        preview: false,
+    if (!spot) {
+      return res.status(404).json({
+        message: "Spot couldn't be found",
+        statusCode: 404,
       });
     }
+    if (spot.ownerId !== userId) {
+      return res.status(403).json({
+        message: "Forbidden",
+        statusCode: 403,
+      });
+    }
+    // allow only one preview image
+    if (preview === true) {
+      const existingPreview = await SpotImage.findOne({
+        where: {
+          spotId: spotId,
+          preview: true,
+        },
+      });
+      if (existingPreview) {
+        await existingPreview.update({
+          preview: false,
+        });
+      }
+    }
+
+    const newImage = await SpotImage.create({
+      spotId: spotId,
+      url,
+      preview,
+    });
+
+    return res.status(200).json({
+      // Answered: is it supposed to be spotId instead of id? - no, its the id column of the spotImage
+      id: newImage.id,
+      url: newImage.url,
+      preview: newImage.preview,
+    });
   }
-
-  const newImage = await SpotImage.create({
-    spotId: spotId,
-    url,
-    preview,
-  });
-
-  return res.status(200).json({
-    // Answered: is it supposed to be spotId instead of id? - no, its the id column of the spotImage
-    id: newImage.id,
-    url: newImage.url,
-    preview: newImage.preview,
-  });
-});
+);
 
 // create a booking for a spot
 router.post(
