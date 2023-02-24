@@ -523,6 +523,7 @@ router.post(
         statusCode: 403,
       });
     }
+
     const existingReview = await Review.findOne({
       where: {
         spotId: spotId,
