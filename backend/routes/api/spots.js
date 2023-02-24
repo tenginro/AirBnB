@@ -244,6 +244,8 @@ router.post(
         statusCode: 404,
       });
     }
+
+    // check authorization
     if (spot.ownerId !== userId) {
       return res.status(403).json({
         message: "Forbidden",
@@ -323,6 +325,8 @@ router.post(
         statusCode: 404,
       });
     }
+
+    // check authorization
     if (spot.ownerId === userId) {
       return res.status(403).json({
         message: "Forbidden",
@@ -511,6 +515,8 @@ router.post(
         statusCode: 404,
       });
     }
+
+    // check authorization
     if (spot.ownerId === userId) {
       return res.status(403).json({
         message: "Forbidden",
@@ -576,6 +582,7 @@ router.put("/:spotId", [requireAuth, validateNewSpot], async (req, res) => {
       statusCode: 404,
     });
   }
+  // check authorization
   const ownerId = spot.ownerId;
   const userId = req.user.id;
   if (ownerId !== userId) {
@@ -584,6 +591,7 @@ router.put("/:spotId", [requireAuth, validateNewSpot], async (req, res) => {
       statusCode: 403,
     });
   }
+
   const { address, city, state, country, lat, lng, name, description, price } =
     req.body;
 
@@ -663,6 +671,8 @@ router.delete("/:spotId", requireAuth, async (req, res) => {
       statusCode: 404,
     });
   }
+
+  // check authorization
   // not spot.userId but ownerId
   if (spot.ownerId !== userId) {
     return res.status(403).json({
@@ -670,6 +680,7 @@ router.delete("/:spotId", requireAuth, async (req, res) => {
       statusCode: 403,
     });
   }
+
   await spot.destroy();
   return res.status(200).json({
     message: "Successfully deleted",
