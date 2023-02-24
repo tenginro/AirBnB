@@ -228,8 +228,7 @@ router.get("/:spotId/reviews", async (req, res) => {
 // create new spotImage
 router.post(
   "/:spotId/images",
-  requireAuth,
-  validateSpotImage,
+  [requireAuth, validateSpotImage],
   async (req, res) => {
     const { url, preview } = req.body;
     const spotId = req.params.spotId;
@@ -284,8 +283,7 @@ router.post(
 // create a booking for a spot
 router.post(
   "/:spotId/bookings",
-  requireAuth,
-  validateNewBooking,
+  [requireAuth, validateNewBooking],
   async (req, res) => {
     let { startDate, endDate } = req.body;
 
@@ -498,8 +496,7 @@ router.get("/:spotId/bookings", requireAuth, async (req, res) => {
 // create a review for a spot
 router.post(
   "/:spotId/reviews",
-  requireAuth,
-  validateNewReview,
+  [requireAuth, validateNewReview],
   async (req, res) => {
     const spotId = req.params.spotId;
     const userId = req.user.id;
@@ -566,7 +563,7 @@ router.get("/current", requireAuth, async (req, res) => {
 });
 
 // edit a spot
-router.put("/:spotId", requireAuth, validateNewSpot, async (req, res) => {
+router.put("/:spotId", [requireAuth, validateNewSpot], async (req, res) => {
   const spotId = req.params.spotId;
   const spot = await Spot.findOne({
     where: {
@@ -681,7 +678,7 @@ router.delete("/:spotId", requireAuth, async (req, res) => {
 });
 
 // create new spot
-router.post("/", requireAuth, validateNewSpot, async (req, res) => {
+router.post("/", [requireAuth, validateNewSpot], async (req, res) => {
   const { address, city, state, country, lat, lng, name, description, price } =
     req.body;
   const ownerId = req.user.id;
