@@ -116,7 +116,7 @@ router.get("/current", requireAuth, async (req, res) => {
     });
     const spot = await Spot.findOne({
       where: {
-        ownerId: userId,
+        id: review.spotId,
       },
       attributes: [
         "id",
@@ -140,11 +140,13 @@ router.get("/current", requireAuth, async (req, res) => {
     });
     const reviewImages = await ReviewImage.findAll({
       where: {
-        reviewId: reviews[i].id,
+        reviewId: review.id,
       },
       attributes: ["id", "url"],
     });
+
     arr[i].User = user;
+
     if (!previewImage) {
       arr[i].Spot = {
         ...spot.toJSON(),
@@ -153,10 +155,12 @@ router.get("/current", requireAuth, async (req, res) => {
     } else {
       arr[i].Spot = { ...spot.toJSON(), previewImage: previewImage.url };
     }
+
     if (reviewImages.length > 0) {
       arr[i].ReviewImage = reviewImages;
     } else arr[i].ReviewImage = "No review images yet";
   }
+
   if (arr.length > 0) {
     return res.status(200).json({
       Reviews: arr,
