@@ -166,6 +166,9 @@ router.put("/:bookingId", requireAuth, async (req, res) => {
 
   const fullPeriodConflict = await Booking.findOne({
     where: {
+      id: {
+        [Op.not]: booking.id,
+      },
       spotId: booking.spotId,
       startDate: {
         [Op.between]: [startDate, endDate],
@@ -187,18 +190,11 @@ router.put("/:bookingId", requireAuth, async (req, res) => {
   }
   const conflict = await Booking.findOne({
     where: {
+      id: {
+        [Op.not]: booking.id,
+      },
       spotId: booking.spotId,
       [Op.and]: [
-        // {
-        //   startDate: {
-        //     [Op.between]: [startDate, endDate],
-        //   },
-        // },
-        // {
-        //   endDate: {
-        //     [Op.between]: [startDate, endDate],
-        //   },
-        // },
         {
           startDate: {
             [Op.lte]: startDate,
@@ -230,6 +226,9 @@ router.put("/:bookingId", requireAuth, async (req, res) => {
   }
   const startDateConflict = await Booking.findOne({
     where: {
+      id: {
+        [Op.not]: booking.id,
+      },
       spotId: booking.spotId,
       startDate: {
         [Op.lte]: startDate,
@@ -250,6 +249,9 @@ router.put("/:bookingId", requireAuth, async (req, res) => {
   }
   const endDateConflict = await Booking.findOne({
     where: {
+      id: {
+        [Op.not]: booking.id,
+      },
       spotId: booking.spotId,
       startDate: {
         [Op.lte]: endDate,
