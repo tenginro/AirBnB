@@ -334,20 +334,21 @@ router.post(
       });
     }
 
+    const fullPeriodConflict = await Booking.findOne({
+      where: {
+        spotId: spotId,
+        startDate: {
+          [Op.between]: [startDate, endDate],
+        },
+        endDate: {
+          [Op.between]: [startDate, endDate],
+        },
+      },
+    });
     const conflict = await Booking.findOne({
       where: {
         spotId: spotId,
         [Op.and]: [
-          // {
-          //   startDate: {
-          //     [Op.between]: [startDate, endDate],
-          //   },
-          // },
-          // {
-          //   endDate: {
-          //     [Op.between]: [startDate, endDate],
-          //   },
-          // },
           {
             startDate: {
               [Op.lte]: startDate,
@@ -367,7 +368,7 @@ router.post(
         ],
       },
     });
-    if (conflict) {
+    if (fullPeriodConflict || conflict) {
       return res.status(403).json({
         message: "Sorry, this spot is already booked for the specified dates",
         statusCode: 403,
@@ -415,28 +416,6 @@ router.post(
         message: "Sorry, this spot is already booked for the specified dates",
         statusCode: 403,
         errors: {
-          endDate: "End date conflicts with an existing booking",
-        },
-      });
-    }
-
-    const fullPeriodConflict = await Booking.findOne({
-      where: {
-        spotId: spotId,
-        startDate: {
-          [Op.between]: [startDate, endDate],
-        },
-        endDate: {
-          [Op.between]: [startDate, endDate],
-        },
-      },
-    });
-    if (fullPeriodConflict) {
-      return res.status(403).json({
-        message: "Sorry, this spot is already booked for the specified dates",
-        statusCode: 403,
-        errors: {
-          startDate: "Start date conflicts with an existing booking",
           endDate: "End date conflicts with an existing booking",
         },
       });
