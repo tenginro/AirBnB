@@ -741,8 +741,8 @@ router.post("/", [requireAuth, validateNewSpot], async (req, res) => {
     name: newSpot.name,
     description: newSpot.description,
     price: +newSpot.price,
-    updatedAt: dateFormat(newSpot.updatedAt),
     createdAt: dateFormat(newSpot.createdAt),
+    updatedAt: dateFormat(newSpot.updatedAt),
   });
 });
 
