@@ -808,6 +808,7 @@ router.get("/", validateQuery, async (req, res) => {
       [Op.and]: queryArr,
     };
   }
+
   const spots = await Spot.findAll(query);
   let arr = [];
   arr = await spotsWithRatingImg(spots, arr);
