@@ -559,6 +559,20 @@ router.post(
         statusCode: 403,
       });
     }
+
+    const booking = await Booking.findOne({
+      where: {
+        spotId: spotId,
+        userId: userId,
+      },
+    });
+    if (!booking) {
+      return res.status(403).json({
+        message: "Forbidden",
+        statusCode: 403,
+      });
+    }
+
     const { review, stars } = req.body;
     const newReview = await Review.create({
       userId,
