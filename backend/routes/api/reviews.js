@@ -157,8 +157,8 @@ router.get("/current", requireAuth, async (req, res) => {
     }
 
     if (reviewImages.length > 0) {
-      arr[i].ReviewImage = reviewImages;
-    } else arr[i].ReviewImage = "No review images yet";
+      arr[i].ReviewImages = reviewImages;
+    } else arr[i].ReviewImages = "No review images yet";
   }
 
   if (arr.length > 0) {

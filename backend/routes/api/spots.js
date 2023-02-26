@@ -547,18 +547,51 @@ router.post(
       });
     }
 
-    const existingReview = await Review.findOne({
+    const booking = await Booking.findOne({
       where: {
         spotId: spotId,
         userId: userId,
       },
     });
-    if (existingReview) {
+    if (!booking) {
+      return res.status(403).json({
+        message: "Forbidden",
+        statusCode: 403,
+      });
+    }
+    const existingBookings = await Booking.findAll({
+      where: {
+        spotId: spotId,
+        userId: userId,
+      },
+    });
+    const existingReviews = await Review.findAll({
+      where: {
+        spotId: spotId,
+        userId: userId,
+      },
+    });
+    // Interesting - what if a user booked twice
+    if (existingBookings.length === existingReviews.length) {
       return res.status(403).json({
         message: "User already has a review for this spot",
         statusCode: 403,
       });
     }
+
+    // const existingReview = await Review.findOne({
+    //   where: {
+    //     spotId: spotId,
+    //     userId: userId,
+    //   },
+    // });
+    // if (existingReview) {
+    //   return res.status(403).json({
+    //     message: "User already has a review for this spot",
+    //     statusCode: 403,
+    //   });
+    // }
+
     const { review, stars } = req.body;
     const newReview = await Review.create({
       userId,
@@ -741,8 +774,8 @@ router.post("/", [requireAuth, validateNewSpot], async (req, res) => {
     name: newSpot.name,
     description: newSpot.description,
     price: +newSpot.price,
-    updatedAt: dateFormat(newSpot.updatedAt),
     createdAt: dateFormat(newSpot.createdAt),
+    updatedAt: dateFormat(newSpot.updatedAt),
   });
 });
 
