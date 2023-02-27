@@ -788,7 +788,8 @@ router.get("/", validateQuery, async (req, res) => {
     };
   }
 
-  const spots = await Spot.findAll(query);
+  const spots = await Spot.findAll({ ...query });
+
   let arr = [];
   arr = await spotsWithRatingImg(spots, arr);
   return res.status(200).json({ Spots: arr, page: page, size: size });
