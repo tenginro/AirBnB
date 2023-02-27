@@ -526,50 +526,50 @@ router.post(
       });
     }
 
-    const booking = await Booking.findOne({
-      where: {
-        spotId: spotId,
-        userId: userId,
-      },
-    });
-    if (!booking) {
-      return res.status(403).json({
-        message: "Forbidden",
-        statusCode: 403,
-      });
-    }
-    const existingBookings = await Booking.findAll({
-      where: {
-        spotId: spotId,
-        userId: userId,
-      },
-    });
-    const existingReviews = await Review.findAll({
-      where: {
-        spotId: spotId,
-        userId: userId,
-      },
-    });
-    // Interesting - what if a user booked twice
-    if (existingBookings.length === existingReviews.length) {
-      return res.status(403).json({
-        message: "User already has a review for this spot",
-        statusCode: 403,
-      });
-    }
-
-    // const existingReview = await Review.findOne({
+    // const booking = await Booking.findOne({
     //   where: {
     //     spotId: spotId,
     //     userId: userId,
     //   },
     // });
-    // if (existingReview) {
+    // if (!booking) {
+    //   return res.status(403).json({
+    //     message: "Forbidden",
+    //     statusCode: 403,
+    //   });
+    // }
+    // const existingBookings = await Booking.findAll({
+    //   where: {
+    //     spotId: spotId,
+    //     userId: userId,
+    //   },
+    // });
+    // const existingReviews = await Review.findAll({
+    //   where: {
+    //     spotId: spotId,
+    //     userId: userId,
+    //   },
+    // });
+    // // Interesting - what if a user booked twice
+    // if (existingBookings.length === existingReviews.length) {
     //   return res.status(403).json({
     //     message: "User already has a review for this spot",
     //     statusCode: 403,
     //   });
     // }
+
+    const existingReview = await Review.findOne({
+      where: {
+        spotId: spotId,
+        userId: userId,
+      },
+    });
+    if (existingReview) {
+      return res.status(403).json({
+        message: "User already has a review for this spot",
+        statusCode: 403,
+      });
+    }
 
     const { review, stars } = req.body;
     const newReview = await Review.create({
@@ -776,6 +776,7 @@ router.get("/", validateQuery, async (req, res) => {
 
   if (minLat || maxLat || minLng || maxLng || minPrice || maxPrice) {
     let queryArr = [];
+    // Interesting - i was using parseInt before but it can actually allow decimal values
     if (minLat) queryArr.push({ lat: { [Op.gte]: +minLat } });
     if (maxLat) queryArr.push({ lat: { [Op.lte]: +maxLat } });
     if (minLng) queryArr.push({ lng: { [Op.gte]: +minLng } });
