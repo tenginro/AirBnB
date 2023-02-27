@@ -334,20 +334,21 @@ router.post(
       });
     }
 
+    const fullPeriodConflict = await Booking.findOne({
+      where: {
+        spotId: spotId,
+        startDate: {
+          [Op.between]: [startDate, endDate],
+        },
+        endDate: {
+          [Op.between]: [startDate, endDate],
+        },
+      },
+    });
     const conflict = await Booking.findOne({
       where: {
         spotId: spotId,
         [Op.and]: [
-          // {
-          //   startDate: {
-          //     [Op.between]: [startDate, endDate],
-          //   },
-          // },
-          // {
-          //   endDate: {
-          //     [Op.between]: [startDate, endDate],
-          //   },
-          // },
           {
             startDate: {
               [Op.lte]: startDate,
@@ -367,7 +368,7 @@ router.post(
         ],
       },
     });
-    if (conflict) {
+    if (fullPeriodConflict || conflict) {
       return res.status(403).json({
         message: "Sorry, this spot is already booked for the specified dates",
         statusCode: 403,
@@ -415,28 +416,6 @@ router.post(
         message: "Sorry, this spot is already booked for the specified dates",
         statusCode: 403,
         errors: {
-          endDate: "End date conflicts with an existing booking",
-        },
-      });
-    }
-
-    const fullPeriodConflict = await Booking.findOne({
-      where: {
-        spotId: spotId,
-        startDate: {
-          [Op.between]: [startDate, endDate],
-        },
-        endDate: {
-          [Op.between]: [startDate, endDate],
-        },
-      },
-    });
-    if (fullPeriodConflict) {
-      return res.status(403).json({
-        message: "Sorry, this spot is already booked for the specified dates",
-        statusCode: 403,
-        errors: {
-          startDate: "Start date conflicts with an existing booking",
           endDate: "End date conflicts with an existing booking",
         },
       });
@@ -797,18 +776,20 @@ router.get("/", validateQuery, async (req, res) => {
 
   if (minLat || maxLat || minLng || maxLng || minPrice || maxPrice) {
     let queryArr = [];
-    if (minLat) queryArr.push({ lat: { [Op.gte]: parseInt(minLat) } });
-    if (maxLat) queryArr.push({ lat: { [Op.lte]: parseInt(maxLat) } });
-    if (minLng) queryArr.push({ lng: { [Op.gte]: parseInt(minLng) } });
-    if (maxLng) queryArr.push({ lng: { [Op.lte]: parseInt(maxLng) } });
-    if (minPrice) queryArr.push({ price: { [Op.gte]: parseInt(minPrice) } });
-    if (maxPrice) queryArr.push({ price: { [Op.lte]: parseInt(maxPrice) } });
+    if (minLat) queryArr.push({ lat: { [Op.gte]: +minLat } });
+    if (maxLat) queryArr.push({ lat: { [Op.lte]: +maxLat } });
+    if (minLng) queryArr.push({ lng: { [Op.gte]: +minLng } });
+    if (maxLng) queryArr.push({ lng: { [Op.lte]: +maxLng } });
+    if (minPrice) queryArr.push({ price: { [Op.gte]: +minPrice } });
+    if (maxPrice) queryArr.push({ price: { [Op.lte]: +maxPrice } });
 
     query.where = {
       [Op.and]: queryArr,
     };
   }
-  const spots = await Spot.findAll(query);
+
+  const spots = await Spot.findAll({ ...query });
+
   let arr = [];
   arr = await spotsWithRatingImg(spots, arr);
   return res.status(200).json({ Spots: arr, page: page, size: size });
