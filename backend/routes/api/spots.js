@@ -776,12 +776,12 @@ router.get("/", validateQuery, async (req, res) => {
 
   if (minLat || maxLat || minLng || maxLng || minPrice || maxPrice) {
     let queryArr = [];
-    if (minLat) queryArr.push({ lat: { [Op.gte]: parseInt(minLat) } });
-    if (maxLat) queryArr.push({ lat: { [Op.lte]: parseInt(maxLat) } });
-    if (minLng) queryArr.push({ lng: { [Op.gte]: parseInt(minLng) } });
-    if (maxLng) queryArr.push({ lng: { [Op.lte]: parseInt(maxLng) } });
-    if (minPrice) queryArr.push({ price: { [Op.gte]: parseInt(minPrice) } });
-    if (maxPrice) queryArr.push({ price: { [Op.lte]: parseInt(maxPrice) } });
+    if (minLat) queryArr.push({ lat: { [Op.gte]: +minLat } });
+    if (maxLat) queryArr.push({ lat: { [Op.lte]: +maxLat } });
+    if (minLng) queryArr.push({ lng: { [Op.gte]: +minLng } });
+    if (maxLng) queryArr.push({ lng: { [Op.lte]: +maxLng } });
+    if (minPrice) queryArr.push({ price: { [Op.gte]: +minPrice } });
+    if (maxPrice) queryArr.push({ price: { [Op.lte]: +maxPrice } });
 
     query.where = {
       [Op.and]: queryArr,
