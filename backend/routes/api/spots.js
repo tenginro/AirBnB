@@ -525,7 +525,7 @@ router.post(
         statusCode: 403,
       });
     }
-
+    // //check for only allow user had a booking to give a review
     // const booking = await Booking.findOne({
     //   where: {
     //     spotId: spotId,
@@ -550,7 +550,7 @@ router.post(
     //     userId: userId,
     //   },
     // });
-    // // Interesting - what if a user booked twice
+    // //what if a user booked twice
     // if (existingBookings.length === existingReviews.length) {
     //   return res.status(403).json({
     //     message: "User already has a review for this spot",
