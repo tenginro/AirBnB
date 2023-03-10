@@ -1,0 +1,15 @@
+button {
+  background-color: red;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  row-gap: 10px;
+}
+
+input {
+  margin: 5px;
+}
