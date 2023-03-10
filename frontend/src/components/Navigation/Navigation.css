@@ -1,0 +1,17 @@
+ul {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+li {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  column-gap: 50px;
+  margin: 10px;
+}
+
+.fas.fa-user-circle {
+  width: 20px;
+}

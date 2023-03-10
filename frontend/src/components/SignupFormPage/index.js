@@ -22,6 +22,7 @@ function SignupFormPage() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    // The confirmPassword field value does not get sent to the backend. That field is only handled on the frontend and a validation check comparing the password field and confirmPassword field value should be done before a sign up request gets sent to the backend.
     if (password === confirmPassword) {
       setErrors([]);
       return dispatch(
