@@ -1,0 +1,26 @@
+.nav.ul {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.profile-dropdown {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+li {
+  display: flex;
+  flex-direction: row;
+  padding: 5px;
+}
+
+.hidden {
+  display: none;
+}
+
+.logoutButton {
+  width: 63px;
+  height: 30px;
+}

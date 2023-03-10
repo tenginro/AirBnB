@@ -26,6 +26,13 @@ const validateLogin = [
   handleValidationErrors,
 ];
 
+const dateFormat = (str) => {
+  let string = new Date(str);
+  let date = string.toISOString().split("T")[0];
+  let time = string.toLocaleTimeString("en-GB");
+  return `${date} ${time}`;
+};
+
 // Log in
 router.post("/", validateLogin, async (req, res, next) => {
   const { credential, password } = req.body;
@@ -77,6 +84,8 @@ router.get("/", restoreUser, (req, res) => {
         lastName: user.lastName,
         email: user.email,
         username: user.username,
+        createdAt: dateFormat(user.createdAt),
+        updatedAt: dateFormat(user.updatedAt),
       },
     });
   } else return res.json({ user: null });
