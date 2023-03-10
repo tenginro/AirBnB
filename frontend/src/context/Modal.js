@@ -2,9 +2,15 @@ import React, { useRef, useState, useContext } from "react";
 import ReactDOM from "react-dom";
 import "./Modal.css";
 
+// The modalRef ModalContext's value is the modal div DOM element. Through the ModalContext's provider, any component wrapped by the provider can access the data of the context's value, including modalRef.
 const ModalContext = React.createContext();
 
 export function ModalProvider({ children }) {
+  // useRef()
+  // Updating the reference does not trigger a component re-render.
+  // Updating a reference is synchronous.
+  // The value of the reference is not updated between component re-renders .
+  // The useRef hook can be used to access DOM elements.
   const modalRef = useRef();
   const [modalContent, setModalContent] = useState(null);
   // callback function that will be called when modal is closing

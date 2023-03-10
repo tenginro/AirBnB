@@ -1,7 +1,7 @@
 .nav.ul {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: space-around;
 }
 
 .profile-dropdown {
@@ -16,19 +16,8 @@ li {
   padding: 5px;
 }
 
-.SignUpButton {
-  margin-left: 20px;
-  margin-right: 20px;
-}
-
 .hidden {
   display: none;
-}
-
-.ProfileButton {
-  width: 30px;
-  height: 30px;
-  margin-right: 10px;
 }
 
 .logoutButton {
