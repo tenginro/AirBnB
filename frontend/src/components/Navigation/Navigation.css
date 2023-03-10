@@ -3,10 +3,11 @@
   flex-direction: row;
   justify-content: space-between;
 }
+
 .profile-dropdown {
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: space-evenly;
 }
 
 li {
@@ -15,9 +16,10 @@ li {
   padding: 5px;
 }
 
-/* .fas.fa-user-circle {
-  
-} */
+.SignUpButton {
+  margin-left: 20px;
+  margin-right: 20px;
+}
 
 .hidden {
   display: none;
@@ -27,4 +29,9 @@ li {
   width: 30px;
   height: 30px;
   margin-right: 10px;
+}
+
+.logoutButton {
+  width: 63px;
+  height: 30px;
 }
