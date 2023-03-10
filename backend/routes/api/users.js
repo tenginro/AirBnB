@@ -35,6 +35,13 @@ const validateSignup = [
   handleValidationErrors,
 ];
 
+const dateFormat = (str) => {
+  let string = new Date(str);
+  let date = string.toISOString().split("T")[0];
+  let time = string.toLocaleTimeString("en-GB");
+  return `${date} ${time}`;
+};
+
 // Sign up
 router.post("/", validateSignup, async (req, res) => {
   const { email, password, username, firstName, lastName } = req.body;
@@ -91,9 +98,11 @@ router.post("/", validateSignup, async (req, res) => {
     lastName: user.lastName,
     email: user.email,
     username: user.username,
+    createdAt: dateFormat(user.createdAt),
+    updatedAt: dateFormat(user.updatedAt),
     // token: token,
   };
-  return res.json(returnUser);
+  return res.json({ user: returnUser });
   // If the creation of the user is unsuccessful, then a Sequelize Validation error will be passed onto the next error-handling middleware.
 });
 
