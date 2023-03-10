@@ -91,7 +91,7 @@ router.post("/", validateSignup, async (req, res) => {
     lastName: user.lastName,
     email: user.email,
     username: user.username,
-    token: token,
+    // token: token,
   };
   return res.json(returnUser);
   // If the creation of the user is unsuccessful, then a Sequelize Validation error will be passed onto the next error-handling middleware.
