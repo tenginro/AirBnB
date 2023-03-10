@@ -75,8 +75,6 @@ router.delete("/", (_req, res) => {
 // router.get("/", restoreUser, requireAuth, (req, res) => {
 router.get("/", restoreUser, (req, res) => {
   const { user } = req;
-  console.log(user);
-
   if (user) {
     return res.status(200).json({
       // user: user.toSafeObject(),
