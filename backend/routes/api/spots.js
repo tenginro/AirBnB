@@ -26,14 +26,14 @@ const validateNewSpot = [
   check("country")
     .exists({ checkFalsy: true })
     .withMessage("Country is required"),
-  check("lat")
-    .exists({ checkFalsy: true })
-    .isFloat({ min: -90, max: 90 })
-    .withMessage("Latitude is not valid"),
-  check("lng")
-    .exists({ checkFalsy: true })
-    .isFloat({ min: -180, max: 180 })
-    .withMessage("Longitude is not valid"),
+  // check("lat")
+  //   .exists({ checkFalsy: true })
+  //   .isFloat({ min: -90, max: 90 })
+  //   .withMessage("Latitude is not valid"),
+  // check("lng")
+  //   .exists({ checkFalsy: true })
+  //   .isFloat({ min: -180, max: 180 })
+  //   .withMessage("Longitude is not valid"),
   check("name")
     .exists({ checkFalsy: true })
     .isLength({ max: 49, min: 1 })
