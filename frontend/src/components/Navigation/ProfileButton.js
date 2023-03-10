@@ -8,7 +8,8 @@ function ProfileButton({ user }) {
   const [showMenu, setShowMenu] = useState(false);
   const ulRef = useRef();
 
-  const openMenu = () => {
+  const openMenu = (e) => {
+    e.stopPropagation();
     if (showMenu) return;
     setShowMenu(true);
   };
@@ -17,6 +18,7 @@ function ProfileButton({ user }) {
     if (!showMenu) return;
 
     const closeMenu = (e) => {
+      // you want the dropdown menu to close only if the click happened OUTSIDE the dropdown.
       if (!ulRef.current.contains(e.target)) {
         setShowMenu(false);
       }
@@ -36,7 +38,7 @@ function ProfileButton({ user }) {
 
   return (
     <>
-      <button onClick={openMenu}>
+      <button className="ProfileButton" onClick={openMenu}>
         <i className="fas fa-user-circle" />
       </button>
       <ul className={ulClassName} ref={ulRef}>

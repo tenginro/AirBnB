@@ -1,17 +1,30 @@
-ul {
+.nav.ul {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+}
+.profile-dropdown {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
 }
 
 li {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
-  column-gap: 50px;
-  margin: 10px;
+  padding: 5px;
 }
 
-.fas.fa-user-circle {
-  width: 20px;
+/* .fas.fa-user-circle {
+  
+} */
+
+.hidden {
+  display: none;
+}
+
+.ProfileButton {
+  width: 30px;
+  height: 30px;
+  margin-right: 10px;
 }
