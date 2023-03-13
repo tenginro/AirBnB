@@ -1,15 +1,24 @@
-.LogInButton {
+/* .LogInButton {
   background-color: blue;
-}
+} */
 
-form {
+/* form {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   row-gap: 10px;
+} */
+
+h1 {
+  text-align: center;
 }
 
 input {
   margin: 5px;
+  width: 300px;
+}
+
+.error {
+  color: red;
 }
