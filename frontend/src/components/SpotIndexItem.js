@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import "./spot.css";
 
 const SpotIndexItem = ({ spot }) => {
   return (
@@ -7,13 +6,16 @@ const SpotIndexItem = ({ spot }) => {
       <Link to={`/spots/${spot.id}`}>
         <div>
           <img src={spot.previewImage} alt="spotPreviewImage"></img>
-          <div>
+          <div className="spotLineOne">
             <div>
               {spot.city}, {spot.state}
             </div>
-            <div>{spot.avgRating}</div>
+            <div>
+              <i class="fas fa-sharp fa-solid fa-star"></i>
+              {spot.avgRating}
+            </div>
           </div>
-          <div>${spot.price} night</div>
+          <div className="spotLineTwo">${spot.price} night</div>
         </div>
       </Link>
     </li>
