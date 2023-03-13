@@ -2,25 +2,53 @@
   display: flex;
   flex-direction: row;
   justify-content: space-around;
+  height: 80px;
+  border: 1px solid gray;
+  align-items: center;
+  list-style-type: none;
 }
 
-.profile-dropdown {
+.logo {
+  height: 45px;
+  width: 45px;
+}
+
+.home.li {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  font-size: 25px;
+}
+
+.profile.button {
+  height: 40px;
+  width: 80px;
+  border: 1px solid gray;
+  border-radius: 21px;
+}
+
+.fa-bars {
+  margin: 5px;
+}
+
+/* .profile-dropdown {
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
-}
+  padding: 5px;
+} */
 
-li {
+/* .profile.li {
   display: flex;
   flex-direction: row;
   padding: 5px;
-}
+} */
 
 .hidden {
   display: none;
 }
 
-.logoutButton {
+/* .logoutButton {
   width: 63px;
   height: 30px;
-}
+} */

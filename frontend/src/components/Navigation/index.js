@@ -33,13 +33,15 @@ function Navigation({ isLoaded }) {
 
   return (
     <ul className="nav ul">
-      <li>
+      <li className="home li">
+        {/* to render an image, need this format */}
+        <img className="logo" src={require("./icon1.png")} alt="icon"></img>
         <NavLink exact to="/">
-          Home
+          HereBnB
         </NavLink>
       </li>
       {isLoaded && (
-        <li>
+        <li className="profile li">
           <ProfileButton user={sessionUser} />
         </li>
       )}
