@@ -19,8 +19,20 @@ function LoginFormModal() {
       .then(closeModal)
       .catch(async (res) => {
         const data = await res.json();
-        if (data && data.errors) setErrors(data.errors);
+        // if (data && data.message) setErrors(data.message);
+        if (data && data.errors) {
+          setErrors(Object.values(data.errors));
+        }
       });
+  };
+
+  const onClick = (e) => {
+    e.preventDefault();
+    setCredential("demo@user.io");
+    setPassword("password1");
+    return dispatch(sessionActions.login({ credential, password })).then(
+      closeModal
+    );
   };
 
   return (
@@ -29,28 +41,42 @@ function LoginFormModal() {
       <form onSubmit={handleSubmit}>
         <ul>
           {errors.map((error, idx) => (
-            <li key={idx}>{error}</li>
+            <li className="error" key={idx}>
+              {error}
+            </li>
           ))}
         </ul>
         <label>
           Username or Email
           <input
             type="text"
+            // placeholder="Username or Email"
             value={credential}
             onChange={(e) => setCredential(e.target.value)}
-            required
+            // required
           />
         </label>
         <label>
           Password
           <input
             type="password"
+            // placeholder="Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            required
+            // required
           />
         </label>
-        <button type="submit">Log In</button>
+        <button
+          type="submit"
+          disabled={
+            credential.length <= 4 || password.length <= 6 ? true : false
+          }
+        >
+          Log In
+        </button>
+        <button type="button" onClick={onClick}>
+          Demo User
+        </button>
       </form>
     </>
   );
