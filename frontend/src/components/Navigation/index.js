@@ -35,9 +35,11 @@ function Navigation({ isLoaded }) {
     <ul className="nav ul">
       <li className="home li">
         {/* to render an image, need this format */}
-        <img className="logo" src={require("./icon1.png")} alt="icon"></img>
         <NavLink exact to="/">
-          HereBnB
+          <div className="logoLine">
+            <img className="logo" src={require("./icon1.png")} alt="icon"></img>
+            HereBnB
+          </div>
         </NavLink>
       </li>
       {isLoaded && (

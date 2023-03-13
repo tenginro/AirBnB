@@ -13,42 +13,44 @@
   width: 45px;
 }
 
-.home.li {
+.logoLine {
   display: flex;
   flex-direction: row;
   align-items: center;
+  gap: 2px;
   font-size: 25px;
 }
 
 .profile.button {
   height: 40px;
-  width: 80px;
+  width: 60px;
   border: 1px solid gray;
   border-radius: 21px;
+  margin: 10px;
 }
 
 .fa-bars {
   margin: 5px;
 }
 
-/* .profile-dropdown {
+.profile-dropdown {
   display: flex;
   flex-direction: row;
-  justify-content: space-evenly;
-  padding: 5px;
-} */
+  align-items: center;
+  gap: 5px;
+  list-style-type: none;
+}
 
-/* .profile.li {
+.profile.li {
   display: flex;
   flex-direction: row;
-  padding: 5px;
-} */
+}
 
 .hidden {
   display: none;
 }
 
-/* .logoutButton {
+.logoutButton {
   width: 63px;
   height: 30px;
-} */
+}
