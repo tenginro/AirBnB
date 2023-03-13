@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: row;
   justify-content: space-around;
-  height: 80px;
+  height: 100px;
   border: 1px solid gray;
   align-items: center;
   list-style-type: none;
@@ -21,12 +21,17 @@
   font-size: 25px;
 }
 
+.profile.div {
+  display: flex;
+  flex-direction: column;
+}
 .profile.button {
   height: 45px;
-  width: 60px;
+  width: 70px;
   border: 1px solid gray;
   border-radius: 21px;
   margin: 10px;
+  cursor: pointer;
 }
 
 .fa-bars {
@@ -34,11 +39,12 @@
 }
 
 .profile-dropdown {
-  display: flex;
-  flex-direction: row;
+  /* display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 5px;
+  gap: 5px; */
   list-style-type: none;
+  cursor: pointer;
 }
 
 .profile.li {

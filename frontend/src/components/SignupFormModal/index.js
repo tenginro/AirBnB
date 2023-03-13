@@ -31,7 +31,8 @@ function SignupFormModal() {
         .then(closeModal)
         .catch(async (res) => {
           const data = await res.json();
-          if (data && data.errors) setErrors(data.errors);
+          console.log(data);
+          if (data && data.errors) setErrors(Object.values(data.errors));
         });
     }
     return setErrors([
@@ -45,7 +46,9 @@ function SignupFormModal() {
       <form onSubmit={handleSubmit}>
         <ul>
           {errors.map((error, idx) => (
-            <li key={idx}>{error}</li>
+            <li className="error" key={idx}>
+              {error}
+            </li>
           ))}
         </ul>
         <label>
@@ -104,19 +107,17 @@ function SignupFormModal() {
         </label>
         <button
           type="submit"
-          disabled={
-            email ||
-            username ||
-            firstName ||
-            lastName ||
-            password ||
-            confirmPassword ||
-            username.length <= 4 ||
-            password <= 6 ||
-            password !== confirmPassword
-              ? true
-              : false
-          }
+          // disabled={
+          //   email ||
+          //   username.length < 4 ||
+          //   firstName ||
+          //   lastName ||
+          //   confirmPassword ||
+          //   password.length < 6 ||
+          //   password !== confirmPassword
+          //     ? true
+          //     : false
+          // }
         >
           Sign Up
         </button>

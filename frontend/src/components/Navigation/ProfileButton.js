@@ -45,37 +45,39 @@ function ProfileButton({ user }) {
 
   return (
     <>
-      <button className="profile button" onClick={openMenu}>
-        <i className="fas fa-solid fa-bars" />
-        <i className="fas fa-user-circle" />
-      </button>
-      <ul className={ulClassName} ref={ulRef}>
-        {user ? (
-          <>
-            <li>{user.username}</li>
-            <li>
-              {user.firstName} {user.lastName}
-            </li>
-            <li>{user.email}</li>
-            <li>
-              <button onClick={logout}>Log Out</button>
-            </li>
-          </>
-        ) : (
-          <>
-            <OpenModalMenuItem
-              itemText="Log In"
-              onItemClick={closeMenu}
-              modalComponent={<LoginFormModal />}
-            />
-            <OpenModalMenuItem
-              itemText="Sign Up"
-              onItemClick={closeMenu}
-              modalComponent={<SignupFormModal />}
-            />
-          </>
-        )}
-      </ul>
+      <div className="profile div">
+        <button className="profile button" onClick={openMenu}>
+          <i className="fas fa-solid fa-bars" />
+          <i className="fas fa-user-circle" />
+        </button>
+        <ul className={ulClassName} ref={ulRef}>
+          {user ? (
+            <>
+              <li>{user.username}</li>
+              <li>
+                {user.firstName} {user.lastName}
+              </li>
+              <li>{user.email}</li>
+              <li>
+                <button onClick={logout}>Log Out</button>
+              </li>
+            </>
+          ) : (
+            <>
+              <OpenModalMenuItem
+                itemText="Log In"
+                onItemClick={closeMenu}
+                modalComponent={<LoginFormModal />}
+              />
+              <OpenModalMenuItem
+                itemText="Sign Up"
+                onItemClick={closeMenu}
+                modalComponent={<SignupFormModal />}
+              />
+            </>
+          )}
+        </ul>
+      </div>
     </>
   );
 }
