@@ -29,7 +29,7 @@ function LoginFormModal() {
   const onClick = (e) => {
     e.preventDefault();
     setCredential("demo@user.io");
-    setPassword("password1");
+    setPassword("password");
     return dispatch(sessionActions.login({ credential, password })).then(
       closeModal
     );
@@ -68,9 +68,7 @@ function LoginFormModal() {
         </label>
         <button
           type="submit"
-          disabled={
-            credential.length <= 4 || password.length <= 6 ? true : false
-          }
+          disabled={credential.length < 4 || password.length < 6 ? true : false}
         >
           Log In
         </button>
