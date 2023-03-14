@@ -27,10 +27,17 @@ export const getSpotDetail = (id) => async (dispatch) => {
 
   if (response.ok) {
     const spot = await response.json();
-    // console.log(spot);
     await dispatch(actionLoadSpotDetail(spot));
     return spot;
   }
+};
+
+const CREATE_SPOT = "/spots/create";
+export const actionCreateSpot = (spot) => async (dispatch) => {
+  const {} = spot;
+  const response = await csrfFetch("/api/spots", {
+    method: "POST",
+  });
 };
 
 const initialState = {
