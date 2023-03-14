@@ -4,7 +4,7 @@ export const actionLoadSpots = (spots) => ({
   spots,
 });
 
-const ADD_ONE_SPOT = "spots/load_one";
+const ADD_ONE_SPOT = "spots/add_one";
 export const actionAddOneSpot = (spot) => ({
   type: ADD_ONE_SPOT,
   spot,
@@ -44,14 +44,13 @@ const spotReducer = (state = initialState, action) => {
     case ADD_ONE_SPOT:
       if (!state.allSpots[action.spot.id]) {
         const newState = {
-          ...state,
           allSpots: { ...state.allSpots, [action.spot.id]: action.spot },
           singleSpot: { ...action.spot },
         };
         return newState;
       }
       return {
-        allSpots: { ...state.allSpots },
+        ...state,
         singleSpot: { ...action.spot },
       };
     default:
