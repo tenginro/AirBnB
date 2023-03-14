@@ -2,15 +2,19 @@ import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import { useEffect } from "react";
 import { getAllSpots, getOneSpot } from "../store/spot";
-import SpotReviews from "./Review";
+import "./spotDetail.css";
+import { getReviews } from "../store/review";
 
 const SpotDetail = () => {
   const { spotId } = useParams();
   const spot = useSelector((state) => state.spots.allSpots[spotId]);
+  const reviewsObj = useSelector((state) => state.reviews.spot);
+  const reviewsArr = Object.values(reviewsObj);
 
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getOneSpot(spotId));
+    dispatch(getReviews(spotId));
   }, [dispatch, spotId]);
 
   if (!spot) return null;
@@ -46,7 +50,13 @@ const SpotDetail = () => {
         <i className="fas fa-sharp fa-solid fa-star"></i>
         {spot.avgStarRating} · {spot.numReviews} reviews
       </div>
-      <SpotReviews spot={spot} />
+      {reviewsArr.map((review) => (
+        <div>
+          <div>{review.User.firstName}</div>
+          <div>{review.createdAt}</div>
+          <div>{review.review}</div>
+        </div>
+      ))}
     </>
   );
 };
