@@ -81,9 +81,9 @@ const SpotDetail = () => {
         <div>${spot.price} night</div>
         <div>
           <i className="fas fa-sharp fa-solid fa-star"></i>
-          {typeof spot.avgRating === "number" ? spot.avgRating : "New"} ·{" "}
-          {typeof spot.numReviews === "number" ? spot.numReviews : "New"}{" "}
-          reviews
+          {typeof spot.numReviews === "number"
+            ? `${spot.avgStarRating} · ${spot.numReviews} reviews`
+            : "New"}
         </div>
       </div>
       <div>
@@ -91,8 +91,9 @@ const SpotDetail = () => {
       </div>
       <div>
         <i className="fas fa-sharp fa-solid fa-star"></i>
-        {typeof spot.avgRating === "number" ? spot.avgRating : "New"} ·{" "}
-        {typeof spot.numReviews === "number" ? spot.numReviews : "New"} reviews
+        {typeof spot.numReviews === "number"
+          ? `${spot.avgStarRating} · ${spot.numReviews} reviews`
+          : "New"}
       </div>
       {spotReviewsArr.map((review) => (
         <div key={review.id}>

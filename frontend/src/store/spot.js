@@ -2,6 +2,7 @@ import { csrfFetch } from "./csrf";
 
 const LOAD_SPOTS = "spots/load";
 const LOAD_SPOT_DETAIL = "spots/load_one";
+const LOAD_SPOTS_CURRENT = "spots/current";
 const CREATE_SPOT = "/spots/create";
 const UPDATE_SPOT = "spots/update";
 const REMOVE_SPOT = "spots/remove";
