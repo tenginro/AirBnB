@@ -26,6 +26,12 @@
   flex-direction: column;
 } */
 
+.rightSide {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
 .profile.button {
   height: 45px;
   width: 70px;

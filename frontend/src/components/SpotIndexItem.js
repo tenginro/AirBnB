@@ -16,7 +16,7 @@ const SpotIndexItem = ({ spot }) => {
             </div>
             <div>
               <i className="fas fa-sharp fa-solid fa-star"></i>
-              {spot.avgRating}
+              {spot.avgRating ? spot.avgRating : "New"}
             </div>
           </div>
           <div className="spotLineTwo">${spot.price} night</div>

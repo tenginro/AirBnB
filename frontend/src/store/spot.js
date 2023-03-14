@@ -47,13 +47,13 @@ const spotReducer = (state = initialState, action) => {
       });
       return { ...state, allSpots: { ...allSpots } };
     case LOAD_SPOT_DETAIL:
-      if (!state.allSpots[action.spot.id]) {
-        const newState = {
-          allSpots: { ...state.allSpots, [action.spot.id]: action.spot },
-          singleSpot: { ...action.spot },
-        };
-        return newState;
-      }
+      // if (!state.allSpots[action.spot.id]) {
+      //   const newState = {
+      //     allSpots: { ...state.allSpots, [action.spot.id]: action.spot },
+      //     singleSpot: { ...action.spot },
+      //   };
+      //   return newState;
+      // }
       return {
         ...state,
         singleSpot: { ...action.spot },
