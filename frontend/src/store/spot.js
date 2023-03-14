@@ -33,11 +33,30 @@ export const getSpotDetail = (id) => async (dispatch) => {
 };
 
 const CREATE_SPOT = "/spots/create";
-export const actionCreateSpot = (spot) => async (dispatch) => {
-  const {} = spot;
+export const actionCreateSpot = (spot) => ({
+  type: CREATE_SPOT,
+  spot,
+});
+
+export const createSpot = (spot, user) => async (dispatch) => {
+  const { address, city, state, country, name, description, price } = spot;
   const response = await csrfFetch("/api/spots", {
     method: "POST",
+    body: JSON.stringify({
+      address,
+      city,
+      state,
+      country,
+      name,
+      description,
+      price,
+    }),
   });
+  console.log(response);
+
+  const newSpot = await response.json();
+  dispatch(actionCreateSpot(newSpot));
+  return response;
 };
 
 const initialState = {
@@ -54,16 +73,14 @@ const spotReducer = (state = initialState, action) => {
       });
       return { ...state, allSpots: { ...allSpots } };
     case LOAD_SPOT_DETAIL:
-      // if (!state.allSpots[action.spot.id]) {
-      //   const newState = {
-      //     allSpots: { ...state.allSpots, [action.spot.id]: action.spot },
-      //     singleSpot: { ...action.spot },
-      //   };
-      //   return newState;
-      // }
       return {
         ...state,
         singleSpot: { ...action.spot },
+      };
+    case CREATE_SPOT:
+      return {
+        ...state,
+        allSpots: { ...state.allSpots, [action.spot.id]: action.spot },
       };
     default:
       return state;

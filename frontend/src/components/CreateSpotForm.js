@@ -1,8 +1,11 @@
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { createSelectorHook, useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
+import { createSpot } from "../store/spot";
 
-const CreateSpotForm = ({ user }) => {
+const CreateSpotForm = () => {
+  const user = useSelector((state) => state.session.user);
+
   const [country, setCountry] = useState("");
   const [address, setAddress] = useState("");
   const [city, setCity] = useState("");
@@ -15,9 +18,51 @@ const CreateSpotForm = ({ user }) => {
   const [image2, setImage2] = useState("");
   const [image3, setImage3] = useState("");
   const [image4, setImage4] = useState("");
+  const [errorMessages, setErrorMessages] = useState({});
 
-  const handleSubmit = (e) => {
+  const dispatch = useDispatch();
+  const history = useHistory();
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // return dispatch(
+    //   CreateSpot({
+    //     address,
+    //     city,
+    //     state,
+    //     country,
+    //     name,
+    //     description,
+    //     price,
+    //   }).catch(async (res) => {
+    //     const data = await res.json();
+    //     if (data && data.errors) setErrors(Object.values(data.errors));
+    //   })
+    // );
+
+    const payload = {
+      address,
+      city,
+      state,
+      country,
+      name,
+      description,
+      price,
+    };
+
+    let newSpot;
+
+    try {
+      newSpot = await dispatch(createSpot(payload, user));
+    } catch (error) {
+      setErrorMessages(error.errors);
+    }
+
+    if (newSpot) {
+      setErrorMessages({});
+      history.pushState(`/spots/${newSpot.id}`);
+    }
   };
 
   return (
@@ -36,7 +81,7 @@ const CreateSpotForm = ({ user }) => {
             value={country}
             placeholder="country"
             onChange={(e) => setCountry(e.target.value)}
-            required
+            // required
           ></input>
         </label>
 
@@ -47,7 +92,7 @@ const CreateSpotForm = ({ user }) => {
             value={address}
             placeholder="Address"
             onChange={(e) => setAddress(e.target.value)}
-            required
+            // required
           ></input>
         </label>
 
@@ -58,7 +103,7 @@ const CreateSpotForm = ({ user }) => {
             value={city}
             placeholder="City"
             onChange={(e) => setCity(e.target.value)}
-            required
+            // required
           ></input>
         </label>
 
@@ -69,7 +114,7 @@ const CreateSpotForm = ({ user }) => {
             value={state}
             placeholder="STATE"
             onChange={(e) => setState(e.target.value)}
-            required
+            // required
           ></input>
         </label>
 
@@ -83,7 +128,7 @@ const CreateSpotForm = ({ user }) => {
           value={description}
           placeholder="Please write at least 30 characters"
           onChange={(e) => setDescription(e.target.value)}
-          required
+          //   required
         ></textarea>
 
         <h2>Create a title for your spot</h2>
@@ -97,7 +142,7 @@ const CreateSpotForm = ({ user }) => {
             value={name}
             placeholder="Name of your spot"
             onChange={(e) => setName(e.target.value)}
-            required
+            // required
           ></input>
         </label>
 
@@ -113,7 +158,7 @@ const CreateSpotForm = ({ user }) => {
             value={price}
             placeholder="Price per night (USD)"
             onChange={(e) => setPrice(e.target.value)}
-            required
+            // required
           ></input>
         </label>
 
@@ -125,7 +170,7 @@ const CreateSpotForm = ({ user }) => {
             value={previewImg}
             placeholder="Preview Image URL"
             onChange={(e) => setPreviewImg(e.target.value)}
-            required
+            // required
           ></input>
         </label>
         <label>

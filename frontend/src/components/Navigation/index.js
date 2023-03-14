@@ -23,7 +23,7 @@ function Navigation({ isLoaded }) {
       <div className="rightSide">
         {sessionUser && (
           <li>
-            <NavLink exact to="/spots/new" user={sessionUser}>
+            <NavLink exact to="/spots/new">
               <div className="createSpot">Create a New Spot</div>
             </NavLink>
           </li>
