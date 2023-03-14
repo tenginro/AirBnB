@@ -20,6 +20,11 @@ export const actionCreateSpot = (spot) => ({
   spot,
 });
 
+export const actionLoadUserSpot = (spots) => ({
+  type: LOAD_SPOTS_CURRENT,
+  spots,
+});
+
 export const getAllSpots = () => async (dispatch) => {
   const response = await csrfFetch("/api/spots");
 
@@ -106,6 +111,15 @@ export const createSpot = (spot, user) => async (dispatch) => {
   return response;
 };
 
+export const getUserSpots = () => async (dispatch) => {
+  const response = await csrfFetch("/api/spots/current");
+  if (response.ok) {
+    const spots = await response.json();
+    await dispatch(actionLoadUserSpot(spots.Spots));
+    return spots;
+  }
+};
+
 const initialState = {
   allSpots: {},
   singleSpot: {},
@@ -129,6 +143,13 @@ const spotReducer = (state = initialState, action) => {
         ...state,
         allSpots: { ...state.allSpots, [action.spot.id]: action.spot },
       };
+    case LOAD_SPOTS_CURRENT:
+      const allUserSpots = {};
+      action.spots.forEach((spot) => {
+        allUserSpots[spot.id] = spot;
+      });
+      return { ...state, allSpots: { ...allUserSpots } };
+
     default:
       return state;
   }

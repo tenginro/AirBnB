@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllSpots } from "../store/spot";
+import { getAllSpots, getUserSpots } from "../store/spot";
 import SpotIndexItem from "./SpotIndexItem";
 import "./spot.css";
 
@@ -10,7 +10,7 @@ const SpotsIndex = () => {
 
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(getAllSpots());
+    dispatch(getUserSpots());
   }, [dispatch]);
 
   return (
