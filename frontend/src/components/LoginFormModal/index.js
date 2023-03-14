@@ -29,7 +29,7 @@ function LoginFormModal() {
   const onClick = (e) => {
     e.preventDefault();
     setCredential("demo@user.io");
-    setPassword("password1");
+    setPassword("password");
     return dispatch(sessionActions.login({ credential, password })).then(
       closeModal
     );
