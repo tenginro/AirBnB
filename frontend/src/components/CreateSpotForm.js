@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { createSelectorHook, useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { createSpot } from "../store/spot";
+import "./CreateSpotForm.css";
 
 const CreateSpotForm = () => {
   const user = useSelector((state) => state.session.user);
@@ -12,13 +13,14 @@ const CreateSpotForm = () => {
   const [state, setState] = useState("");
   const [description, setDescription] = useState("");
   const [name, setName] = useState("");
-  const [price, setPrice] = useState();
+  const [price, setPrice] = useState("");
   const [previewImg, setPreviewImg] = useState("");
   const [image1, setImage1] = useState("");
   const [image2, setImage2] = useState("");
   const [image3, setImage3] = useState("");
   const [image4, setImage4] = useState("");
-  const [errorMessages, setErrorMessages] = useState({});
+  const [errorMessage, setErrorMessage] = useState({});
+  const [previewImgError, setPreviewImgError] = useState({});
 
   const dispatch = useDispatch();
   const history = useHistory();
@@ -49,20 +51,23 @@ const CreateSpotForm = () => {
       name,
       description,
       price,
+      previewImg,
+      image1,
+      image2,
+      image3,
+      image4,
     };
 
-    let newSpot;
+    let newSpot = await dispatch(createSpot(payload, user))
+      .then((res) => {
+        return res;
+      })
+      .catch(async (res) => {
+        const data = await res.json();
+        if (data && data.errors) setErrorMessage(data.errors);
+      });
 
-    try {
-      newSpot = await dispatch(createSpot(payload, user));
-    } catch (error) {
-      setErrorMessages(error.errors);
-    }
-
-    if (newSpot) {
-      setErrorMessages({});
-      history.pushState(`/spots/${newSpot.id}`);
-    }
+    return history.push(`/spots/${newSpot.id}`);
   };
 
   return (
@@ -75,7 +80,12 @@ const CreateSpotForm = () => {
           reservation.
         </h3>
         <label>
-          Country
+          <div className="inputLabel">
+            Country
+            {errorMessage?.country && (
+              <div className="errors">{errorMessage.country}</div>
+            )}
+          </div>
           <input
             type="text"
             value={country}
@@ -86,7 +96,12 @@ const CreateSpotForm = () => {
         </label>
 
         <label>
-          Street Address
+          <div className="inputLabel">
+            Street Address
+            {errorMessage?.address && (
+              <div className="errors">{errorMessage.address}</div>
+            )}
+          </div>
           <input
             type="text"
             value={address}
@@ -97,7 +112,12 @@ const CreateSpotForm = () => {
         </label>
 
         <label>
-          City
+          <div className="inputLabel">
+            City
+            {errorMessage?.city && (
+              <div className="errors">{errorMessage.city}</div>
+            )}
+          </div>
           <input
             type="text"
             value={city}
@@ -108,7 +128,12 @@ const CreateSpotForm = () => {
         </label>
 
         <label>
-          State
+          <div className="inputLabel">
+            State
+            {errorMessage?.state && (
+              <div className="errors">{errorMessage.state}</div>
+            )}
+          </div>
           <input
             type="text"
             value={state}
@@ -130,6 +155,9 @@ const CreateSpotForm = () => {
           onChange={(e) => setDescription(e.target.value)}
           //   required
         ></textarea>
+        {errorMessage?.description && (
+          <div className="errors">{errorMessage.description}</div>
+        )}
 
         <h2>Create a title for your spot</h2>
         <h3>
@@ -144,6 +172,9 @@ const CreateSpotForm = () => {
             onChange={(e) => setName(e.target.value)}
             // required
           ></input>
+          {errorMessage?.name && (
+            <div className="errors">{errorMessage.name}</div>
+          )}
         </label>
 
         <h2>Set a base price for your spot</h2>
@@ -160,6 +191,9 @@ const CreateSpotForm = () => {
             onChange={(e) => setPrice(e.target.value)}
             // required
           ></input>
+          {errorMessage?.price && (
+            <div className="errors">{errorMessage.price}</div>
+          )}
         </label>
 
         <h2>Liven up your spot with photos</h2>
@@ -172,6 +206,9 @@ const CreateSpotForm = () => {
             onChange={(e) => setPreviewImg(e.target.value)}
             // required
           ></input>
+          {errorMessage?.url && (
+            <div className="errors">{errorMessage.url}</div>
+          )}
         </label>
         <label>
           <input
