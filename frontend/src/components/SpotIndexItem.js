@@ -5,7 +5,11 @@ const SpotIndexItem = ({ spot }) => {
     <li className="spot">
       <Link to={`/spots/${spot.id}`}>
         <div>
-          <img src={spot.previewImage} alt="spotPreviewImage"></img>
+          <img
+            src={spot.previewImage}
+            alt="spotPreviewImage"
+            title={spot.name}
+          ></img>
           <div className="spotLineOne">
             <div>
               {spot.city}, {spot.state}
