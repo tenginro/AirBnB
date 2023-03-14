@@ -4,7 +4,7 @@ export const actionLoadSpots = (spots) => ({
   spots,
 });
 
-const ADD_ONE_SPOT = "spots/load_one";
+const ADD_ONE_SPOT = "spots/add_one";
 export const actionAddOneSpot = (spot) => ({
   type: ADD_ONE_SPOT,
   spot,
@@ -16,7 +16,6 @@ export const getAllSpots = () => async (dispatch) => {
   if (response.ok) {
     const spots = await response.json();
     dispatch(actionLoadSpots(spots.Spots));
-    return spots;
   }
 };
 
@@ -26,7 +25,6 @@ export const getOneSpot = (id) => async (dispatch) => {
   if (response.ok) {
     const spot = await response.json();
     dispatch(actionAddOneSpot(spot));
-    return spot;
   }
 };
 
@@ -46,7 +44,6 @@ const spotReducer = (state = initialState, action) => {
     case ADD_ONE_SPOT:
       if (!state.allSpots[action.spot.id]) {
         const newState = {
-          ...state,
           allSpots: { ...state.allSpots, [action.spot.id]: action.spot },
           singleSpot: { ...action.spot },
         };
@@ -54,7 +51,6 @@ const spotReducer = (state = initialState, action) => {
       }
       return {
         ...state,
-        allSpots: { ...state.allSpots },
         singleSpot: { ...action.spot },
       };
     default:
