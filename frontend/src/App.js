@@ -23,6 +23,12 @@ function App() {
           <Route exact path="/">
             <SpotsIndex />
           </Route>
+          {/* <Route path="/spots/new">
+            <CreateSpotForm />
+          </Route> */}
+          {/* <Route path="/spots/current">
+            <UserSpot />
+          </Route> */}
           <Route path="/spots/:spotId">
             <SpotDetail />
           </Route>

@@ -7,9 +7,8 @@ import { getReviews } from "../store/review";
 
 const SpotDetail = () => {
   const { spotId } = useParams();
-  // const spotFromSpots = useSelector((state) => state.spots.allSpots[spotId]);
-  // const spot = useSelector((state) => state.spots.singleSpot);
-  const spot = useSelector((state) => state.spots.allSpots[spotId]);
+  const spot = useSelector((state) => state.spots.singleSpot); //spot is an obj so !spot wont work
+
   const spotReviewsObj = useSelector((state) => state.reviews.spot);
   const spotReviewsArr = Object.values(spotReviewsObj);
 
@@ -20,8 +19,8 @@ const SpotDetail = () => {
     dispatch(getReviews(spotId));
   }, [dispatch, spotId]);
 
-  if (!spot) {
-    console.log("loading");
+  // conditionally render
+  if (!spot.SpotImages) {
     return <div>Loading</div>;
   }
 
@@ -33,25 +32,43 @@ const SpotDetail = () => {
       </div>
       <div className="spotImages">
         <div className="previewSpotImage">
-          <img
-            className="previewImg"
-            src={spot.previewImage}
-            alt="previewImage"
-          ></img>
+          {spot.SpotImages[0] && (
+            <img
+              className="largerImage"
+              src={spot.SpotImages[0].url}
+              alt="imageOne"
+            ></img>
+          )}
         </div>
-        <div className="smallerImages">
-          {spot.SpotImages.length &&
-            spot.SpotImages.map(
-              (img) =>
-                !img.preview && (
-                  <img
-                    className="smImages"
-                    src={img.url}
-                    alt="spotImage"
-                    key={img.id}
-                  ></img>
-                )
-            )}
+        <div className="otherImages">
+          {spot.SpotImages[1] && (
+            <img
+              className="smallerImages"
+              src={spot.SpotImages[1].url}
+              alt="imageOne"
+            ></img>
+          )}
+          {spot.SpotImages[2] && (
+            <img
+              className="smallerImages"
+              src={spot.SpotImages[2].url}
+              alt="imageOne"
+            ></img>
+          )}
+          {spot.SpotImages[3] && (
+            <img
+              className="smallerImages"
+              src={spot.SpotImages[3].url}
+              alt="imageOne"
+            ></img>
+          )}
+          {spot.SpotImages[4] && (
+            <img
+              className="smallerImages"
+              src={spot.SpotImages[4].url}
+              alt="imageOne"
+            ></img>
+          )}
         </div>
       </div>
       <div>

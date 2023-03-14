@@ -8,6 +8,7 @@ import "./Navigation.css";
 
 function Navigation({ isLoaded }) {
   const sessionUser = useSelector((state) => state.session.user);
+  console.log(sessionUser);
 
   return (
     <ul className="nav ul">
@@ -20,11 +21,20 @@ function Navigation({ isLoaded }) {
           </div>
         </NavLink>
       </li>
-      {isLoaded && (
-        <li className="profile li">
-          <ProfileButton user={sessionUser} />
-        </li>
-      )}
+      <div className="rightSide">
+        {sessionUser && (
+          <li>
+            <NavLink exact to="/spots/new" user={sessionUser}>
+              <div className="createSpot">Create a New Spot</div>
+            </NavLink>
+          </li>
+        )}
+        {isLoaded && (
+          <li className="profile li">
+            <ProfileButton user={sessionUser} />
+          </li>
+        )}
+      </div>
     </ul>
   );
 }

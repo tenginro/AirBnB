@@ -28,11 +28,11 @@ function LoginFormModal() {
 
   const onClick = (e) => {
     e.preventDefault();
-    setCredential("demo@user.io");
-    setPassword("password");
-    return dispatch(sessionActions.login({ credential, password })).then(
-      closeModal
-    );
+    // setCredential("demo@user.io");
+    // setPassword("password");
+    return dispatch(
+      sessionActions.login({ credential: "demo@user.io", password: "password" })
+    ).then(closeModal);
   };
 
   return (

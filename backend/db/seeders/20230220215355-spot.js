@@ -31,7 +31,8 @@ module.exports = {
         lat: 41.58,
         lng: 71.24,
         name: "Sitting on your deck watching spectacular sunsets",
-        description: "3b2b",
+        description:
+          "It's always about the view and this place will leave you feeling energized and calm. Situated on premium beachfront property, this single family home has luxurious amenities like super plush towels, organic cotton bedding. ",
         price: 302.0,
       },
       {
@@ -55,7 +56,8 @@ module.exports = {
         lat: 42.91,
         lng: 70.81,
         name: "Sandy shores family's next ocean-front vacation",
-        description: "2b2b",
+        description:
+          "This completely renovated,  sunny unit boasts ocean views sitting right across the street from a resident beach. This is not your typical studio apartment, as it features a full sized kitchen and a separate living space.",
         price: 250.0,
       },
       {
@@ -67,7 +69,8 @@ module.exports = {
         lat: 40.44,
         lng: 74.13,
         name: "Perfect beach cottage",
-        description: "2b2b",
+        description:
+          "Sitting right on Easton's beach, this family home is just steps to the beach! Wake up to ocean views, enjoy the indoor swimming pool and jacuzzi complete with French doors that open to towards the ocean.",
         price: 227.0,
       },
       {
@@ -79,7 +82,8 @@ module.exports = {
         lat: 41.64,
         lng: 70.21,
         name: "Fully Renovated Single Floor Home",
-        description: "2b1b",
+        description:
+          "Stairs on the deck lead down to the south end of Mondo's Cove where you can surf, boogie board or just play in the ocean. This house will not only give you a peaceful getaway but also the opportunity to discover the charming  stores in downtown Ventura nearby.",
         price: 202.0,
       },
     ]);
