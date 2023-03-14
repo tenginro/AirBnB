@@ -1,16 +1,18 @@
-export const LOAD_REVIEWS = "reviews/load_reviews";
-const loadReviews = (reviews, spotId) => ({
-  type: LOAD_REVIEWS,
+import { csrfFetch } from "./csrf";
+
+export const LOAD_SPOT_REVIEWS = "reviews/load_reviews";
+const loadSpotReviews = (reviews, spotId) => ({
+  type: LOAD_SPOT_REVIEWS,
   reviews,
   spotId,
 });
 
 export const getReviews = (spotId) => async (dispatch) => {
-  const response = await fetch(`/api/spots/${spotId}/reviews`);
+  const response = await csrfFetch(`/api/spots/${spotId}/reviews`);
 
   if (response.ok) {
     const reviews = await response.json();
-    dispatch(loadReviews(reviews, spotId));
+    await dispatch(loadSpotReviews(reviews.Reviews, spotId));
     return reviews;
   }
 };
@@ -22,9 +24,11 @@ const initialState = {
 
 const reviewReducer = (state = initialState, action) => {
   switch (action.type) {
-    case LOAD_REVIEWS:
+    case LOAD_SPOT_REVIEWS:
       const reviewObj = {};
-      action.reviews.forEach((review) => (reviewObj[review.id] = review));
+      action.reviews.forEach((review) => {
+        reviewObj[review.id] = review;
+      });
       return {
         ...state,
         spot: {
