@@ -1,23 +1,81 @@
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { createSelectorHook, useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
+import { createSpot } from "../store/spot";
+import "./CreateSpotForm.css";
 
-const CreateSpotForm = ({ user }) => {
+const CreateSpotForm = () => {
+  const user = useSelector((state) => state.session.user);
+
   const [country, setCountry] = useState("");
   const [address, setAddress] = useState("");
   const [city, setCity] = useState("");
   const [state, setState] = useState("");
   const [description, setDescription] = useState("");
   const [name, setName] = useState("");
-  const [price, setPrice] = useState();
+  const [price, setPrice] = useState("");
   const [previewImg, setPreviewImg] = useState("");
   const [image1, setImage1] = useState("");
   const [image2, setImage2] = useState("");
   const [image3, setImage3] = useState("");
   const [image4, setImage4] = useState("");
+  const [errorMessage, setErrorMessage] = useState({});
+  const [previewImgError, setPreviewImgError] = useState({});
 
-  const handleSubmit = (e) => {
+  const dispatch = useDispatch();
+  const history = useHistory();
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setErrorMessage({});
+    // return dispatch(
+    //   CreateSpot({
+    //     address,
+    //     city,
+    //     state,
+    //     country,
+    //     name,
+    //     description,
+    //     price,
+    //   }).catch(async (res) => {
+    //     const data = await res.json();
+    //     if (data && data.errors) setErrors(Object.values(data.errors));
+    //   })
+    // );
+
+    const payload = {
+      address,
+      city,
+      state,
+      country,
+      name,
+      description,
+      price,
+      previewImg,
+      image1,
+      image2,
+      image3,
+      image4,
+    };
+
+    let newSpot = await dispatch(createSpot(payload, user))
+      .then((res) => {
+        return res;
+      })
+      .catch(async (res) => {
+        const data = await res.json();
+        if (data && data.errors) setErrorMessage(data.errors);
+      });
+
+    // if (!previewImg)
+    //   setErrorMessage({
+    //     ...errorMessage,
+    //     previewImg: "Preview image is required",
+    //   });
+    if (newSpot) {
+      setErrorMessage({});
+      return history.push(`/spots/${newSpot.id}`);
+    }
   };
 
   return (
@@ -30,46 +88,66 @@ const CreateSpotForm = ({ user }) => {
           reservation.
         </h3>
         <label>
-          Country
+          <div className="inputLabel">
+            Country
+            {errorMessage?.country && (
+              <div className="errors">{errorMessage.country}</div>
+            )}
+          </div>
           <input
             type="text"
             value={country}
             placeholder="country"
             onChange={(e) => setCountry(e.target.value)}
-            required
+            // required
           ></input>
         </label>
 
         <label>
-          Street Address
+          <div className="inputLabel">
+            Street Address
+            {errorMessage?.address && (
+              <div className="errors">{errorMessage.address}</div>
+            )}
+          </div>
           <input
             type="text"
             value={address}
             placeholder="Address"
             onChange={(e) => setAddress(e.target.value)}
-            required
+            // required
           ></input>
         </label>
 
         <label>
-          City
+          <div className="inputLabel">
+            City
+            {errorMessage?.city && (
+              <div className="errors">{errorMessage.city}</div>
+            )}
+          </div>
           <input
             type="text"
             value={city}
             placeholder="City"
             onChange={(e) => setCity(e.target.value)}
-            required
+            // required
           ></input>
         </label>
 
         <label>
-          State
+          <div className="inputLabel">
+            State
+            {errorMessage?.state && (
+              <div className="errors">{errorMessage.state}</div>
+            )}
+          </div>
           <input
             type="text"
             value={state}
             placeholder="STATE"
             onChange={(e) => setState(e.target.value)}
-            required
+            // required
           ></input>
         </label>
 
@@ -83,8 +161,11 @@ const CreateSpotForm = ({ user }) => {
           value={description}
           placeholder="Please write at least 30 characters"
           onChange={(e) => setDescription(e.target.value)}
-          required
+          //   required
         ></textarea>
+        {errorMessage?.description && (
+          <div className="errors">{errorMessage.description}</div>
+        )}
 
         <h2>Create a title for your spot</h2>
         <h3>
@@ -97,8 +178,11 @@ const CreateSpotForm = ({ user }) => {
             value={name}
             placeholder="Name of your spot"
             onChange={(e) => setName(e.target.value)}
-            required
+            // required
           ></input>
+          {errorMessage?.name && (
+            <div className="errors">{errorMessage.name}</div>
+          )}
         </label>
 
         <h2>Set a base price for your spot</h2>
@@ -113,8 +197,11 @@ const CreateSpotForm = ({ user }) => {
             value={price}
             placeholder="Price per night (USD)"
             onChange={(e) => setPrice(e.target.value)}
-            required
+            // required
           ></input>
+          {errorMessage?.price && (
+            <div className="errors">{errorMessage.price}</div>
+          )}
         </label>
 
         <h2>Liven up your spot with photos</h2>
@@ -125,8 +212,23 @@ const CreateSpotForm = ({ user }) => {
             value={previewImg}
             placeholder="Preview Image URL"
             onChange={(e) => setPreviewImg(e.target.value)}
-            required
+            // required
           ></input>
+          {/* {!previewImg && (
+            <div className="errors">Preview image is required.</div>
+          )} */}
+          {errorMessage?.url && (
+            <div className="errors">{errorMessage.url}</div>
+          )}
+          {previewImg &&
+            previewImg.slice(-4) !== ".png" &&
+            previewImg.slice(-4) !== ".jpg" &&
+            previewImg.slice(-5) !== ".jpeg" &&
+            previewImg.slice(-5) !== ".webp" && (
+              <div className="errors">
+                Image URL must end in .png, .jpg, or .jpeg
+              </div>
+            )}
         </label>
         <label>
           <input
@@ -135,6 +237,15 @@ const CreateSpotForm = ({ user }) => {
             placeholder="Image URL"
             onChange={(e) => setImage1(e.target.value)}
           ></input>
+          {image1 &&
+            image1.slice(-4) !== ".png" &&
+            image1.slice(-4) !== ".jpg" &&
+            image1.slice(-5) !== ".jpeg" &&
+            image1.slice(-5) !== ".webp" && (
+              <div className="errors">
+                Image URL must end in .png, .jpg, or .jpeg
+              </div>
+            )}
         </label>
         <label>
           <input
@@ -143,6 +254,15 @@ const CreateSpotForm = ({ user }) => {
             placeholder="Image URL"
             onChange={(e) => setImage2(e.target.value)}
           ></input>
+          {image2 &&
+            image2.slice(-4) !== ".png" &&
+            image2.slice(-4) !== ".jpg" &&
+            image2.slice(-5) !== ".jpeg" &&
+            image2.slice(-5) !== ".webp" && (
+              <div className="errors">
+                Image URL must end in .png, .jpg, or .jpeg
+              </div>
+            )}
         </label>
         <label>
           <input
@@ -151,6 +271,15 @@ const CreateSpotForm = ({ user }) => {
             placeholder="Image URL"
             onChange={(e) => setImage3(e.target.value)}
           ></input>
+          {image3 &&
+            image3.slice(-4) !== ".png" &&
+            image3.slice(-4) !== ".jpg" &&
+            image3.slice(-5) !== ".jpeg" &&
+            image3.slice(-5) !== ".webp" && (
+              <div className="errors">
+                Image URL must end in .png, .jpg, or .jpeg
+              </div>
+            )}
         </label>
         <label>
           <input
@@ -159,6 +288,15 @@ const CreateSpotForm = ({ user }) => {
             placeholder="Image URL"
             onChange={(e) => setImage4(e.target.value)}
           ></input>
+          {image4 &&
+            image4.slice(-4) !== ".png" &&
+            image4.slice(-4) !== ".jpg" &&
+            image4.slice(-5) !== ".jpeg" &&
+            image4.slice(-5) !== ".webp" && (
+              <div className="errors">
+                Image URL must end in .png, .jpg, or .jpeg
+              </div>
+            )}
         </label>
         <button>Create Spot</button>
       </form>

@@ -45,28 +45,28 @@ const SpotDetail = () => {
             <img
               className="smallerImages"
               src={spot.SpotImages[1].url}
-              alt="imageOne"
+              alt="imageTwo"
             ></img>
           )}
           {spot.SpotImages[2] && (
             <img
               className="smallerImages"
               src={spot.SpotImages[2].url}
-              alt="imageOne"
+              alt="imageThree"
             ></img>
           )}
           {spot.SpotImages[3] && (
             <img
               className="smallerImages"
               src={spot.SpotImages[3].url}
-              alt="imageOne"
+              alt="imageFour"
             ></img>
           )}
           {spot.SpotImages[4] && (
             <img
               className="smallerImages"
               src={spot.SpotImages[4].url}
-              alt="imageOne"
+              alt="imageFive"
             ></img>
           )}
         </div>
@@ -81,7 +81,9 @@ const SpotDetail = () => {
         <div>${spot.price} night</div>
         <div>
           <i className="fas fa-sharp fa-solid fa-star"></i>
-          {spot.avgStarRating} · {spot.numReviews} reviews
+          {typeof spot.avgRating === "number" ? spot.avgRating : "New"} ·{" "}
+          {typeof spot.numReviews === "number" ? spot.numReviews : "New"}{" "}
+          reviews
         </div>
       </div>
       <div>
@@ -89,7 +91,8 @@ const SpotDetail = () => {
       </div>
       <div>
         <i className="fas fa-sharp fa-solid fa-star"></i>
-        {spot.avgStarRating} · {spot.numReviews} reviews
+        {typeof spot.avgRating === "number" ? spot.avgRating : "New"} ·{" "}
+        {typeof spot.numReviews === "number" ? spot.numReviews : "New"} reviews
       </div>
       {spotReviewsArr.map((review) => (
         <div key={review.id}>

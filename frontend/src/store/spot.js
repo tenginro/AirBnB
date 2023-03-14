@@ -1,9 +1,22 @@
 import { csrfFetch } from "./csrf";
 
 const LOAD_SPOTS = "spots/load";
+const LOAD_SPOT_DETAIL = "spots/load_one";
+const CREATE_SPOT = "/spots/create";
+const UPDATE_SPOT = "spots/update";
+const REMOVE_SPOT = "spots/remove";
+
 export const actionLoadSpots = (spots) => ({
   type: LOAD_SPOTS,
   spots,
+});
+export const actionLoadSpotDetail = (spot) => ({
+  type: LOAD_SPOT_DETAIL,
+  spot,
+});
+export const actionCreateSpot = (spot) => ({
+  type: CREATE_SPOT,
+  spot,
 });
 
 export const getAllSpots = () => async (dispatch) => {
@@ -16,12 +29,6 @@ export const getAllSpots = () => async (dispatch) => {
   }
 };
 
-const LOAD_SPOT_DETAIL = "spots/add_one";
-export const actionLoadSpotDetail = (spot) => ({
-  type: LOAD_SPOT_DETAIL,
-  spot,
-});
-
 export const getSpotDetail = (id) => async (dispatch) => {
   const response = await csrfFetch(`/api/spots/${id}`);
 
@@ -32,12 +39,70 @@ export const getSpotDetail = (id) => async (dispatch) => {
   }
 };
 
-const CREATE_SPOT = "/spots/create";
-export const actionCreateSpot = (spot) => async (dispatch) => {
-  const {} = spot;
+export const createSpot = (spot, user) => async (dispatch) => {
+  const {
+    address,
+    city,
+    state,
+    country,
+    name,
+    description,
+    price,
+    previewImg,
+    image1,
+    image2,
+    image3,
+    image4,
+  } = spot;
+
   const response = await csrfFetch("/api/spots", {
     method: "POST",
+    body: JSON.stringify({
+      address,
+      city,
+      state,
+      country,
+      name,
+      description,
+      price,
+    }),
   });
+
+  if (response.ok) {
+    const newSpot = await response.json();
+
+    try {
+      await csrfFetch(`/api/spots/${newSpot.id}/images`, {
+        method: "POST",
+        body: JSON.stringify({ url: previewImg, preview: true }),
+      });
+      if (image1)
+        await csrfFetch(`/api/spots/${newSpot.id}/images`, {
+          method: "POST",
+          body: JSON.stringify({ url: image1, preview: false }),
+        });
+      if (image2)
+        await csrfFetch(`/api/spots/${newSpot.id}/images`, {
+          method: "POST",
+          body: JSON.stringify({ url: image2, preview: false }),
+        });
+      if (image3)
+        await csrfFetch(`/api/spots/${newSpot.id}/images`, {
+          method: "POST",
+          body: JSON.stringify({ url: image3, preview: false }),
+        });
+      if (image4)
+        await csrfFetch(`/api/spots/${newSpot.id}/images`, {
+          method: "POST",
+          body: JSON.stringify({ url: image4, preview: false }),
+        });
+      dispatch(actionCreateSpot(newSpot));
+      return newSpot;
+    } catch (error) {
+      throw error;
+    }
+  }
+  return response;
 };
 
 const initialState = {
@@ -54,16 +119,14 @@ const spotReducer = (state = initialState, action) => {
       });
       return { ...state, allSpots: { ...allSpots } };
     case LOAD_SPOT_DETAIL:
-      // if (!state.allSpots[action.spot.id]) {
-      //   const newState = {
-      //     allSpots: { ...state.allSpots, [action.spot.id]: action.spot },
-      //     singleSpot: { ...action.spot },
-      //   };
-      //   return newState;
-      // }
       return {
         ...state,
         singleSpot: { ...action.spot },
+      };
+    case CREATE_SPOT:
+      return {
+        ...state,
+        allSpots: { ...state.allSpots, [action.spot.id]: action.spot },
       };
     default:
       return state;

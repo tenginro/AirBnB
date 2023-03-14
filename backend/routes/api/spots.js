@@ -20,7 +20,7 @@ const { Op } = require("sequelize");
 const validateNewSpot = [
   check("address")
     .exists({ checkFalsy: true })
-    .withMessage("Street address is required"),
+    .withMessage("Address is required"),
   check("city").exists({ checkFalsy: true }).withMessage("City is required"),
   check("state").exists({ checkFalsy: true }).withMessage("State is required"),
   check("country")
@@ -34,16 +34,15 @@ const validateNewSpot = [
   //   .exists({ checkFalsy: true })
   //   .isFloat({ min: -180, max: 180 })
   //   .withMessage("Longitude is not valid"),
-  check("name")
-    .exists({ checkFalsy: true })
-    .isLength({ max: 49, min: 1 })
-    .withMessage("Name must be less than 50 characters"),
+  check("name").exists({ checkFalsy: true }).withMessage("Name is required"),
+  // check("name")
+  //   .isLength({ max: 49, min: 1 })
+  //   .withMessage("Name must be less than 50 characters"),
   check("description")
     .exists({ checkFalsy: true })
-    .withMessage("Description is required"),
-  check("price")
-    .exists({ checkFalsy: true })
-    .withMessage("Price per day is required"),
+    .isLength({ min: 30 })
+    .withMessage("Description needs a minimum of 30 characters"),
+  check("price").exists({ checkFalsy: true }).withMessage("Price is required"),
   handleValidationErrors,
 ];
 
