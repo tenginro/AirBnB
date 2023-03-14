@@ -1,7 +1,7 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import { useEffect } from "react";
-import { getAllSpots, getOneSpot } from "../store/spot";
+import { getOneSpot } from "../store/spot";
 
 const SpotDetail = () => {
   const { spotId } = useParams();
@@ -37,6 +37,9 @@ const SpotDetail = () => {
           <i className="fas fa-sharp fa-solid fa-star"></i>
           {spot.avgStarRating} · {spot.numReviews} reviews
         </div>
+      </div>
+      <div>
+        <button onClick={() => alert("Feature Coming Soon...")}>Reserve</button>
       </div>
       <div>
         <i className="fas fa-sharp fa-solid fa-star"></i>

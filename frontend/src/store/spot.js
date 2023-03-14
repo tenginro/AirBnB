@@ -16,7 +16,6 @@ export const getAllSpots = () => async (dispatch) => {
   if (response.ok) {
     const spots = await response.json();
     dispatch(actionLoadSpots(spots.Spots));
-    return spots;
   }
 };
 
@@ -26,7 +25,6 @@ export const getOneSpot = (id) => async (dispatch) => {
   if (response.ok) {
     const spot = await response.json();
     dispatch(actionAddOneSpot(spot));
-    return spot;
   }
 };
 
@@ -53,7 +51,6 @@ const spotReducer = (state = initialState, action) => {
         return newState;
       }
       return {
-        ...state,
         allSpots: { ...state.allSpots },
         singleSpot: { ...action.spot },
       };
