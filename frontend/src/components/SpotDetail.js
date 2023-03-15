@@ -51,7 +51,7 @@ const SpotDetail = () => {
   useEffect(() => {
     dispatch(getSpotDetail(spotId));
     dispatch(getReviews(spotId));
-  }, [dispatch, spotId, spotReviewsObj]);
+  }, [dispatch, spotId]);
 
   // conditionally render
   if (!spot.SpotImages && !spot.Owner) {
@@ -120,8 +120,12 @@ const SpotDetail = () => {
                 <i className="fas fa-sharp fa-solid fa-star"></i>
                 {typeof spot.numReviews === "number"
                   ? +spot.numReviews !== 1
-                    ? `${spot.avgStarRating} · ${spot.numReviews} reviews`
-                    : `${spot.avgStarRating} · ${spot.numReviews} review`
+                    ? `${spot.avgStarRating.toFixed(1)} · ${
+                        spot.numReviews
+                      } reviews`
+                    : `${spot.avgStarRating.toFixed(1)} · ${
+                        spot.numReviews
+                      } review`
                   : "New"}
               </div>
             </div>
@@ -140,8 +144,10 @@ const SpotDetail = () => {
             <i className="fas fa-sharp fa-solid fa-star"></i>
             {typeof spot.numReviews === "number"
               ? +spot.numReviews !== 1
-                ? `${spot.avgStarRating} · ${spot.numReviews} reviews`
-                : `${spot.avgStarRating} · ${spot.numReviews} review`
+                ? `${spot.avgStarRating.toFixed(1)} · ${
+                    spot.numReviews
+                  } reviews`
+                : `${spot.avgStarRating.toFixed(1)} · ${spot.numReviews} review`
               : "New"}
           </div>
           <div>
@@ -174,7 +180,10 @@ const SpotDetail = () => {
                               itemText="Delete"
                               onItemClick={closeMenu}
                               modalComponent={
-                                <DeleteReviewModal review={review} />
+                                <DeleteReviewModal
+                                  review={review}
+                                  spotId={spotId}
+                                />
                               }
                             />
                           </button>

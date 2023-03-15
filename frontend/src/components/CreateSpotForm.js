@@ -52,11 +52,6 @@ const CreateSpotForm = () => {
         if (data && data.errors) setErrorMessage(data.errors);
       });
 
-    // if (!previewImg)
-    //   setErrorMessage({
-    //     ...errorMessage,
-    //     previewImg: "Preview image is required",
-    //   });
     if (newSpot) {
       setErrorMessage({});
       return history.push(`/spots/${newSpot.id}`);

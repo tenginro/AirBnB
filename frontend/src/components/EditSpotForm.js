@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 import { getAllSpots, updateSpot } from "../store/spot";
@@ -13,10 +13,6 @@ const EditSpotForm = () => {
 
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(getAllSpots());
-  }, [dispatch, spots, spot]);
-
   const [country, setCountry] = useState(spot.country);
   const [address, setAddress] = useState(spot.address);
   const [city, setCity] = useState(spot.city);
@@ -25,6 +21,10 @@ const EditSpotForm = () => {
   const [name, setName] = useState(spot.name);
   const [price, setPrice] = useState(spot.price);
   const [errorMessage, setErrorMessage] = useState({});
+
+  useEffect(() => {
+    dispatch(getAllSpots());
+  }, [dispatch]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -97,38 +97,39 @@ const EditSpotForm = () => {
               // required
             ></input>
           </label>
-
-          <label>
-            <div className="inputLabel">
-              City
-              {errorMessage?.city && (
-                <div className="errors">{errorMessage.city}</div>
-              )}
-            </div>
-            <input
-              type="text"
-              value={city}
-              placeholder="City"
-              onChange={(e) => setCity(e.target.value)}
-              // required
-            ></input>
-          </label>
-
-          <label>
-            <div className="inputLabel">
-              State
-              {errorMessage?.state && (
-                <div className="errors">{errorMessage.state}</div>
-              )}
-            </div>
-            <input
-              type="text"
-              value={state}
-              placeholder="STATE"
-              onChange={(e) => setState(e.target.value)}
-              // required
-            ></input>
-          </label>
+          <div className="cityState">
+            <label>
+              <div className="inputLabel">
+                City
+                {errorMessage?.city && (
+                  <div className="errors">{errorMessage.city}</div>
+                )}
+              </div>
+              <input
+                type="text"
+                value={city}
+                placeholder="City"
+                onChange={(e) => setCity(e.target.value)}
+                // required
+              ></input>
+              {", "}
+            </label>
+            <label>
+              <div className="inputLabel">
+                State
+                {errorMessage?.state && (
+                  <div className="errors">{errorMessage.state}</div>
+                )}
+              </div>
+              <input
+                type="text"
+                value={state}
+                placeholder="STATE"
+                onChange={(e) => setState(e.target.value)}
+                // required
+              ></input>
+            </label>
+          </div>
         </div>
         <div className="secondSection">
           <h2>Describe your place to guests</h2>

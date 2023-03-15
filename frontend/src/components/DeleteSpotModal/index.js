@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { deleteSpot } from "../../store/spot";
+import { deleteSpot, getAllSpots, getUserSpots } from "../../store/spot";
 import { useModal } from "../../context/Modal";
 import { useHistory } from "react-router-dom";
 
@@ -14,6 +14,7 @@ export default function DeleteSpotModal({ spot }) {
     e.preventDefault();
     await dispatch(deleteSpot(spot))
       .then(closeModal)
+      .then(() => dispatch(getUserSpots()))
       .catch(async (res) => {
         const data = await res.json();
         if (data && data.errors) {

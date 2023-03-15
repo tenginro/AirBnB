@@ -25,9 +25,9 @@ export const actionLoadUserSpot = (spots) => ({
   spots,
 });
 
-export const actionEditSpot = (payload) => ({
+export const actionEditSpot = (spot) => ({
   type: UPDATE_SPOT,
-  payload,
+  spot,
 });
 
 export const actionRemoveSpot = (id) => ({
@@ -174,17 +174,22 @@ const spotReducer = (state = initialState, action) => {
         ...state,
         singleSpot: { ...action.spot },
       };
-    case CREATE_SPOT:
-      return {
-        ...state,
-        allSpots: { ...state.allSpots, [action.spot.id]: action.spot },
-      };
     case LOAD_SPOTS_CURRENT:
       const allUserSpots = {};
       action.spots.forEach((spot) => {
         allUserSpots[spot.id] = spot;
       });
       return { ...state, allSpots: { ...allUserSpots } };
+    case CREATE_SPOT:
+      return {
+        ...state,
+        allSpots: { ...state.allSpots, [action.spot.id]: action.spot },
+      };
+    case UPDATE_SPOT:
+      return {
+        ...state,
+        allSpots: { ...state.allSpots, [action.spot.id]: action.spot },
+      };
     case REMOVE_SPOT:
       const newState = { ...state };
       delete newState.allSpots[action.id];
