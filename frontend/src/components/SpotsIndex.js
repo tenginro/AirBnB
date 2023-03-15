@@ -1,8 +1,10 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+
 import { getAllSpots } from "../store/spot";
 import SpotIndexItem from "./SpotIndexItem";
-import "./spot.css";
+
+import "./SpotIndex.css";
 
 const SpotsIndex = () => {
   const spotsObj = useSelector((state) => state.spots.allSpots);

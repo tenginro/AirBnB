@@ -3,7 +3,8 @@
   flex-direction: row;
   justify-content: space-around;
   height: 100px;
-  border: 1px solid gray;
+  /* border-top: 1px solid gray; */
+  border-bottom: 1px solid lightgrey;
   align-items: center;
   list-style-type: none;
 }

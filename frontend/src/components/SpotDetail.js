@@ -1,12 +1,14 @@
+import { useEffect, useRef, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
-import { useEffect, useRef, useState } from "react";
+
 import { getSpotDetail } from "../store/spot";
-import "./spotDetail.css";
 import { getReviews } from "../store/review";
 import CreateReviewModal from "./CreateReviewModal";
 import OpenModalMenuItem from "./Navigation/OpenModalMenuItem";
 import DeleteReviewModal from "./DeleteReviewModal";
+
+import "./SpotDetail.css";
 
 const SpotDetail = () => {
   const { spotId } = useParams();
@@ -58,108 +60,125 @@ const SpotDetail = () => {
 
   return (
     <>
-      <h2>{spot.name}</h2>
-      <div>
-        {spot.city}, {spot.state}, {spot.country}
-      </div>
-      <div className="spotImages">
-        <div className="previewSpotImage">
-          {spot.SpotImages[0] && (
-            <img
-              className="largerImage"
-              src={spot.SpotImages[0].url}
-              alt="imageOne"
-            ></img>
-          )}
-        </div>
-        <div className="otherImages">
-          {spot.SpotImages[1] && (
-            <img
-              className="smallerImages"
-              src={spot.SpotImages[1].url}
-              alt="imageTwo"
-            ></img>
-          )}
-          {spot.SpotImages[2] && (
-            <img
-              className="smallerImages"
-              src={spot.SpotImages[2].url}
-              alt="imageThree"
-            ></img>
-          )}
-          {spot.SpotImages[3] && (
-            <img
-              className="smallerImages"
-              src={spot.SpotImages[3].url}
-              alt="imageFour"
-            ></img>
-          )}
-          {spot.SpotImages[4] && (
-            <img
-              className="smallerImages"
-              src={spot.SpotImages[4].url}
-              alt="imageFive"
-            ></img>
-          )}
-        </div>
-      </div>
-      <div>
+      <div className="spotDetailContent">
+        <h2>{spot.name}</h2>
         <div>
-          Hosted by {spot.Owner.firstName} {spot.Owner.lastName}
+          {spot.city}, {spot.state}, {spot.country}
         </div>
-        <div>{spot.description}</div>
-      </div>
-      <div>
-        <div>${spot.price} night</div>
-        <div>
-          <i className="fas fa-sharp fa-solid fa-star"></i>
-          {typeof spot.numReviews === "number"
-            ? +spot.numReviews !== 1
-              ? `${spot.avgStarRating} · ${spot.numReviews} reviews`
-              : `${spot.avgStarRating} · ${spot.numReviews} review`
-            : "New"}
-        </div>
-      </div>
-      <div>
-        <button onClick={() => alert("Feature Coming Soon...")}>Reserve</button>
-      </div>
-      <div>
-        <i className="fas fa-sharp fa-solid fa-star"></i>
-        {typeof spot.numReviews === "number"
-          ? +spot.numReviews !== 1
-            ? `${spot.avgStarRating} · ${spot.numReviews} reviews`
-            : `${spot.avgStarRating} · ${spot.numReviews} review`
-          : "New"}
-      </div>
-      {spot.Owner.id !== sessionUser.id && (
-        <>
-          <button>
-            <OpenModalMenuItem
-              itemText="Post Your Review"
-              onItemClick={closeMenu}
-              modalComponent={<CreateReviewModal spot={spot} />}
-            />
-          </button>
-          {!spotReviewsArr.length && <div>Be the first to post a review!</div>}
-        </>
-      )}
-      {spotReviewsArr.length !== 0 &&
-        spotReviewsArr.map((review) => (
-          <div key={review.id}>
-            <div>{review.User.firstName}</div>
-            <div>{review.createdAt}</div>
-            <div>{review.review}</div>
-            {review.User.id === sessionUser.id && (
-              <button>
-                <OpenModalMenuItem
-                  itemText="Delete"
-                  onItemClick={closeMenu}
-                  modalComponent={<DeleteReviewModal review={review} />}
-                />
-              </button>
+        <div className="spotImages">
+          <div className="previewSpotImage">
+            {spot.SpotImages[0] && (
+              <img
+                className="largerImage"
+                src={spot.SpotImages[0].url}
+                alt="imageOne"
+              ></img>
             )}
           </div>
-        ))}
+          <div className="otherImages">
+            {spot.SpotImages[1] && (
+              <img
+                className="smallerImages"
+                src={spot.SpotImages[1].url}
+                alt="imageTwo"
+              ></img>
+            )}
+            {spot.SpotImages[2] && (
+              <img
+                className="smallerImages"
+                src={spot.SpotImages[2].url}
+                alt="imageThree"
+              ></img>
+            )}
+            {spot.SpotImages[3] && (
+              <img
+                className="smallerImages"
+                src={spot.SpotImages[3].url}
+                alt="imageFour"
+              ></img>
+            )}
+            {spot.SpotImages[4] && (
+              <img
+                className="smallerImages"
+                src={spot.SpotImages[4].url}
+                alt="imageFive"
+              ></img>
+            )}
+          </div>
+        </div>
+        <div className="secondContent">
+          <div className="description">
+            <h3>
+              Hosted by {spot.Owner.firstName} {spot.Owner.lastName}
+            </h3>
+            <div>{spot.description}</div>
+          </div>
+          <div className="reserveBox">
+            <div className="reserveBoxLineOne">
+              <h3>${spot.price} night</h3>
+              <div>
+                <i className="fas fa-sharp fa-solid fa-star"></i>
+                {typeof spot.numReviews === "number"
+                  ? +spot.numReviews !== 1
+                    ? `${spot.avgStarRating} · ${spot.numReviews} reviews`
+                    : `${spot.avgStarRating} · ${spot.numReviews} review`
+                  : "New"}
+              </div>
+            </div>
+            <div className="reserveButtonContainer">
+              <button
+                className="reserveButton"
+                onClick={() => alert("Feature Coming Soon...")}
+              >
+                Reserve
+              </button>
+            </div>
+          </div>
+        </div>
+        <div className="reviewsContainer">
+          <div className="reviewsFirstLine">
+            <i className="fas fa-sharp fa-solid fa-star"></i>
+            {typeof spot.numReviews === "number"
+              ? +spot.numReviews !== 1
+                ? `${spot.avgStarRating} · ${spot.numReviews} reviews`
+                : `${spot.avgStarRating} · ${spot.numReviews} review`
+              : "New"}
+          </div>
+          <div>
+            {spot.Owner.id !== sessionUser.id && (
+              <>
+                <button>
+                  <OpenModalMenuItem
+                    itemText="Post Your Review"
+                    onItemClick={closeMenu}
+                    modalComponent={<CreateReviewModal spot={spot} />}
+                  />
+                </button>
+                {!spotReviewsArr.length && (
+                  <div>Be the first to post a review!</div>
+                )}
+              </>
+            )}
+            {spotReviewsArr.length !== 0 &&
+              spotReviewsArr.map((review) => (
+                <div key={review.id} className="individualReview">
+                  <div>{review.User.firstName}</div>
+                  <div>{review.createdAt}</div>
+                  <div>{review.review}</div>
+                  {review.User.id === sessionUser.id && (
+                    <button>
+                      <OpenModalMenuItem
+                        itemText="Delete"
+                        onItemClick={closeMenu}
+                        modalComponent={<DeleteReviewModal review={review} />}
+                      />
+                    </button>
+                  )}
+                </div>
+              ))}
+          </div>
+        </div>
+      </div>
     </>
   );
 };
