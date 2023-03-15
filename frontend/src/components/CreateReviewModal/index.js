@@ -37,7 +37,7 @@ export default function CreateReviewModal({ spot }) {
   };
 
   return (
-    <>
+    <div id="createReviewForm">
       <h2>How was your stay?</h2>
       <form>
         {errors && <div className="errors">{errors}</div>}
@@ -54,12 +54,6 @@ export default function CreateReviewModal({ spot }) {
             onMouseEnter={() => {
               setActiveRating(1);
             }}
-            //   onMouseLeave={() => {
-            //     if (!disabled) setActiveRating(rating);
-            //   }}
-            //   onClick={() => {
-            //     if (!disabled) onChange(1);
-            //   }}
           >
             <i className="fas fa-regular fa-star"></i>
           </div>
@@ -68,12 +62,6 @@ export default function CreateReviewModal({ spot }) {
             onMouseEnter={() => {
               setActiveRating(2);
             }}
-            //   onMouseLeave={() => {
-            //     if (!disabled) setActiveRating(rating);
-            //   }}
-            //   onClick={() => {
-            //     if (!disabled) onChange(2);
-            //   }}
           >
             <i className="fas fa-regular fa-star"></i>
           </div>
@@ -82,12 +70,6 @@ export default function CreateReviewModal({ spot }) {
             onMouseEnter={() => {
               setActiveRating(3);
             }}
-            //   onMouseLeave={() => {
-            //     if (!disabled) setActiveRating(rating);
-            //   }}
-            //   onClick={() => {
-            //     if (!disabled) onChange(3);
-            //   }}
           >
             <i className="fas fa-regular fa-star"></i>
           </div>
@@ -96,12 +78,6 @@ export default function CreateReviewModal({ spot }) {
             onMouseEnter={() => {
               setActiveRating(4);
             }}
-            //   onMouseLeave={() => {
-            //     if (!disabled) setActiveRating(rating);
-            //   }}
-            //   onClick={() => {
-            //     if (!disabled) onChange(4);
-            //   }}
           >
             <i className="fas fa-regular fa-star"></i>
           </div>
@@ -110,21 +86,21 @@ export default function CreateReviewModal({ spot }) {
             onMouseEnter={() => {
               setActiveRating(5);
             }}
-            //   onMouseLeave={() => {
-            //     if (!disabled) setActiveRating(rating);
-            //   }}
-            //   onClick={() => {
-            //     if (!disabled) onChange(5);
-            //   }}
           >
             <i className="fas fa-regular fa-star"></i>
           </div>
           <div>Stars</div>
         </div>
-        <button type="button" disabled={review.length <= 10} onClick={onClick}>
-          Submit Your Review
-        </button>
+        <div className="submitReviewButton">
+          <button
+            type="button"
+            disabled={review.length <= 10}
+            onClick={onClick}
+          >
+            Submit Your Review
+          </button>
+        </div>
       </form>
-    </>
+    </div>
   );
 }
