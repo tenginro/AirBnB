@@ -1,11 +1,21 @@
-form {
+.error {
+  color: red;
+}
+
+.signUpContainer {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  row-gap: 10px;
 }
 
-.error {
-  color: red;
+#signUpForm {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+#signUpForm button {
+  width: 100%;
 }

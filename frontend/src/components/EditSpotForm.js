@@ -59,7 +59,7 @@ const EditSpotForm = () => {
   return (
     <div className="createSpotPage">
       <h1>Update your Spot</h1>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} id="editSpotForm">
         <div className="firstSection">
           <h2>Where's your place located?</h2>
           <h3>
