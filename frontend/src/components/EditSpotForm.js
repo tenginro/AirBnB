@@ -1,15 +1,13 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
-import { getSpotDetail, getAllSpots, updateSpot } from "../store/spot";
+import { getAllSpots, updateSpot } from "../store/spot";
 import "./CreateSpotForm.css";
 
 const EditSpotForm = () => {
   const { spotId } = useParams();
   const spots = useSelector((state) => state.spots.allSpots);
   const spot = spots[spotId];
-
-  console.log(spot);
 
   const history = useHistory();
 
@@ -49,7 +47,6 @@ const EditSpotForm = () => {
       })
       .catch(async (res) => {
         const data = await res.json();
-        console.log(data);
         if (data && data.errors) setErrorMessage(data.errors);
       });
 

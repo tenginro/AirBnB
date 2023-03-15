@@ -20,8 +20,6 @@ const SpotDetail = () => {
     a.createdAt > b.createdAt ? -1 : 1
   );
 
-  // console.log(spot.Owner);
-
   const dispatch = useDispatch();
 
   const [showMenu, setShowMenu] = useState(false);

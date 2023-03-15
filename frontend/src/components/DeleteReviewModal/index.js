@@ -1,15 +1,13 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-
 import { useModal } from "../../context/Modal";
-import { useHistory } from "react-router-dom";
+
 import { deleteReview } from "../../store/review";
 
 export default function DeleteReviewModal({ review }) {
   const dispatch = useDispatch();
   const { closeModal } = useModal();
   const [errors, setErrors] = useState([]);
-  const history = useHistory();
 
   const onClick = async (e) => {
     e.preventDefault();
@@ -17,12 +15,10 @@ export default function DeleteReviewModal({ review }) {
       .then(closeModal)
       .catch(async (res) => {
         const data = await res.json();
-        console.log(data);
         if (data && data.errors) {
           setErrors(Object.values(data.errors));
         }
       });
-    // return history.push("/spots/current");
   };
 
   return (
