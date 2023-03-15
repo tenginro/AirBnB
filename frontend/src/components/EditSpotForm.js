@@ -1,13 +1,11 @@
-import { useState, useEffect, useRef } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
-import { getAllSpots, updateSpot } from "../store/spot";
+import { updateSpot } from "../store/spot";
 import "./EditSpotForm.css";
 
-const EditSpotForm = () => {
+const EditSpotForm = ({ spot }) => {
   const { spotId } = useParams();
-  const spots = useSelector((state) => state.spots.allSpots);
-  const spot = spots[spotId];
 
   const history = useHistory();
 
@@ -21,10 +19,6 @@ const EditSpotForm = () => {
   const [name, setName] = useState(spot.name);
   const [price, setPrice] = useState(spot.price);
   const [errorMessage, setErrorMessage] = useState({});
-
-  useEffect(() => {
-    dispatch(getAllSpots());
-  }, [dispatch]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();

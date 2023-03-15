@@ -9,18 +9,14 @@ import SpotsIndex from "./components/SpotsIndex";
 import SpotDetail from "./components/SpotDetail";
 import CreateSpotForm from "./components/CreateSpotForm";
 import UserSpot from "./components/UserSpot";
-import EditSpotForm from "./components/EditSpotForm";
-import { getAllSpots } from "./store/spot";
+import EditSpotFormWrapper from "./components/EditSpotFormWrapper";
 
 function App() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
-  // const [spots, setSpots] = useState({});
 
   useEffect(() => {
     dispatch(sessionActions.restoreUser()).then(() => setIsLoaded(true));
-    // dispatch(getAllSpots());
-    // .then((res) => setSpots(res));
   }, [dispatch]);
 
   return (
@@ -38,7 +34,7 @@ function App() {
             <UserSpot />
           </Route>
           <Route exact path="/spots/:spotId/edit">
-            <EditSpotForm />
+            <EditSpotFormWrapper />
           </Route>
           <Route exact path="/spots/:spotId">
             <SpotDetail />
