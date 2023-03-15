@@ -23,4 +23,5 @@
 #logInContainer button {
   margin: 5px;
   width: 100%;
+  cursor: pointer;
 }
