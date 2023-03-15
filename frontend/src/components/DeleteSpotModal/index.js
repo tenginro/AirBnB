@@ -21,6 +21,7 @@ export default function DeleteSpotModal({ spot }) {
           setErrors(Object.values(data.errors));
         }
       });
+
     return history.push("/spots/current");
   };
 

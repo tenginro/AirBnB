@@ -1,12 +1,98 @@
-.largerImage {
-  width: 400px;
-  height: 400px;
+.spotDetailContent {
+  max-width: 1000px;
+  margin: 0 auto;
 }
+
+.spotImages {
+  margin-top: 20px;
+  display: grid;
+  grid-template-columns: 50% 50%;
+  gap: 10px;
+}
+
+.largerImage {
+  width: 100%;
+  height: 430px;
+}
+
+.otherImages {
+  display: grid;
+  grid-template-columns: 50% 50%;
+  column-gap: 10px;
+  row-gap: 10px;
+}
+
 .smallerImages {
-  width: 300px;
-  height: 200px;
+  width: 100%;
+  height: 210px;
 }
 
 li {
   list-style-type: none;
+}
+
+.secondContent {
+  margin: 10px;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 10px;
+}
+
+.reserveBox {
+  border: 3px solid black;
+  border-radius: 8%;
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+}
+
+.reserveBoxLineOne {
+  display: grid;
+  /* flex-direction: row; */
+  grid-template-columns: 1fr 1fr;
+  /* justify-content: space-evenly; */
+  align-items: center;
+}
+
+.reserveBoxLineOne h3 {
+  margin: 0 auto;
+}
+.reserveButtonContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.reserveButton {
+  background-color: green;
+  cursor: pointer;
+  border-radius: 10%;
+  color: white;
+}
+
+.reviewsContainer {
+  margin-top: 30px;
+  margin-left: 10px;
+  margin-right: 10px;
+  border-top: 1px solid lightgrey;
+}
+
+.reviewsFirstLine {
+  margin-top: 10px;
+}
+
+.individualReview {
+  margin-top: 10px;
+}
+
+@media screen and (max-width: 1000px) {
+  .spotDetailContent {
+    max-width: max-content;
+    margin: 0 auto;
+  }
+  .spotImages {
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: 100%;
+    grid-template-rows: 50% 50%;
+    gap: 10px;
+  }
 }

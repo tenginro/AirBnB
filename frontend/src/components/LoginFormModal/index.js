@@ -73,7 +73,7 @@ function LoginFormModal() {
           Log In
         </button>
         <button type="button" onClick={onClick}>
-          Demo User
+          Log in as Demo User
         </button>
       </form>
     </>

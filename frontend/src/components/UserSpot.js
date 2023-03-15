@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserSpots } from "../store/spot";
 import UserSpotIndexItem from "./UserSpotIndexItem";
-import "./spot.css";
+import "./SpotIndex.css";
 
 const UserSpot = () => {
   const spotsObj = useSelector((state) => state.spots.allSpots);
