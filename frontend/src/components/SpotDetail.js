@@ -8,7 +8,7 @@ import CreateReviewModal from "./CreateReviewModal";
 import OpenModalMenuItem from "./Navigation/OpenModalMenuItem";
 import DeleteReviewModal from "./DeleteReviewModal";
 
-import "./SpotDetail.css";
+import "./spot.css";
 
 const SpotDetail = () => {
   const { spotId } = useParams();
