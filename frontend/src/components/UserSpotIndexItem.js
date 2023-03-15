@@ -1,11 +1,48 @@
+import React, { useState, useEffect, useRef } from "react";
 import { NavLink, useHistory } from "react-router-dom";
+import { useDispatch } from "react-redux";
+
+import { deleteSpot } from "../store/spot";
+import OpenModalMenuItem from "./Navigation/OpenModalMenuItem";
+import DeleteSpotModal from "./DeleteSpotModal";
 
 const UserSpotIndexItem = ({ spot }) => {
   const history = useHistory();
+  const dispatch = useDispatch();
+  const [showMenu, setShowMenu] = useState(false);
+  const ulRef = useRef();
+
+  const openMenu = (e) => {
+    e.stopPropagation();
+    if (showMenu) return;
+    setShowMenu(true);
+  };
+
+  useEffect(() => {
+    if (!showMenu) return;
+
+    const closeMenu = (e) => {
+      // you want the dropdown menu to close only if the click happened OUTSIDE the dropdown.
+      if (!ulRef.current.contains(e.target)) {
+        setShowMenu(false);
+      }
+    };
+
+    document.addEventListener("click", closeMenu);
+
+    return () => document.removeEventListener("click", closeMenu);
+  }, [showMenu]);
+
+  const closeMenu = () => setShowMenu(false);
 
   const onClickUpdate = (e) => {
     e.preventDefault();
     return history.push(`/spots/${spot.id}/edit`);
+  };
+
+  const onClickDelete = async (e) => {
+    e.preventDefault();
+    await dispatch(deleteSpot(spot.id));
   };
 
   return (
@@ -35,7 +72,14 @@ const UserSpotIndexItem = ({ spot }) => {
             Update
           </NavLink>
         </button>
-        <button>Delete</button>
+        <button onClick={onClickDelete}>
+          {" "}
+          <OpenModalMenuItem
+            itemText="Delete"
+            onItemClick={closeMenu}
+            modalComponent={<DeleteSpotModal spot={spot} />}
+          />
+        </button>
       </div>
     </li>
   );

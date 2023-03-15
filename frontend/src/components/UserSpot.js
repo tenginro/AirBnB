@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserSpots } from "../store/spot";
 import UserSpotIndexItem from "./UserSpotIndexItem";
@@ -14,11 +15,19 @@ const UserSpot = () => {
   }, [dispatch]);
 
   return (
-    <ul className="spots">
-      {spots.map((spot) => (
-        <UserSpotIndexItem spot={spot} key={spot.id} />
-      ))}
-    </ul>
+    <>
+      <h2>Manage Your Spots</h2>
+      <button>
+        <NavLink exact to="/spots/new">
+          <div className="createSpot">Create a New Spot</div>
+        </NavLink>
+      </button>
+      <ul className="spots">
+        {spots.map((spot) => (
+          <UserSpotIndexItem spot={spot} key={spot.id} />
+        ))}
+      </ul>
+    </>
   );
 };
 export default UserSpot;

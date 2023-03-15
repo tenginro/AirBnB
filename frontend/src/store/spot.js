@@ -30,6 +30,11 @@ export const actionEditSpot = (payload) => ({
   payload,
 });
 
+export const actionRemoveSpot = (id) => ({
+  type: REMOVE_SPOT,
+  id,
+});
+
 export const getAllSpots = () => async (dispatch) => {
   const response = await csrfFetch("/api/spots");
 
@@ -139,6 +144,17 @@ export const updateSpot = (spot) => async (dispatch) => {
   return response.json();
 };
 
+export const deleteSpot = (spot) => async (dispatch) => {
+  const response = await csrfFetch(`/api/spots/${spot.id}`, {
+    method: "delete",
+  });
+
+  if (response.ok) {
+    dispatch(actionRemoveSpot(spot.id));
+    return await response.json();
+  }
+};
+
 const initialState = {
   allSpots: {},
   singleSpot: {},
@@ -168,7 +184,10 @@ const spotReducer = (state = initialState, action) => {
         allUserSpots[spot.id] = spot;
       });
       return { ...state, allSpots: { ...allUserSpots } };
-
+    case REMOVE_SPOT:
+      const newState = { ...state };
+      delete newState.allSpots[action.id];
+      return newState;
     default:
       return state;
   }

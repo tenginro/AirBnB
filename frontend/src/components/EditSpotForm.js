@@ -1,16 +1,18 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
-import { getSpotDetail } from "../store/spot";
+import { getSpotDetail, getAllSpots, updateSpot } from "../store/spot";
 
-const EditSpotForm = async () => {
+const EditSpotForm = () => {
   const { spotId } = useParams();
-  console.log(spotId);
+  const spots = useSelector((state) => state.spots.allSpots);
+  const spot = spots[spotId];
+  const history = useHistory();
 
-  const user = useSelector((state) => state.session.user);
-  const spot = await dispatch(getSpotDetail(spotId));
-
-  console.log(spot);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getAllSpots());
+  }, [dispatch]);
 
   const [country, setCountry] = useState(spot.country);
   const [address, setAddress] = useState(spot.address);
@@ -21,15 +23,43 @@ const EditSpotForm = async () => {
   const [price, setPrice] = useState(spot.price);
   const [errorMessage, setErrorMessage] = useState({});
 
-  const dispatch = useDispatch();
-  const history = useHistory();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setErrorMessage({});
+
+    const payload = {
+      id: spotId,
+      address,
+      city,
+      state,
+      country,
+      name,
+      description,
+      price,
+    };
+
+    let updatedSpot = await dispatch(updateSpot(payload))
+      .then((res) => {
+        return res;
+      })
+      .catch(async (res) => {
+        const data = await res.json();
+        console.log(data);
+        if (data && data.errors) setErrorMessage(data.errors);
+      });
+
+    if (updatedSpot) {
+      setErrorMessage({});
+      return history.push(`/spots/${updatedSpot.id}`);
+    }
+  };
+
+  if (!spot.country) return <div>Loading</div>;
 
   return (
     <>
       <h1>Update your Spot</h1>
-      <form
-      //   onSubmit={handleSubmit}
-      >
+      <form onSubmit={handleSubmit}>
         <h2>Where's your place located?</h2>
         <h3>
           Guests will only get your exact address once they booked a
