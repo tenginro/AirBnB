@@ -21,7 +21,7 @@ h2 {
 h3 {
   margin-top: 0;
 }
-form {
+#createSpotForm {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -63,4 +63,5 @@ textarea {
 .createSpotButton {
   background-color: red;
   color: white;
+  margin-top: 5px;
 }

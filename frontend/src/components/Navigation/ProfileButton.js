@@ -74,16 +74,21 @@ function ProfileButton({ user }) {
             </>
           ) : (
             <>
-              <OpenModalMenuItem
-                itemText="Log In"
-                onItemClick={closeMenu}
-                modalComponent={<LoginFormModal />}
-              />
-              <OpenModalMenuItem
-                itemText="Sign Up"
-                onItemClick={closeMenu}
-                modalComponent={<SignupFormModal />}
-              />
+              <div className="hoverEffect">
+                <OpenModalMenuItem
+                  itemText="Log In"
+                  onItemClick={closeMenu}
+                  modalComponent={<LoginFormModal />}
+                />
+              </div>
+              <div className="hoverEffect">
+                <OpenModalMenuItem
+                  itemText="Sign Up"
+                  className="hoverEffect"
+                  onItemClick={closeMenu}
+                  modalComponent={<SignupFormModal />}
+                />
+              </div>
             </>
           )}
         </ul>

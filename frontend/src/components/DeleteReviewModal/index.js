@@ -2,23 +2,30 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
 
-import { deleteReview } from "../../store/review";
+import { deleteReview, getReviews } from "../../store/review";
+import { useHistory } from "react-router-dom";
+import { getSpotDetail } from "../../store/spot";
 
-export default function DeleteReviewModal({ review }) {
+export default function DeleteReviewModal({ review, spotId }) {
   const dispatch = useDispatch();
   const { closeModal } = useModal();
   const [errors, setErrors] = useState([]);
+  const history = useHistory();
 
   const onClick = async (e) => {
     e.preventDefault();
     await dispatch(deleteReview(review))
       .then(closeModal)
+      .then(() => dispatch(getSpotDetail(spotId)))
+      .then(() => dispatch(getReviews(spotId)))
       .catch(async (res) => {
         const data = await res.json();
         if (data && data.errors) {
           setErrors(Object.values(data.errors));
         }
       });
+
+    return history.push(`/spots/${spotId}`);
   };
 
   return (

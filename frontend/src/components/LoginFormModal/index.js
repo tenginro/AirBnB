@@ -2,7 +2,9 @@
 import React, { useState } from "react";
 import * as sessionActions from "../../store/session";
 import { useDispatch } from "react-redux";
+
 import { useModal } from "../../context/Modal";
+
 import "./LoginForm.css";
 
 function LoginFormModal() {
@@ -36,9 +38,9 @@ function LoginFormModal() {
   };
 
   return (
-    <>
+    <div id="logInContainer">
       <h1>Log In</h1>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} id="loginForm">
         <ul>
           {errors.map((error, idx) => (
             <li className="error" key={idx}>
@@ -46,26 +48,22 @@ function LoginFormModal() {
             </li>
           ))}
         </ul>
-        <label>
-          Username or Email
-          <input
-            type="text"
-            // placeholder="Username or Email"
-            value={credential}
-            onChange={(e) => setCredential(e.target.value)}
-            // required
-          />
-        </label>
-        <label>
-          Password
-          <input
-            type="password"
-            // placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            // required
-          />
-        </label>
+        <label>Username or Email</label>
+        <input
+          type="text"
+          // placeholder="Username or Email"
+          value={credential}
+          onChange={(e) => setCredential(e.target.value)}
+          // required
+        />
+        <label>Password</label>
+        <input
+          type="password"
+          // placeholder="Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          // required
+        />
         <button
           type="submit"
           disabled={credential.length < 4 || password.length < 6 ? true : false}
@@ -76,7 +74,7 @@ function LoginFormModal() {
           Log in as Demo User
         </button>
       </form>
-    </>
+    </div>
   );
 }
 

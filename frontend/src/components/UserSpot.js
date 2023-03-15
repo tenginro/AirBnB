@@ -12,7 +12,7 @@ const UserSpot = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getUserSpots());
-  }, [dispatch, spots.length]);
+  }, [dispatch]);
 
   return (
     <>

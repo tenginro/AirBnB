@@ -4,7 +4,8 @@ import { useModal } from "../../context/Modal";
 import { useHistory } from "react-router-dom";
 
 import "./CreateReviewModal.css";
-import { createReview } from "../../store/review";
+import { createReview, getReviews } from "../../store/review";
+import { getSpotDetail } from "../../store/spot";
 
 export default function CreateReviewModal({ spot }) {
   const dispatch = useDispatch();
@@ -23,6 +24,8 @@ export default function CreateReviewModal({ spot }) {
     };
     let newReview = await dispatch(createReview(payload, spot))
       .then(closeModal)
+      .then(() => dispatch(getSpotDetail(spot.id)))
+      .then(() => dispatch(getReviews(spot.id)))
       .catch(async (res) => {
         const data = await res.json();
         if (data && data.message) setErrors(data.message);

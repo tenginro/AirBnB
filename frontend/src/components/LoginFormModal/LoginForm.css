@@ -10,15 +10,33 @@
   row-gap: 10px;
 } */
 
-h1 {
+/* h1 {
   text-align: center;
-}
-
-input {
-  margin: 5px;
-  width: 300px;
-}
+} */
 
 .error {
   color: red;
+}
+
+#logInContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#loginForm {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+#logInContainer input {
+  width: 300px;
+}
+
+#logInContainer button {
+  margin: 5px;
+  width: 100%;
 }
