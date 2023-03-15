@@ -48,17 +48,25 @@
 .profile-dropdown {
   display: flex;
   flex-direction: column;
-  /* justify-content: center; */
-  /* align-items: center; */
   gap: 5px;
   list-style-type: none;
   cursor: pointer;
   position: absolute;
+  background-color: white;
+  border: 1px solid black;
+  border-radius: 10%;
+}
+
+.profile-dropdown li:hover {
+  width: 100%;
+  left: 0;
+  background-color: #f2f2f2;
 }
 
 /* .profile-dropdown li {
   border: 1px solid gray;
 } */
+
 .profile.li {
   display: flex;
   flex-direction: row;
@@ -71,4 +79,5 @@
 .logoutButton {
   width: 63px;
   height: 30px;
+  cursor: pointer;
 }

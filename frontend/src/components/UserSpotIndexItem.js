@@ -40,11 +40,6 @@ const UserSpotIndexItem = ({ spot }) => {
     return history.push(`/spots/${spot.id}/edit`);
   };
 
-  const onClickDelete = async (e) => {
-    e.preventDefault();
-    await dispatch(deleteSpot(spot.id));
-  };
-
   return (
     <li className="spot">
       <NavLink to={`/spots/${spot.id}`}>
@@ -72,7 +67,7 @@ const UserSpotIndexItem = ({ spot }) => {
             Update
           </NavLink>
         </button>
-        <button onClick={onClickDelete}>
+        <button>
           {" "}
           <OpenModalMenuItem
             itemText="Delete"

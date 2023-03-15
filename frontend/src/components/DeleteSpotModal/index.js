@@ -1,17 +1,28 @@
+import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { deleteSpot } from "../../store/spot";
 import { useModal } from "../../context/Modal";
+import { useHistory } from "react-router-dom";
 
 export default function DeleteSpotModal({ spot }) {
   const dispatch = useDispatch();
   const { closeModal } = useModal();
+  const [errors, setErrors] = useState([]);
+  const history = useHistory();
 
-  const onClick = (e) => {
+  const onClick = async (e) => {
     e.preventDefault();
-    return dispatch(deleteSpot(spot)).then(closeModal);
+    await dispatch(deleteSpot(spot))
+      .then(closeModal)
+      .catch(async (res) => {
+        const data = await res.json();
+        console.log(data);
+        if (data && data.errors) {
+          setErrors(Object.values(data.errors));
+        }
+      });
+    return history.push("/spots/current");
   };
-
-  console.log(spot.id);
 
   return (
     <>

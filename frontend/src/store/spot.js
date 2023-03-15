@@ -153,6 +153,7 @@ export const deleteSpot = (spot) => async (dispatch) => {
     dispatch(actionRemoveSpot(spot.id));
     return await response.json();
   }
+  return await response.json();
 };
 
 const initialState = {

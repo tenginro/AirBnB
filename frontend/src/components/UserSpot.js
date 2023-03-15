@@ -12,20 +12,19 @@ const UserSpot = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getUserSpots());
-  }, [dispatch]);
+  }, [dispatch, spots.length]);
 
   return (
     <>
-      <h2>Manage Your Spots</h2>
+      <h2>Manage Spots</h2>
       <button>
         <NavLink exact to="/spots/new">
           <div className="createSpot">Create a New Spot</div>
         </NavLink>
       </button>
       <ul className="spots">
-        {spots.map((spot) => (
-          <UserSpotIndexItem spot={spot} key={spot.id} />
-        ))}
+        {spots &&
+          spots.map((spot) => <UserSpotIndexItem spot={spot} key={spot.id} />)}
       </ul>
     </>
   );

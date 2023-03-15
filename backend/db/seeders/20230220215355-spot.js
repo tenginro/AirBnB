@@ -44,7 +44,8 @@ module.exports = {
         lat: 43.47,
         lng: 70.39,
         name: "Beautiful Oceanfront Cottage",
-        description: "6b4b",
+        description:
+          "Such a gracious host! The views are unbeatable and the accommodation was so luxurious.",
         price: 600.0,
       },
       {
