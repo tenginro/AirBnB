@@ -64,7 +64,7 @@ const CreateSpotForm = () => {
   };
 
   return (
-    <>
+    <div className="createSpotPage">
       <h1>Create a new Spot</h1>
       <form onSubmit={handleSubmit}>
         <h2>Where's your place located?</h2>
@@ -285,7 +285,7 @@ const CreateSpotForm = () => {
         </label>
         <button>Create Spot</button>
       </form>
-    </>
+    </div>
   );
 };
 
