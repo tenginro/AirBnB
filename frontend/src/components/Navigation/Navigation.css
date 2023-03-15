@@ -54,14 +54,20 @@
   cursor: pointer;
   position: absolute;
   background-color: white;
-  border: 1px solid black;
-  border-radius: 10%;
+  border: 3px solid black;
+  padding: 10px;
 }
 
-.profile-dropdown li:hover {
+.profile-dropdown li {
+  margin-right: 10px;
+  margin-left: 0;
+}
+
+.hoverEffect:hover,
+.logoutButton:hover {
   width: 100%;
   left: 0;
-  background-color: #f2f2f2;
+  background-color: pink;
 }
 
 /* .profile-dropdown li {

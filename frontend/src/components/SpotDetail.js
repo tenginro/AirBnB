@@ -20,16 +20,18 @@ const SpotDetail = () => {
     a.createdAt > b.createdAt ? -1 : 1
   );
 
+  // console.log(spot.Owner);
+
   const dispatch = useDispatch();
 
   const [showMenu, setShowMenu] = useState(false);
   const ulRef = useRef();
 
-  // const openMenu = (e) => {
-  //   e.stopPropagation();
-  //   if (showMenu) return;
-  //   setShowMenu(true);
-  // };
+  const openMenu = (e) => {
+    e.stopPropagation();
+    if (showMenu) return;
+    setShowMenu(true);
+  };
 
   useEffect(() => {
     if (!showMenu) return;
@@ -54,7 +56,7 @@ const SpotDetail = () => {
   }, [dispatch, spotId]);
 
   // conditionally render
-  if (!spot.SpotImages) {
+  if (!spot.SpotImages && !spot.Owner) {
     return <div>Loading</div>;
   }
 
@@ -145,7 +147,7 @@ const SpotDetail = () => {
               : "New"}
           </div>
           <div>
-            {spot.Owner.id !== sessionUser.id && (
+            {sessionUser !== null && spot.Owner.id !== sessionUser.id && (
               <>
                 <button>
                   <OpenModalMenuItem
@@ -165,15 +167,16 @@ const SpotDetail = () => {
                   <div>{review.User.firstName}</div>
                   <div>{review.createdAt}</div>
                   <div>{review.review}</div>
-                  {review.User.id === sessionUser.id && (
-                    <button>
-                      <OpenModalMenuItem
-                        itemText="Delete"
-                        onItemClick={closeMenu}
-                        modalComponent={<DeleteReviewModal review={review} />}
-                      />
-                    </button>
-                  )}
+                  {sessionUser !== null &&
+                    review.User.id === sessionUser.id && (
+                      <button>
+                        <OpenModalMenuItem
+                          itemText="Delete"
+                          onItemClick={closeMenu}
+                          modalComponent={<DeleteReviewModal review={review} />}
+                        />
+                      </button>
+                    )}
                 </div>
               ))}
           </div>
