@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { createSelectorHook, useDispatch, useSelector } from "react-redux";
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { createSpot } from "../store/spot";
 import "./CreateSpotForm.css";
@@ -20,7 +20,6 @@ const CreateSpotForm = () => {
   const [image3, setImage3] = useState("");
   const [image4, setImage4] = useState("");
   const [errorMessage, setErrorMessage] = useState({});
-  const [previewImgError, setPreviewImgError] = useState({});
 
   const dispatch = useDispatch();
   const history = useHistory();
@@ -28,20 +27,6 @@ const CreateSpotForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setErrorMessage({});
-    // return dispatch(
-    //   CreateSpot({
-    //     address,
-    //     city,
-    //     state,
-    //     country,
-    //     name,
-    //     description,
-    //     price,
-    //   }).catch(async (res) => {
-    //     const data = await res.json();
-    //     if (data && data.errors) setErrors(Object.values(data.errors));
-    //   })
-    // );
 
     const payload = {
       address,
