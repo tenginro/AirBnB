@@ -181,7 +181,7 @@ const EditSpotForm = () => {
             <div className="errors">{errorMessage.price}</div>
           )}
         </label>
-        <button>Update Spot</button>
+        <button>Update your Spot</button>
       </form>
     </>
   );
