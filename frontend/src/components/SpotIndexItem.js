@@ -1,6 +1,15 @@
-import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { Link, NavLink, useHistory } from "react-router-dom";
 
 const SpotIndexItem = ({ spot }) => {
+  const sessionUser = useSelector((state) => state.session.user);
+  // const history = useHistory();
+
+  // const onClickUpdate = (e) => {
+  //   e.preventDefault();
+  //   return history.push(`/spots/${spot.id}/edit`);
+  // };
+
   return (
     <li className="spot">
       <Link to={`/spots/${spot.id}`}>
@@ -22,6 +31,16 @@ const SpotIndexItem = ({ spot }) => {
           <div className="spotLineTwo">${spot.price} night</div>
         </div>
       </Link>
+      {/* {sessionUser.id === spot.ownerId && (
+        <div>
+          <button onClick={onClickUpdate}>
+            <NavLink exact to={`/spots/${spot.id}/edit`} spot={spot}>
+              Update
+            </NavLink>
+          </button>
+          <button>Delete</button>
+        </div>
+      )} */}
     </li>
   );
 };

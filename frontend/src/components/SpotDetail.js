@@ -10,7 +10,9 @@ const SpotDetail = () => {
   const spot = useSelector((state) => state.spots.singleSpot); //spot is an obj so !spot wont work
 
   const spotReviewsObj = useSelector((state) => state.reviews.spot);
-  const spotReviewsArr = Object.values(spotReviewsObj);
+  const spotReviewsArr = Object.values(spotReviewsObj).sort((a, b) =>
+    a.createdAt > b.createdAt ? -1 : 1
+  );
 
   const dispatch = useDispatch();
 
@@ -81,9 +83,11 @@ const SpotDetail = () => {
         <div>${spot.price} night</div>
         <div>
           <i className="fas fa-sharp fa-solid fa-star"></i>
-          {typeof spot.avgRating === "number" ? spot.avgRating : "New"} ·{" "}
-          {typeof spot.numReviews === "number" ? spot.numReviews : "New"}{" "}
-          reviews
+          {typeof spot.numReviews === "number"
+            ? +spot.numReviews !== 1
+              ? `${spot.avgStarRating} · ${spot.numReviews} reviews`
+              : `${spot.avgStarRating} · ${spot.numReviews} review`
+            : "New"}
         </div>
       </div>
       <div>
@@ -91,8 +95,11 @@ const SpotDetail = () => {
       </div>
       <div>
         <i className="fas fa-sharp fa-solid fa-star"></i>
-        {typeof spot.avgRating === "number" ? spot.avgRating : "New"} ·{" "}
-        {typeof spot.numReviews === "number" ? spot.numReviews : "New"} reviews
+        {typeof spot.numReviews === "number"
+          ? +spot.numReviews !== 1
+            ? `${spot.avgStarRating} · ${spot.numReviews} reviews`
+            : `${spot.avgStarRating} · ${spot.numReviews} review`
+          : "New"}
       </div>
       {spotReviewsArr.map((review) => (
         <div key={review.id}>

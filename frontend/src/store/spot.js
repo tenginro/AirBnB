@@ -2,9 +2,10 @@ import { csrfFetch } from "./csrf";
 
 const LOAD_SPOTS = "spots/load";
 const LOAD_SPOT_DETAIL = "spots/load_one";
+const LOAD_SPOTS_CURRENT = "spots/current";
 const CREATE_SPOT = "/spots/create";
-const UPDATE_SPOT = "spots/update";
-const REMOVE_SPOT = "spots/remove";
+const UPDATE_SPOT = "/spots/update";
+const REMOVE_SPOT = "/spots/remove";
 
 export const actionLoadSpots = (spots) => ({
   type: LOAD_SPOTS,
@@ -17,6 +18,21 @@ export const actionLoadSpotDetail = (spot) => ({
 export const actionCreateSpot = (spot) => ({
   type: CREATE_SPOT,
   spot,
+});
+
+export const actionLoadUserSpot = (spots) => ({
+  type: LOAD_SPOTS_CURRENT,
+  spots,
+});
+
+export const actionEditSpot = (payload) => ({
+  type: UPDATE_SPOT,
+  payload,
+});
+
+export const actionRemoveSpot = (id) => ({
+  type: REMOVE_SPOT,
+  id,
 });
 
 export const getAllSpots = () => async (dispatch) => {
@@ -105,6 +121,41 @@ export const createSpot = (spot, user) => async (dispatch) => {
   return response;
 };
 
+export const getUserSpots = () => async (dispatch) => {
+  const response = await csrfFetch("/api/spots/current");
+  if (response.ok) {
+    const spots = await response.json();
+    await dispatch(actionLoadUserSpot(spots.Spots));
+    return spots;
+  }
+};
+
+export const updateSpot = (spot) => async (dispatch) => {
+  const response = await csrfFetch(`/api/spots/${spot.id}`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(spot),
+  });
+  if (response.ok) {
+    const updatedSpot = await response.json();
+    dispatch(actionEditSpot(updateSpot));
+    return updatedSpot;
+  }
+  return response.json();
+};
+
+export const deleteSpot = (spot) => async (dispatch) => {
+  const response = await csrfFetch(`/api/spots/${spot.id}`, {
+    method: "delete",
+  });
+
+  if (response.ok) {
+    dispatch(actionRemoveSpot(spot.id));
+    return await response.json();
+  }
+  return await response.json();
+};
+
 const initialState = {
   allSpots: {},
   singleSpot: {},
@@ -128,6 +179,16 @@ const spotReducer = (state = initialState, action) => {
         ...state,
         allSpots: { ...state.allSpots, [action.spot.id]: action.spot },
       };
+    case LOAD_SPOTS_CURRENT:
+      const allUserSpots = {};
+      action.spots.forEach((spot) => {
+        allUserSpots[spot.id] = spot;
+      });
+      return { ...state, allSpots: { ...allUserSpots } };
+    case REMOVE_SPOT:
+      const newState = { ...state };
+      delete newState.allSpots[action.id];
+      return newState;
     default:
       return state;
   }
