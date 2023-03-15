@@ -1,13 +1,17 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import { getSpotDetail } from "../store/spot";
 import "./spotDetail.css";
 import { getReviews } from "../store/review";
+import CreateReviewModal from "./CreateReviewModal";
+import OpenModalMenuItem from "./Navigation/OpenModalMenuItem";
+import DeleteReviewModal from "./DeleteReviewModal";
 
 const SpotDetail = () => {
   const { spotId } = useParams();
   const spot = useSelector((state) => state.spots.singleSpot); //spot is an obj so !spot wont work
+  const sessionUser = useSelector((state) => state.session.user);
 
   const spotReviewsObj = useSelector((state) => state.reviews.spot);
   const spotReviewsArr = Object.values(spotReviewsObj).sort((a, b) =>
@@ -15,6 +19,32 @@ const SpotDetail = () => {
   );
 
   const dispatch = useDispatch();
+
+  const [showMenu, setShowMenu] = useState(false);
+  const ulRef = useRef();
+
+  // const openMenu = (e) => {
+  //   e.stopPropagation();
+  //   if (showMenu) return;
+  //   setShowMenu(true);
+  // };
+
+  useEffect(() => {
+    if (!showMenu) return;
+
+    const closeMenu = (e) => {
+      // you want the dropdown menu to close only if the click happened OUTSIDE the dropdown.
+      if (!ulRef.current.contains(e.target)) {
+        setShowMenu(false);
+      }
+    };
+
+    document.addEventListener("click", closeMenu);
+
+    return () => document.removeEventListener("click", closeMenu);
+  }, [showMenu]);
+
+  const closeMenu = () => setShowMenu(false);
 
   useEffect(() => {
     dispatch(getSpotDetail(spotId));
@@ -101,13 +131,35 @@ const SpotDetail = () => {
             : `${spot.avgStarRating} · ${spot.numReviews} review`
           : "New"}
       </div>
-      {spotReviewsArr.map((review) => (
-        <div key={review.id}>
-          <div>{review.User.firstName}</div>
-          <div>{review.createdAt}</div>
-          <div>{review.review}</div>
-        </div>
-      ))}
+      {spot.Owner.id !== sessionUser.id && (
+        <>
+          <button>
+            <OpenModalMenuItem
+              itemText="Post Your Review"
+              onItemClick={closeMenu}
+              modalComponent={<CreateReviewModal spot={spot} />}
+            />
+          </button>
+          {!spotReviewsArr.length && <div>Be the first to post a review!</div>}
+        </>
+      )}
+      {spotReviewsArr.length !== 0 &&
+        spotReviewsArr.map((review) => (
+          <div key={review.id}>
+            <div>{review.User.firstName}</div>
+            <div>{review.createdAt}</div>
+            <div>{review.review}</div>
+            {review.User.id === sessionUser.id && (
+              <button>
+                <OpenModalMenuItem
+                  itemText="Delete"
+                  onItemClick={closeMenu}
+                  modalComponent={<DeleteReviewModal review={review} />}
+                />
+              </button>
+            )}
+          </div>
+        ))}
     </>
   );
 };

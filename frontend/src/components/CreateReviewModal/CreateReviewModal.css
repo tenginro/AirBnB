@@ -1,0 +1,17 @@
+.rating-input {
+  display: flex;
+  flex-direction: row;
+  margin-right: 4px;
+}
+
+.rating-input .filled {
+  color: blue;
+}
+
+.rating-input .empty {
+  color: gray;
+}
+
+.errors {
+  color: red;
+}
