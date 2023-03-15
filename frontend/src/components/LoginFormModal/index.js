@@ -21,7 +21,6 @@ function LoginFormModal() {
       .then(closeModal)
       .catch(async (res) => {
         const data = await res.json();
-        // if (data && data.message) setErrors(data.message);
         if (data && data.errors) {
           setErrors(Object.values(data.errors));
         }
@@ -30,8 +29,6 @@ function LoginFormModal() {
 
   const onClick = (e) => {
     e.preventDefault();
-    // setCredential("demo@user.io");
-    // setPassword("password");
     return dispatch(
       sessionActions.login({ credential: "demo@user.io", password: "password" })
     ).then(closeModal);

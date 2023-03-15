@@ -118,6 +118,7 @@ export default function CreateReviewModal({ spot }) {
             //   }}
           >
             <i className="fas fa-regular fa-star"></i>
+            Stars
           </div>
         </div>
         <button type="button" disabled={review.length <= 10} onClick={onClick}>
