@@ -48,7 +48,7 @@ li {
 .reserveBoxLineOne {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  align-items: center;
+  align-items: flex-end;
 }
 
 .reserveBoxLineOne h3 {
