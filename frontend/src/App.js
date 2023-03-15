@@ -10,12 +10,17 @@ import SpotDetail from "./components/SpotDetail";
 import CreateSpotForm from "./components/CreateSpotForm";
 import UserSpot from "./components/UserSpot";
 import EditSpotForm from "./components/EditSpotForm";
+import { getAllSpots } from "./store/spot";
 
 function App() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
+  // const [spots, setSpots] = useState({});
+
   useEffect(() => {
     dispatch(sessionActions.restoreUser()).then(() => setIsLoaded(true));
+    // dispatch(getAllSpots());
+    // .then((res) => setSpots(res));
   }, [dispatch]);
 
   return (
@@ -37,6 +42,9 @@ function App() {
           </Route>
           <Route exact path="/spots/:spotId">
             <SpotDetail />
+          </Route>
+          <Route>
+            <h1>404: Page not found</h1>
           </Route>
         </Switch>
       )}

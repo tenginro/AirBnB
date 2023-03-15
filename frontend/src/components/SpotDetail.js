@@ -53,7 +53,7 @@ const SpotDetail = () => {
   useEffect(() => {
     dispatch(getSpotDetail(spotId));
     dispatch(getReviews(spotId));
-  }, [dispatch, spotId]);
+  }, [dispatch, spotId, spotReviewsObj]);
 
   // conditionally render
   if (!spot.SpotImages && !spot.Owner) {
@@ -162,23 +162,28 @@ const SpotDetail = () => {
               </>
             )}
             {spotReviewsArr.length !== 0 &&
-              spotReviewsArr.map((review) => (
-                <div key={review.id} className="individualReview">
-                  <div>{review.User.firstName}</div>
-                  <div>{review.createdAt}</div>
-                  <div>{review.review}</div>
-                  {sessionUser !== null &&
-                    review.User.id === sessionUser.id && (
-                      <button>
-                        <OpenModalMenuItem
-                          itemText="Delete"
-                          onItemClick={closeMenu}
-                          modalComponent={<DeleteReviewModal review={review} />}
-                        />
-                      </button>
-                    )}
-                </div>
-              ))}
+              spotReviewsArr.map(
+                (review) =>
+                  review.User && (
+                    <div key={review.id} className="individualReview">
+                      <div>{review.User.firstName}</div>
+                      <div>{review.createdAt}</div>
+                      <div>{review.review}</div>
+                      {sessionUser !== null &&
+                        review.User.id === sessionUser.id && (
+                          <button>
+                            <OpenModalMenuItem
+                              itemText="Delete"
+                              onItemClick={closeMenu}
+                              modalComponent={
+                                <DeleteReviewModal review={review} />
+                              }
+                            />
+                          </button>
+                        )}
+                    </div>
+                  )
+              )}
           </div>
         </div>
       </div>
