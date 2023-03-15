@@ -156,7 +156,7 @@ const SpotDetail = () => {
               spotReviewsArr.filter((el) => el.userId === sessionUser.id)
                 .length === 0 && (
                 <>
-                  <button>
+                  <button className="buttonEffect">
                     <OpenModalMenuItem
                       itemText="Post Your Review"
                       onItemClick={closeMenu}
@@ -178,7 +178,7 @@ const SpotDetail = () => {
                       <div>{review.review}</div>
                       {sessionUser !== null &&
                         review.User.id === sessionUser.id && (
-                          <button>
+                          <button className="buttonEffect">
                             <OpenModalMenuItem
                               itemText="Delete"
                               onItemClick={closeMenu}
