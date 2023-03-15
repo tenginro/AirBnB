@@ -1,0 +1,66 @@
+.errors {
+  color: red;
+}
+
+.inputLabel {
+  display: flex;
+  flex-direction: row;
+}
+.createSpotPage {
+  margin: 0 auto;
+  max-width: 500px;
+}
+
+h1 {
+  display: inline-block;
+  margin-left: 0;
+}
+h2 {
+  margin-bottom: 0;
+}
+h3 {
+  margin-top: 0;
+}
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+input {
+  width: 480px;
+  margin-bottom: 10px;
+}
+
+textarea {
+  width: 480px;
+  height: 100px;
+}
+.cityState {
+  display: flex;
+  flex-direction: row;
+}
+
+.cityState input {
+  width: 230px;
+}
+
+.firstSection,
+.secondSection,
+.thirdSection,
+.fourthSection,
+.pictureSection {
+  border-bottom: 2px solid black;
+}
+.priceContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.createButtonContainer {
+  margin: 0 auto;
+}
+
+.createSpotButton {
+  background-color: red;
+  color: white;
+}
