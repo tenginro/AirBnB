@@ -151,20 +151,23 @@ const SpotDetail = () => {
               : "New"}
           </div>
           <div>
-            {sessionUser !== null && spot.Owner.id !== sessionUser.id && (
-              <>
-                <button>
-                  <OpenModalMenuItem
-                    itemText="Post Your Review"
-                    onItemClick={closeMenu}
-                    modalComponent={<CreateReviewModal spot={spot} />}
-                  />
-                </button>
-                {!spotReviewsArr.length && (
-                  <div>Be the first to post a review!</div>
-                )}
-              </>
-            )}
+            {sessionUser !== null &&
+              spot.Owner.id !== sessionUser.id &&
+              spotReviewsArr.filter((el) => el.userId === sessionUser.id)
+                .length === 0 && (
+                <>
+                  <button>
+                    <OpenModalMenuItem
+                      itemText="Post Your Review"
+                      onItemClick={closeMenu}
+                      modalComponent={<CreateReviewModal spot={spot} />}
+                    />
+                  </button>
+                  {!spotReviewsArr.length && (
+                    <div>Be the first to post a review!</div>
+                  )}
+                </>
+              )}
             {spotReviewsArr.length !== 0 &&
               spotReviewsArr.map(
                 (review) =>
