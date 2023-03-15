@@ -48,7 +48,7 @@ li {
 .reserveBoxLineOne {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  align-items: center;
+  align-items: flex-end;
 }
 
 .reserveBoxLineOne h3 {
@@ -79,6 +79,13 @@ li {
 
 .individualReview {
   margin-top: 10px;
+}
+
+.buttonEffect {
+  background-color: blue;
+  color: white;
+  cursor: pointer;
+  border-radius: 10%;
 }
 
 @media screen and (max-width: 1000px) {

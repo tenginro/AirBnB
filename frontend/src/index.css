@@ -3,3 +3,7 @@
   text-decoration: none;
   font-family: "Prompt", sans-serif;
 }
+
+button {
+  cursor: pointer;
+}
