@@ -5,6 +5,7 @@ import { useModal } from "../../context/Modal";
 import { deleteReview, getReviews } from "../../store/review";
 import { useHistory } from "react-router-dom";
 import { getSpotDetail } from "../../store/spot";
+import "./DeleteReviewModal.css";
 
 export default function DeleteReviewModal({ review, spotId }) {
   const dispatch = useDispatch();
@@ -32,12 +33,18 @@ export default function DeleteReviewModal({ review, spotId }) {
     <>
       <h2>Confirm Delete</h2>
       <h3>Are you sure you want to delete this review?</h3>
-      <button type="button" onClick={onClick}>
-        Yes (Delete Review)
-      </button>
-      <button type="button" onClick={closeModal}>
-        No (Keep Review){" "}
-      </button>
+      <div className="reviewModalButton">
+        <div>
+          <button type="button" onClick={onClick}>
+            Yes (Delete Review)
+          </button>
+        </div>
+        <div>
+          <button type="button" onClick={closeModal}>
+            No (Keep Review){" "}
+          </button>
+        </div>
+      </div>
     </>
   );
 }

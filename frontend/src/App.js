@@ -10,8 +10,6 @@ import SpotDetail from "./components/SpotDetail";
 import CreateSpotForm from "./components/CreateSpotForm";
 import UserSpot from "./components/UserSpot";
 import EditSpotFormWrapper from "./components/EditSpotFormWrapper";
-import { actionClearState } from "./store/spot";
-import { actionClearReviewState } from "./store/review";
 
 function App() {
   const dispatch = useDispatch();

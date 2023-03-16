@@ -206,11 +206,13 @@ const spotReducer = (state = initialState, action) => {
       return { allSpots: { ...allUserSpots }, singleSpot: {} };
     case CREATE_SPOT:
       return {
+        ...state,
         allSpots: { ...state.allSpots, [action.spot.id]: action.spot },
         singleSpot: {},
       };
     case UPDATE_SPOT:
       return {
+        ...state,
         allSpots: { ...state.allSpots, [action.spot.id]: action.spot },
         singleSpot: {},
       };
@@ -219,7 +221,7 @@ const spotReducer = (state = initialState, action) => {
       delete newState.allSpots[action.id];
       return newState;
     case CLEAR_STATE:
-      return { singleSpot: {} };
+      return { ...state, singleSpot: {} };
     default:
       return state;
   }
