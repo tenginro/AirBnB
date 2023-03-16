@@ -71,7 +71,7 @@ function ProfileButton({ user }) {
             </>
           ) : (
             <>
-              <div className="hoverEffect">
+              <div className="hoverEffect logInWord">
                 <OpenModalMenuItem
                   itemText="Log In"
                   onItemClick={closeMenu}

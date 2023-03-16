@@ -118,8 +118,8 @@ const SpotDetail = () => {
           </div>
           <div className="reserveBox">
             <div className="reserveBoxLineOne">
-              <h3>${spot.price} night</h3>
-              <div>
+              <div className="toCenter larger">${spot.price} night</div>
+              <div className="toCenter">
                 <i className="fas fa-sharp fa-solid fa-star"></i>
                 {typeof spot.numReviews === "number"
                   ? +spot.numReviews !== 1
