@@ -192,7 +192,7 @@ const spotReducer = (state = initialState, action) => {
       action.spots.forEach((spot) => {
         allSpots[spot.id] = spot;
       });
-      return { ...state, allSpots: { ...allSpots } };
+      return { ...state, allSpots: { ...allSpots }, singleSpot: {} };
     case LOAD_SPOT_DETAIL:
       return {
         ...state,
@@ -203,23 +203,23 @@ const spotReducer = (state = initialState, action) => {
       action.spots.forEach((spot) => {
         allUserSpots[spot.id] = spot;
       });
-      return { ...state, allSpots: { ...allUserSpots } };
+      return { allSpots: { ...allUserSpots }, singleSpot: {} };
     case CREATE_SPOT:
       return {
-        ...state,
         allSpots: { ...state.allSpots, [action.spot.id]: action.spot },
+        singleSpot: {},
       };
     case UPDATE_SPOT:
       return {
-        ...state,
         allSpots: { ...state.allSpots, [action.spot.id]: action.spot },
+        singleSpot: {},
       };
     case REMOVE_SPOT:
       const newState = { ...state };
       delete newState.allSpots[action.id];
       return newState;
     case CLEAR_STATE:
-      return { allSpots: {}, singleSpot: {} };
+      return { singleSpot: {} };
     default:
       return state;
   }

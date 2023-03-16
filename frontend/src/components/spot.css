@@ -7,7 +7,7 @@
   margin-top: 20px;
   display: grid;
   grid-template-columns: 50% 50%;
-  gap: 10px;
+  gap: 5px;
 }
 
 .largerImage {
@@ -18,8 +18,8 @@
 .otherImages {
   display: grid;
   grid-template-columns: 50% 50%;
-  column-gap: 10px;
-  row-gap: 10px;
+  column-gap: 5px;
+  row-gap: 5px;
 }
 
 .smallerImages {

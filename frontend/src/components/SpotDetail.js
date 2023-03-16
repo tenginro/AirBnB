@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 
 import { actionClearState, getSpotDetail } from "../store/spot";
-import { getReviews } from "../store/review";
+import { actionClearReviewState, getReviews } from "../store/review";
 import CreateReviewModal from "./CreateReviewModal";
 import OpenModalMenuItem from "./Navigation/OpenModalMenuItem";
 import DeleteReviewModal from "./DeleteReviewModal";
@@ -51,12 +51,16 @@ const SpotDetail = () => {
   useEffect(() => {
     dispatch(getSpotDetail(spotId));
     dispatch(getReviews(spotId));
+    return () => {
+      actionClearState();
+      actionClearReviewState();
+    };
   }, [dispatch, spotId]);
 
   useEffect(() => {
     return () => {
-      console.log("clearState");
       actionClearState();
+      actionClearReviewState();
     };
   }, []);
 
