@@ -23,7 +23,12 @@
   justify-content: center;
   align-items: center;
 }
-.submitReviewButton {
+.submitReview {
   display: flex;
   justify-content: center;
+}
+
+.submitReviewButton {
+  border-radius: 5px;
+  font-size: 15px;
 }

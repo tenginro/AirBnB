@@ -1,14 +1,16 @@
 .nav.ul {
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: space-between;
   height: 100px;
-  /* border-top: 1px solid gray; */
-  border-bottom: 1px solid lightgrey;
   align-items: center;
   list-style-type: none;
+  margin-left: 50px;
+  margin-right: 80px;
 }
-
+.navBar {
+  border-bottom: 1px solid lightgrey;
+}
 .logo {
   height: 45px;
   width: 45px;
@@ -19,13 +21,10 @@
   flex-direction: row;
   align-items: center;
   gap: 2px;
-  font-size: 25px;
+  font-size: 26px;
+  color: rgb(16, 101, 237);
+  font-weight: bolder;
 }
-
-/* .profile.div {
-  display: flex;
-  flex-direction: column;
-} */
 
 .rightSide {
   display: flex;
@@ -34,12 +33,14 @@
 }
 
 .profile.button {
-  height: 45px;
-  width: 70px;
+  height: 50px;
+  width: 80px;
   border: 1px solid gray;
   border-radius: 21px;
   margin: 10px;
   cursor: pointer;
+  background-color: white;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
 }
 
 .fa-bars {
@@ -54,26 +55,21 @@
   cursor: pointer;
   position: absolute;
   background-color: white;
-  border: 3px solid lightgray;
   padding: 10px;
-  border-radius: 20%;
+  border: 1px solid rgb(221, 221, 221);
+  box-shadow: rgba(0, 0, 0, 0.12) 0px 6px 16px;
+  border-radius: 12px;
 }
 
 .profile-dropdown li {
-  margin-right: 10px;
   margin-left: 0;
 }
 
 .hoverEffect:hover,
 .logoutButton:hover {
-  width: 100%;
-  left: 0;
-  background-color: lightpink;
+  background-color: lightgrey;
+  border-radius: 5px;
 }
-
-/* .profile-dropdown li {
-  border: 1px solid gray;
-} */
 
 .profile.li {
   display: flex;
@@ -88,4 +84,6 @@
   width: 80px;
   height: 30px;
   cursor: pointer;
+  border-radius: 10px;
+  background-color: rgb(240, 243, 246);
 }

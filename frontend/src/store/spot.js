@@ -192,7 +192,7 @@ const spotReducer = (state = initialState, action) => {
       action.spots.forEach((spot) => {
         allSpots[spot.id] = spot;
       });
-      return { ...state, allSpots: { ...allSpots }, singleSpot: {} };
+      return { ...state, allSpots: { ...allSpots } };
     case LOAD_SPOT_DETAIL:
       return {
         ...state,

@@ -31,10 +31,10 @@ export default function DeleteSpotModal({ spot }) {
       <h2>Confirm Delete</h2>
       <h3>Are you sure you want to remove this spot from the listings?</h3>
       <div className="deleteSpotModalButton">
-        <button type="button" onClick={onClick}>
+        <button className="yesButton" type="button" onClick={onClick}>
           Yes (Delete Spot)
         </button>
-        <button type="button" onClick={closeModal}>
+        <button className="noButton" type="button" onClick={closeModal}>
           No (Keep Spot){" "}
         </button>
       </div>
