@@ -41,7 +41,9 @@ const SpotDetail = () => {
     };
     document.addEventListener("click", closeMenu);
 
-    return () => document.removeEventListener("click", closeMenu);
+    return () => {
+      document.removeEventListener("click", closeMenu);
+    };
   }, [showMenu]);
 
   const closeMenu = () => setShowMenu(false);
@@ -49,8 +51,14 @@ const SpotDetail = () => {
   useEffect(() => {
     dispatch(getSpotDetail(spotId));
     dispatch(getReviews(spotId));
-    return () => actionClearState();
   }, [dispatch, spotId]);
+
+  useEffect(() => {
+    return () => {
+      console.log("clearState");
+      actionClearState();
+    };
+  }, []);
 
   // conditionally render
   if (!spot.SpotImages && !spot.Owner) {

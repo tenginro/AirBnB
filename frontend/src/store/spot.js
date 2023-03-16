@@ -6,7 +6,7 @@ const LOAD_SPOTS_CURRENT = "spots/current";
 const CREATE_SPOT = "spots/create";
 const UPDATE_SPOT = "spots/update";
 const REMOVE_SPOT = "spots/remove";
-const CLEAR_SPOT = "spots/clear";
+const CLEAR_STATE = "spots/clear_state";
 
 export const actionLoadSpots = (spots) => ({
   type: LOAD_SPOTS,
@@ -37,7 +37,7 @@ export const actionRemoveSpot = (id) => ({
 });
 
 export const actionClearState = () => ({
-  type: CLEAR_SPOT,
+  type: CLEAR_STATE,
 });
 
 export const getAllSpots = () => async (dispatch) => {
@@ -218,8 +218,8 @@ const spotReducer = (state = initialState, action) => {
       const newState = { ...state };
       delete newState.allSpots[action.id];
       return newState;
-    case CLEAR_SPOT:
-      return {};
+    case CLEAR_STATE:
+      return { allSpots: {}, singleSpot: {} };
     default:
       return state;
   }
