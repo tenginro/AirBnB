@@ -15,6 +15,6 @@ export default function EditSpotFormWrapper() {
     dispatch(getAllSpots());
   }, [dispatch]);
 
-  if (!spot) return null;
+  if (!spot) return <div>Loading</div>;
   if (spot && spot.country) return <EditSpotForm spot={spot} />;
 }
