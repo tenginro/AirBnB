@@ -10,6 +10,21 @@ import DeleteReviewModal from "./DeleteReviewModal";
 
 import "./spot.css";
 
+const months = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+];
+
 const SpotDetail = () => {
   const { spotId } = useParams();
   const spot = useSelector((state) => state.spots.singleSpot); //spot is an obj so !spot wont work
@@ -179,7 +194,12 @@ const SpotDetail = () => {
                   review.User && (
                     <div key={review.id} className="individualReview">
                       <div className="toBold">{review.User.firstName}</div>
-                      <div>{review.createdAt}</div>
+                      <div>{`${
+                        months[+review.createdAt.slice(5, 7) - 1]
+                      } ${review.createdAt.slice(
+                        8,
+                        10
+                      )}, ${review.createdAt.slice(0, 4)}`}</div>
                       <div>{review.review}</div>
                       {sessionUser !== null &&
                         review.User.id === sessionUser.id && (
