@@ -1,11 +1,10 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { actionClearState, getAllSpots } from "../store/spot";
+import { getAllSpots } from "../store/spot";
 import SpotIndexItem from "./SpotIndexItem";
 
 import "./SpotIndex.css";
-import { actionClearReviewState } from "../store/review";
 
 const SpotsIndex = () => {
   const spotsObj = useSelector((state) => state.spots.allSpots);

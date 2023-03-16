@@ -67,12 +67,14 @@ const reviewReducer = (state = initialState, action) => {
         reviewObj[review.id] = review;
       });
       return {
+        ...state,
         spot: {
           ...reviewObj,
         },
       };
     case CREATE_REVIEW:
       return {
+        ...state,
         spot: { ...state.spot, [action.review.id]: action.review },
       };
     case REMOVE_REVIEW:
@@ -80,7 +82,7 @@ const reviewReducer = (state = initialState, action) => {
       delete newState.spot[action.id];
       return newState;
     case CLEAR_STATE:
-      return { spot: {} };
+      return { ...state, spot: {} };
     default:
       return state;
   }

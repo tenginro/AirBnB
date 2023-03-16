@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { deleteSpot, getAllSpots, getUserSpots } from "../../store/spot";
 import { useModal } from "../../context/Modal";
 import { useHistory } from "react-router-dom";
+import "./DeleteSpotModal.css";
 
 export default function DeleteSpotModal({ spot }) {
   const dispatch = useDispatch();
@@ -29,12 +30,14 @@ export default function DeleteSpotModal({ spot }) {
     <>
       <h2>Confirm Delete</h2>
       <h3>Are you sure you want to remove this spot from the listings?</h3>
-      <button type="button" onClick={onClick}>
-        Yes (Delete Spot)
-      </button>
-      <button type="button" onClick={closeModal}>
-        No (Keep Spot){" "}
-      </button>
+      <div className="deleteSpotModalButton">
+        <button type="button" onClick={onClick}>
+          Yes (Delete Spot)
+        </button>
+        <button type="button" onClick={closeModal}>
+          No (Keep Spot){" "}
+        </button>
+      </div>
     </>
   );
 }
