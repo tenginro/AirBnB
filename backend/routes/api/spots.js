@@ -106,9 +106,7 @@ const validateNewBooking = [
 
 const validateSpotImage = [
   check("url").exists({ checkFalsy: true }).withMessage("url is required"),
-  check("preview")
-    .exists({ checkFalsy: true })
-    .withMessage("preview is required"),
+  check("preview").exists().withMessage("preview is required"),
   handleValidationErrors,
 ];
 
