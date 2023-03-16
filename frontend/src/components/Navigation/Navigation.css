@@ -54,8 +54,9 @@
   cursor: pointer;
   position: absolute;
   background-color: white;
-  border: 3px solid black;
+  border: 3px solid lightgray;
   padding: 10px;
+  border-radius: 20%;
 }
 
 .profile-dropdown li {
@@ -67,7 +68,7 @@
 .logoutButton:hover {
   width: 100%;
   left: 0;
-  background-color: pink;
+  background-color: lightpink;
 }
 
 /* .profile-dropdown li {

@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 
-import { getSpotDetail } from "../store/spot";
+import { actionClearState, getSpotDetail } from "../store/spot";
 import { getReviews } from "../store/review";
 import CreateReviewModal from "./CreateReviewModal";
 import OpenModalMenuItem from "./Navigation/OpenModalMenuItem";
@@ -33,14 +33,12 @@ const SpotDetail = () => {
 
   useEffect(() => {
     if (!showMenu) return;
-
     const closeMenu = (e) => {
       // you want the dropdown menu to close only if the click happened OUTSIDE the dropdown.
       if (!ulRef.current.contains(e.target)) {
         setShowMenu(false);
       }
     };
-
     document.addEventListener("click", closeMenu);
 
     return () => document.removeEventListener("click", closeMenu);
@@ -51,6 +49,7 @@ const SpotDetail = () => {
   useEffect(() => {
     dispatch(getSpotDetail(spotId));
     dispatch(getReviews(spotId));
+    return () => actionClearState();
   }, [dispatch, spotId]);
 
   // conditionally render

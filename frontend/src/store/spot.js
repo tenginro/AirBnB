@@ -6,6 +6,7 @@ const LOAD_SPOTS_CURRENT = "spots/current";
 const CREATE_SPOT = "spots/create";
 const UPDATE_SPOT = "spots/update";
 const REMOVE_SPOT = "spots/remove";
+const CLEAR_SPOT = "spots/clear";
 
 export const actionLoadSpots = (spots) => ({
   type: LOAD_SPOTS,
@@ -33,6 +34,10 @@ export const actionEditSpot = (spot) => ({
 export const actionRemoveSpot = (id) => ({
   type: REMOVE_SPOT,
   id,
+});
+
+export const actionClearState = () => ({
+  type: CLEAR_SPOT,
 });
 
 export const getAllSpots = () => async (dispatch) => {
@@ -90,28 +95,47 @@ export const createSpot = (spot, user) => async (dispatch) => {
     try {
       await csrfFetch(`/api/spots/${newSpot.id}/images`, {
         method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify({ url: previewImg, preview: true }),
       });
-      if (image1)
+      if (image1) {
         await csrfFetch(`/api/spots/${newSpot.id}/images`, {
           method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
           body: JSON.stringify({ url: image1, preview: false }),
         });
-      if (image2)
+      }
+      if (image2) {
         await csrfFetch(`/api/spots/${newSpot.id}/images`, {
           method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
           body: JSON.stringify({ url: image2, preview: false }),
         });
-      if (image3)
+      }
+      if (image3) {
         await csrfFetch(`/api/spots/${newSpot.id}/images`, {
           method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
           body: JSON.stringify({ url: image3, preview: false }),
         });
-      if (image4)
+      }
+      if (image4) {
         await csrfFetch(`/api/spots/${newSpot.id}/images`, {
           method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
           body: JSON.stringify({ url: image4, preview: false }),
         });
+      }
       dispatch(actionCreateSpot(newSpot));
       return newSpot;
     } catch (error) {
@@ -194,6 +218,8 @@ const spotReducer = (state = initialState, action) => {
       const newState = { ...state };
       delete newState.allSpots[action.id];
       return newState;
+    case CLEAR_SPOT:
+      return {};
     default:
       return state;
   }
