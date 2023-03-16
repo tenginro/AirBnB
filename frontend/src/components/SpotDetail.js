@@ -111,7 +111,7 @@ const SpotDetail = () => {
         </div>
         <div className="secondContent">
           <div className="description">
-            <h3>
+            <h3 className="toBoldHeading">
               Hosted by {spot.Owner.firstName} {spot.Owner.lastName}
             </h3>
             <div>{spot.description}</div>
@@ -133,12 +133,14 @@ const SpotDetail = () => {
               </div>
             </div>
             <div className="reserveButtonContainer">
-              <button
-                className="reserveButton"
-                onClick={() => alert("Feature Coming Soon...")}
-              >
-                Reserve
-              </button>
+              <div className="reserveButtonBox">
+                <button
+                  className="reserveButton"
+                  onClick={() => alert("Feature Coming Soon...")}
+                >
+                  Reserve
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -159,7 +161,7 @@ const SpotDetail = () => {
               spotReviewsArr.filter((el) => el.userId === sessionUser.id)
                 .length === 0 && (
                 <>
-                  <button className="buttonEffect">
+                  <button className="postReviewButtonEffect">
                     <OpenModalMenuItem
                       itemText="Post Your Review"
                       onItemClick={closeMenu}
@@ -176,12 +178,12 @@ const SpotDetail = () => {
                 (review) =>
                   review.User && (
                     <div key={review.id} className="individualReview">
-                      <div>{review.User.firstName}</div>
+                      <div className="toBold">{review.User.firstName}</div>
                       <div>{review.createdAt}</div>
                       <div>{review.review}</div>
                       {sessionUser !== null &&
                         review.User.id === sessionUser.id && (
-                          <button className="buttonEffect">
+                          <button className="deleteReviewButtonEffect">
                             <OpenModalMenuItem
                               itemText="Delete"
                               onItemClick={closeMenu}

@@ -34,16 +34,12 @@ export default function DeleteReviewModal({ review, spotId }) {
       <h2>Confirm Delete</h2>
       <h3>Are you sure you want to delete this review?</h3>
       <div className="reviewModalButton">
-        <div>
-          <button type="button" onClick={onClick}>
-            Yes (Delete Review)
-          </button>
-        </div>
-        <div>
-          <button type="button" onClick={closeModal}>
-            No (Keep Review){" "}
-          </button>
-        </div>
+        <button className="yesButton" type="button" onClick={onClick}>
+          Yes (Delete Review)
+        </button>
+        <button className="noButton" type="button" onClick={closeModal}>
+          No (Keep Review){" "}
+        </button>
       </div>
     </>
   );

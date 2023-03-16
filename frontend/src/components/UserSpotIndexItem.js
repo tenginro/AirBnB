@@ -60,13 +60,13 @@ const UserSpotIndexItem = ({ spot }) => {
           <div className="spotLineTwo">${spot.price} night</div>
         </div>
       </NavLink>
-      <div>
-        <button onClick={onClickUpdate}>
+      <div className="userSpotButtons">
+        <button onClick={onClickUpdate} className="updateSpotButton">
           <NavLink exact to={`/spots/${spot.id}/edit`} spot={spot}>
             Update
           </NavLink>
         </button>
-        <button>
+        <button className="deleteSpotButton">
           {" "}
           <OpenModalMenuItem
             itemText="Delete"

@@ -3,7 +3,7 @@ import { csrfFetch } from "./csrf";
 export const LOAD_SPOT_REVIEWS = "reviews/load_reviews";
 const CREATE_REVIEW = "reviews/create";
 const REMOVE_REVIEW = "reviews/remove";
-const CLEAR_STATE = "reviews/clear";
+const CLEAR_STATE = "reviews/clear_state";
 
 const loadSpotReviews = (reviews, spotId) => ({
   type: LOAD_SPOT_REVIEWS,

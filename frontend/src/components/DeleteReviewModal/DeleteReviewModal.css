@@ -2,4 +2,19 @@
   display: flex;
   flex-direction: row;
   justify-content: space-around;
+  font-size: 15px;
+}
+
+.yesButton {
+  background-color: red;
+  color: white;
+  border-radius: 5px;
+  font-size: 15px;
+}
+
+.noButton {
+  background-color: green;
+  color: white;
+  border-radius: 5px;
+  font-size: 15px;
 }

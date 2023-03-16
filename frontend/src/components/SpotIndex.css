@@ -19,6 +19,24 @@ img {
   flex-direction: row;
   justify-content: space-between;
 }
+.userSpotButtons {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+.userSpotButtons button {
+  margin-right: 5px;
+  font-size: 15px;
+  border-radius: 5px;
+}
+
+.updateSpotButton {
+  background-color: lightskyblue;
+}
+
+.deleteSpotButton {
+  background-color: lightgrey;
+}
 
 @media screen and (max-width: 1000px) {
   .spots {
