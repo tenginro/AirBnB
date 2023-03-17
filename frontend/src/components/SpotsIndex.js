@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { getAllSpots } from "../store/spot";
+import { actionClearSpots, getAllSpots } from "../store/spot";
 import SpotIndexItem from "./SpotIndexItem";
 
 import "./SpotIndex.css";
@@ -13,6 +13,7 @@ const SpotsIndex = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getAllSpots());
+    return () => dispatch(actionClearSpots());
   }, [dispatch]);
 
   return (
