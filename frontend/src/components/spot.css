@@ -55,6 +55,17 @@ li {
   gap: 20px;
 }
 
+.description {
+  width: 600px;
+}
+
+.descriptionPara {
+  white-space: pre-wrap;
+  line-height: 24px;
+  box-sizing: border-box;
+  overflow-wrap: break-word;
+}
+
 .reserveBox {
   border: 1px solid rgb(221, 221, 221);
   box-shadow: rgba(0, 0, 0, 0.12) 0px 6px 16px;
