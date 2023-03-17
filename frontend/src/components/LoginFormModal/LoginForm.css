@@ -25,4 +25,6 @@
   width: 100%;
   cursor: pointer;
   border-radius: 5px;
+  background-color: #00ccff;
+  border-color: white;
 }

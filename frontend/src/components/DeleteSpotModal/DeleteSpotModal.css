@@ -5,15 +5,17 @@
 }
 
 .yesButton {
-  background-color: red;
+  background-color: #0052ff;
   color: white;
   border-radius: 5px;
   font-size: 15px;
+  border-color: white;
 }
 
 .noButton {
-  background-color: green;
+  background-color: pink;
   color: white;
   border-radius: 5px;
   font-size: 15px;
+  border-color: white;
 }

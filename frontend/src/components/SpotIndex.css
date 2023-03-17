@@ -28,10 +28,11 @@ img {
   margin-right: 20px;
   font-size: 15px;
   border-radius: 5px;
+  border-color: white;
 }
 
 .updateSpotButton {
-  background-color: #1260cc;
+  background-color: #00a3ff;
   color: white;
 }
 
