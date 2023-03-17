@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getUserSpots } from "../store/spot";
+import { actionClearUserSpot, getUserSpots } from "../store/spot";
 import UserSpotIndexItem from "./UserSpotIndexItem";
 import "./SpotIndex.css";
 
@@ -12,6 +12,7 @@ const UserSpot = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getUserSpots());
+    return () => dispatch(actionClearUserSpot());
   }, [dispatch]);
 
   return (
