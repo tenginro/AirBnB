@@ -16,8 +16,6 @@ const SpotsIndex = () => {
     return () => dispatch(actionClearSpots());
   }, [dispatch]);
 
-  if (!spots.length) return <div>Loading</div>;
-
   return (
     <ul className="spots">
       {spots.map((spot) => (
