@@ -22,7 +22,7 @@
   align-items: center;
   gap: 2px;
   font-size: 26px;
-  color: rgb(16, 101, 237);
+  color: #0700c4;
   font-weight: bolder;
 }
 
@@ -71,8 +71,7 @@
 
 .hoverEffect:hover,
 .logoutButton:hover {
-  background-color: lightgrey;
-  border-radius: 5px;
+  background-color: #00a3ff;
 }
 
 .profile.li {
@@ -88,6 +87,7 @@
   width: 80px;
   height: 30px;
   cursor: pointer;
-  border-radius: 10px;
-  background-color: rgb(240, 243, 246);
+  border-radius: 5px;
+  background-color: #00ccff;
+  color: white;
 }

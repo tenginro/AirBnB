@@ -61,7 +61,8 @@ textarea {
 }
 
 .createSpotButton {
-  background-color: blue;
+  background-color: #007aff;
   color: white;
   margin: 5px;
+  border-radius: 5px;
 }
