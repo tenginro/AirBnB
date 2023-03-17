@@ -3,7 +3,7 @@ import Cookies from "js-cookie";
 
 // The csrfFetch is used to wrap the browser's fetch function and read the value of the XSRF-Token cookie and add it to a header in the fetch request.
 export async function csrfFetch(url, options = {}) {
-  console.log("this is XSRF token in CSRFFetch", Cookies.get("XSRF-TOKEN"));
+  // console.log("this is XSRF token in CSRFFetch", Cookies.get("XSRF-TOKEN"));
 
   // set options.method to 'GET' if there is no method
   options.method = options.method || "GET";

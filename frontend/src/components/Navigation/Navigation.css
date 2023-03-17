@@ -8,9 +8,11 @@
   margin-left: 50px;
   margin-right: 80px;
 }
+
 .navBar {
   border-bottom: 1px solid lightgrey;
 }
+
 .logo {
   height: 45px;
   width: 45px;
@@ -22,8 +24,9 @@
   align-items: center;
   gap: 2px;
   font-size: 26px;
-  color: #0700c4;
+  color: blue;
   font-weight: bolder;
+  /* text-shadow: 1px 1px 2px lightblue; */
 }
 
 .rightSide {
@@ -35,8 +38,8 @@
 .profile.button {
   height: 50px;
   width: 80px;
-  border: 1px solid gray;
-  border-radius: 21px;
+  border: 1px solid rgb(221, 221, 221);
+  border-radius: 30px;
   margin: 10px;
   cursor: pointer;
   background-color: white;

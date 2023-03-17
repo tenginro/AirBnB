@@ -20,11 +20,29 @@
   width: 300px;
 }
 
-#logInContainer button {
+.normalLogInButton {
   margin: 5px;
   width: 100%;
   cursor: pointer;
   border-radius: 5px;
   background-color: #00ccff;
+  border-color: white;
+  color: white;
+}
+.normalLogInButton.disabled {
+  margin: 5px;
+  width: 100%;
+  cursor: pointer;
+  border-radius: 5px;
+  background-color: #afe9f8;
+  color: white;
+}
+.demoUserLogIn {
+  background-color: white;
+  margin: 5px;
+  width: 100%;
+  cursor: pointer;
+  border-radius: 5px;
+  color: #00ccff;
   border-color: white;
 }

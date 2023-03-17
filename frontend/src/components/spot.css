@@ -125,6 +125,9 @@ li {
 .individualReview {
   margin-top: 10px;
 }
+.reviewSentences {
+  overflow-wrap: break-word;
+}
 
 .postReviewButtonEffect {
   background-color: #0052ff;

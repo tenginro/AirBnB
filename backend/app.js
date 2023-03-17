@@ -37,10 +37,10 @@ app.use(
   })
 );
 
-// testing
-app.use((req, res, next) => {
-  console.log("!!!!!!Before csurf in app.use csurf!!!!!!!"), next();
-});
+// // testing
+// app.use((req, res, next) => {
+//   console.log("!!!!!!Before csurf in app.use csurf!!!!!!!"), next();
+// });
 
 // Set the _csrf token and create req.csrfToken method
 app.use(
@@ -54,17 +54,17 @@ app.use(
   })
 );
 
-// testing
-app.use((req, res, next) => {
-  console.log("!!!!!!after csurf in app.use csurf!!!!!!!");
-  next();
-});
+// // testing
+// app.use((req, res, next) => {
+//   console.log("!!!!!!after csurf in app.use csurf!!!!!!!");
+//   next();
+// });
 
-// testing
-app.use((req, res, next) => {
-  console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!CSRF token:", req.csrfToken());
-  next();
-});
+// // testing
+// app.use((req, res, next) => {
+//   console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!CSRF token:", req.csrfToken());
+//   next();
+// });
 
 app.use(routes); // Connect all the routes
 // make sure you are defining your error handlers after your route connections in app.js (i.e., after app.use(routes)).
