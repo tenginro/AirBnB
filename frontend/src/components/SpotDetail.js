@@ -96,28 +96,28 @@ const SpotDetail = () => {
           <div className="otherImages">
             {spot.SpotImages[1] && (
               <img
-                className="smallerImages"
+                className="smallerImages image1"
                 src={spot.SpotImages[1].url}
                 alt="imageTwo"
               ></img>
             )}
             {spot.SpotImages[2] && (
               <img
-                className="smallerImages"
+                className="smallerImages image2"
                 src={spot.SpotImages[2].url}
                 alt="imageThree"
               ></img>
             )}
             {spot.SpotImages[3] && (
               <img
-                className="smallerImages"
+                className="smallerImages image3"
                 src={spot.SpotImages[3].url}
                 alt="imageFour"
               ></img>
             )}
             {spot.SpotImages[4] && (
               <img
-                className="smallerImages"
+                className="smallerImages image4"
                 src={spot.SpotImages[4].url}
                 alt="imageFive"
               ></img>
