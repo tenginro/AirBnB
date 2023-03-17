@@ -33,25 +33,27 @@ const setTokenCookie = (res, user) => {
 const restoreUser = (req, res, next) => {
   // token parsed from cookies
 
-  // console.log("restoreUser backend running");
+  console.log("restoreUser backend running");
 
   const { token } = req.cookies;
-  // console.log("this is token from req.cookies");
+  console.log("this is token from req.cookies", token);
+  console.log("this is req.cookies", req.cookies);
+
   req.user = null;
 
   return jwt.verify(token, secret, null, async (err, jwtPayload) => {
-    // console.log("return jwt verify running");
+    console.log("return jwt verify running");
     if (err) {
-      // console.log("jwt verify if error running", err);
+      console.log("jwt verify if error running", err);
       return next();
     }
 
     try {
       const { id } = jwtPayload.data;
       req.user = await User.scope("currentUser").findByPk(id);
-      // console.log("this is req.user from restoreUser try block", req.user);
+      console.log("this is req.user from restoreUser try block", req.user);
     } catch (e) {
-      // console.log("catch e running in restoreUser, this is e", e);
+      console.log("catch e running in restoreUser, this is e", e);
       res.clearCookie("token");
       return next();
     }

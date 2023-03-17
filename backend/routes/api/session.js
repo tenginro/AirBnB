@@ -35,6 +35,7 @@ const dateFormat = (str) => {
 
 // Log in
 router.post("/", validateLogin, async (req, res, next) => {
+  console.log("BACKEND LOGIN ROUTE");
   const { credential, password } = req.body;
   const user = await User.login({ credential, password });
 
