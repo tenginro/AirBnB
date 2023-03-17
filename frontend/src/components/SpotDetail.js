@@ -129,7 +129,7 @@ const SpotDetail = () => {
             <h3 className="toBoldHeading">
               Hosted by {spot.Owner.firstName} {spot.Owner.lastName}
             </h3>
-            <div>{spot.description}</div>
+            <div className="descriptionPara">{spot.description}</div>
           </div>
           <div className="reserveBox">
             <div className="reserveBoxLineOne">
