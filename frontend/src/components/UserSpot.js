@@ -15,8 +15,6 @@ const UserSpot = () => {
     return () => dispatch(actionClearSpots());
   }, [dispatch]);
 
-  if (!spots.length) return <div>Loading</div>;
-
   return (
     <>
       <h2>Manage Spots</h2>
