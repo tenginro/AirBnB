@@ -25,17 +25,19 @@ img {
   justify-content: flex-start;
 }
 .userSpotButtons button {
-  margin-right: 5px;
+  margin-right: 20px;
   font-size: 15px;
   border-radius: 5px;
 }
 
 .updateSpotButton {
-  background-color: greenyellow;
+  background-color: #1260cc;
+  color: white;
 }
 
 .deleteSpotButton {
-  background-color: lightgrey;
+  background-color: pink;
+  color: black;
 }
 
 @media screen and (max-width: 1000px) {

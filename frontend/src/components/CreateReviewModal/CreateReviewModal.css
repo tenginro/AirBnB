@@ -31,4 +31,12 @@
 .submitReviewButton {
   border-radius: 5px;
   font-size: 15px;
+  background-color: #0052ff;
+  color: white;
+}
+
+.submitReviewButtonDisabled {
+  border-radius: 5px;
+  font-size: 15px;
+  color: black;
 }
