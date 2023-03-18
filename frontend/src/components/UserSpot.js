@@ -17,7 +17,7 @@ const UserSpot = () => {
 
   return (
     <>
-      <h2>Manage Spots</h2>
+      <h2 className="manageSpotsLine">Manage Spots</h2>
       {spots.length === 0 && (
         <button>
           <NavLink exact to="/spots/new">

@@ -16,9 +16,20 @@
   align-items: flex-start;
 }
 
-#signUpForm button {
+.signUpButton {
   width: 100%;
   background-color: #00ccff;
   border-color: white;
   border-radius: 5px;
+  cursor: pointer;
+  color: white;
+}
+
+.signUpButton.disabled {
+  width: 100%;
+  border-color: white;
+  border-radius: 5px;
+  background-color: #afe9f8;
+  color: white;
+  cursor: pointer;
 }

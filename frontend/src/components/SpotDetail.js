@@ -200,7 +200,7 @@ const SpotDetail = () => {
                         8,
                         10
                       )}, ${review.createdAt.slice(0, 4)}`}</div>
-                      <div>{review.review}</div>
+                      <div className="reviewSentences">{review.review}</div>
                       {sessionUser !== null &&
                         review.User.id === sessionUser.id && (
                           <button className="deleteReviewButtonEffect">

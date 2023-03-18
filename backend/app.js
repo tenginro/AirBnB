@@ -20,6 +20,7 @@ app.use(morgan("dev"));
 
 // cookie-parser middleware for parsing cookies
 app.use(cookieParser());
+
 // express.json middleware for parsing JSON bodies of requests with Content-Type of "application/json"
 app.use(express.json());
 

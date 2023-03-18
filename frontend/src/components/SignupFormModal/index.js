@@ -94,6 +94,17 @@ function SignupFormModal() {
         />
         <button
           type="submit"
+          className={
+            !email.length ||
+            username.length < 4 ||
+            !firstName.length ||
+            !lastName.length ||
+            !confirmPassword.length ||
+            password.length < 6 ||
+            password !== confirmPassword
+              ? "signUpButton disabled"
+              : "signUpButton"
+          }
           disabled={
             !email.length ||
             username.length < 4 ||
