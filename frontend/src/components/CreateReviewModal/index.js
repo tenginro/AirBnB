@@ -12,6 +12,7 @@ export default function CreateReviewModal({ spot }) {
   const { closeModal } = useModal();
   const [review, setReview] = useState("");
   const [activeRating, setActiveRating] = useState(0);
+  const [realRating, setRealRating] = useState(0);
   const [errors, setErrors] = useState([]);
   const history = useHistory();
 
@@ -20,7 +21,7 @@ export default function CreateReviewModal({ spot }) {
     setErrors([]);
     const payload = {
       review,
-      stars: activeRating,
+      stars: realRating,
     };
     let newReview = await dispatch(createReview(payload, spot))
       .then(closeModal)
@@ -50,41 +51,81 @@ export default function CreateReviewModal({ spot }) {
 
         <div className="rating-input">
           <div
-            className={activeRating >= 1 ? "filled" : "empty"}
+            className={
+              activeRating >= 1 ? "reviewStar filled" : "reviewStar empty"
+            }
             onMouseEnter={() => {
               setActiveRating(1);
             }}
+            onMouseLeave={() => {
+              setActiveRating(realRating);
+            }}
+            onClick={() => {
+              setRealRating(1);
+            }}
           >
             <i className="fas fa-regular fa-star"></i>
           </div>
           <div
-            className={activeRating >= 2 ? "filled" : "empty"}
+            className={
+              activeRating >= 2 ? "reviewStar filled" : "reviewStar empty"
+            }
             onMouseEnter={() => {
               setActiveRating(2);
             }}
+            onMouseLeave={() => {
+              setActiveRating(realRating);
+            }}
+            onClick={() => {
+              setRealRating(2);
+            }}
           >
             <i className="fas fa-regular fa-star"></i>
           </div>
           <div
-            className={activeRating >= 3 ? "filled" : "empty"}
+            className={
+              activeRating >= 3 ? "reviewStar filled" : "reviewStar empty"
+            }
             onMouseEnter={() => {
               setActiveRating(3);
             }}
-          >
-            <i className="fas fa-regular fa-star"></i>
-          </div>
-          <div
-            className={activeRating >= 4 ? "filled" : "empty"}
-            onMouseEnter={() => {
-              setActiveRating(4);
+            onMouseLeave={() => {
+              setActiveRating(realRating);
+            }}
+            onClick={() => {
+              setRealRating(3);
             }}
           >
             <i className="fas fa-regular fa-star"></i>
           </div>
           <div
-            className={activeRating >= 5 ? "filled" : "empty"}
+            className={
+              activeRating >= 4 ? "reviewStar filled" : "reviewStar empty"
+            }
+            onMouseEnter={() => {
+              setActiveRating(4);
+            }}
+            onMouseLeave={() => {
+              setActiveRating(realRating);
+            }}
+            onClick={() => {
+              setRealRating(4);
+            }}
+          >
+            <i className="fas fa-regular fa-star"></i>
+          </div>
+          <div
+            className={
+              activeRating >= 5 ? "reviewStar filled" : "reviewStar empty"
+            }
             onMouseEnter={() => {
               setActiveRating(5);
+            }}
+            onMouseLeave={() => {
+              setActiveRating(realRating);
+            }}
+            onClick={() => {
+              setRealRating(5);
             }}
           >
             <i className="fas fa-regular fa-star"></i>
@@ -94,7 +135,7 @@ export default function CreateReviewModal({ spot }) {
         <div className="submitReview">
           <button
             className={
-              review.length <= 10
+              review.length <= 10 && realRating < 1
                 ? "submitReviewButtonDisabled"
                 : "submitReviewButton"
             }

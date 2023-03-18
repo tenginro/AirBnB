@@ -9,6 +9,10 @@
   color: blue;
 }
 
+.reviewStar:hover {
+  color: blue;
+}
+
 .rating-input .empty {
   color: gray;
 }
@@ -39,5 +43,5 @@
   border-radius: 5px;
   font-size: 15px;
   background-color: #c6d6fa;
-  color: black;
+  color: white;
 }
