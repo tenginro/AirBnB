@@ -1,4 +1,3 @@
-
 # Create React App Template
 
 A no-frills template from which to create React + Redux applications with
@@ -10,7 +9,7 @@ npx create-react-app my-app --template @appacademy/react-redux-v17 --use-npm
 
 ## Available Scripts
 
-In the project directory, you can run:
+In the project directory, you can do run:
 
 ### `npm start`
 
