@@ -20,6 +20,7 @@ app.use(morgan("dev"));
 
 // cookie-parser middleware for parsing cookies
 app.use(cookieParser());
+
 // express.json middleware for parsing JSON bodies of requests with Content-Type of "application/json"
 app.use(express.json());
 
@@ -37,11 +38,6 @@ app.use(
   })
 );
 
-// // testing
-// app.use((req, res, next) => {
-//   console.log("!!!!!!Before csurf in app.use csurf!!!!!!!"), next();
-// });
-
 // Set the _csrf token and create req.csrfToken method
 app.use(
   csurf({
@@ -53,18 +49,6 @@ app.use(
     },
   })
 );
-
-// // testing
-// app.use((req, res, next) => {
-//   console.log("!!!!!!after csurf in app.use csurf!!!!!!!");
-//   next();
-// });
-
-// // testing
-// app.use((req, res, next) => {
-//   console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!CSRF token:", req.csrfToken());
-//   next();
-// });
 
 app.use(routes); // Connect all the routes
 // make sure you are defining your error handlers after your route connections in app.js (i.e., after app.use(routes)).
