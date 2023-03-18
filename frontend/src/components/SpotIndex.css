@@ -12,6 +12,14 @@
   margin-left: 40px;
 }
 
+.createSpotLine {
+  margin-left: 40px;
+  margin-top: 5px;
+  border-radius: 5px;
+  background-color: #007aff;
+  color: white;
+}
+
 .spotInfo {
   margin-left: 10px;
   margin-right: 10px;
@@ -49,7 +57,7 @@ img {
 
 .deleteSpotButton {
   background-color: pink;
-  color: black;
+  color: white;
 }
 
 @media screen and (max-width: 600px) {
