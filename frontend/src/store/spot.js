@@ -105,6 +105,7 @@ export const createSpot = (spot, user) => async (dispatch) => {
         },
         body: JSON.stringify({ url: previewImg, preview: true }),
       });
+
       if (image1) {
         await csrfFetch(`/api/spots/${newSpot.id}/images`, {
           method: "POST",
