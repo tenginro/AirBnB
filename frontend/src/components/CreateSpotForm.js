@@ -20,6 +20,7 @@ const CreateSpotForm = () => {
   const [image3, setImage3] = useState("");
   const [image4, setImage4] = useState("");
   const [errorMessage, setErrorMessage] = useState({});
+
   const [previewError, setPreviewError] = useState({});
   const [urlError, setUrlError] = useState({});
   const [cityError, setCityError] = useState({});
@@ -140,6 +141,24 @@ const CreateSpotForm = () => {
     }
     if (!price) {
       setPriceError({ price: "Price is required" });
+    }
+
+    if (
+      countryError.country ||
+      addressError.address ||
+      cityError.city ||
+      stateError.state ||
+      descriptionError.description ||
+      nameError.name ||
+      priceError.price ||
+      previewError.previewImg ||
+      urlError.url ||
+      image1Error.image1 ||
+      image2Error.image2 ||
+      image3Error.image3 ||
+      image4Error.image4
+    ) {
+      return null;
     }
 
     if (
