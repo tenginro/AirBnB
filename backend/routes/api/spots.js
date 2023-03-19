@@ -105,9 +105,9 @@ const validateNewBooking = [
 ];
 
 const validateSpotImage = [
-  check("url").exists({ checkFalsy: true }).withMessage("url is required"),
+  // check("url").exists({ checkFalsy: true }).withMessage("url is required"),
   check("url")
-    .exists()
+    .exists({ checkFalsy: true })
     .custom((val) => {
       return val.slice(-4) === ".png" ||
         val.slice(-4) === ".jpg" ||
