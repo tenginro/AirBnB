@@ -158,20 +158,22 @@ li {
     display: grid;
     grid-template-columns: 100%;
     grid-template-rows: 50% 50%;
-    gap: 2px;
+    gap: 3px;
   }
 
   .previewSpotImage {
     margin-right: 10px;
-  }
-  .otherImages {
-    gap: 2px;
   }
 
   .largerImage,
   .smallerImages.image2,
   .smallerImages.image4 {
     border-radius: 0px;
+  }
+
+  .otherImages {
+    row-gap: 2px;
+    column-gap: 2px;
   }
 
   .secondContent {
