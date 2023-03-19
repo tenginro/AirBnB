@@ -20,6 +20,19 @@ const CreateSpotForm = () => {
   const [image3, setImage3] = useState("");
   const [image4, setImage4] = useState("");
   const [errorMessage, setErrorMessage] = useState({});
+  const [previewError, setPreviewError] = useState({});
+  const [urlError, setUrlError] = useState({});
+  const [cityError, setCityError] = useState({});
+  const [stateError, setStateError] = useState({});
+  const [countryError, setCountryError] = useState({});
+  const [addressError, setAddressError] = useState({});
+  const [nameError, setNameError] = useState({});
+  const [descriptionError, setDescriptionError] = useState({});
+  const [priceError, setPriceError] = useState({});
+  const [image1Error, setImage1Error] = useState({});
+  const [image2Error, setImage2Error] = useState({});
+  const [image3Error, setImage3Error] = useState({});
+  const [image4Error, setImage4Error] = useState({});
 
   const dispatch = useDispatch();
   const history = useHistory();
@@ -27,6 +40,19 @@ const CreateSpotForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setErrorMessage({});
+    setPreviewError({});
+    setUrlError({});
+    setCountryError({});
+    setAddressError({});
+    setCityError({});
+    setStateError({});
+    setDescriptionError({});
+    setNameError({});
+    setPriceError({});
+    setImage1Error({});
+    setImage2Error({});
+    setImage3Error({});
+    setImage4Error({});
 
     const payload = {
       address,
@@ -43,54 +69,95 @@ const CreateSpotForm = () => {
       image4,
     };
 
-    if (
-      !country &&
-      !address &&
-      !city &&
-      !state &&
-      description.length < 30 &&
-      !name &&
-      !price &&
-      !previewImg
-    ) {
-      return setErrorMessage({
-        previewImg: "Preview image is required",
-        city: "City is required",
-        state: "State is required",
-        address: "Address is required",
-        country: "Country is required",
-        name: "Name is required",
-        price: "Price is required",
-        description: "Description needs a minimum of 30 characters",
-      });
-    }
-    if (
-      !previewImg &&
-      country &&
-      state &&
-      city &&
-      name &&
-      price &&
-      description.length >= 30
-    ) {
-      return setErrorMessage({ previewImg: "Preview image is required" });
+    if (!previewImg) {
+      setPreviewError({ previewImg: "Preview image is required" });
     }
     if (
       previewImg &&
       previewImg.slice(-4) !== ".jpg" &&
       previewImg.slice(-4) !== ".png" &&
-      previewImg.slice(-5) !== ".jpeg" &&
+      previewImg.slice(-5) !== ".jpeg"
+    ) {
+      setUrlError({ url: "Image URL must end in .png, .jpg, or .jpeg" });
+    }
+    if (
+      image1 &&
+      image1.slice(-4) !== ".jpg" &&
+      image1.slice(-4) !== ".png" &&
+      image1.slice(-5) !== ".jpeg"
+    ) {
+      setImage1Error({ image1: "Image URL must end in .png, .jpg, or .jpeg" });
+    }
+    if (
+      image2 &&
+      image2.slice(-4) !== ".jpg" &&
+      image2.slice(-4) !== ".png" &&
+      image2.slice(-5) !== ".jpeg"
+    ) {
+      setImage2Error({
+        image2: "Image URL must end in .png, .jpg, or .jpeg",
+      });
+    }
+    if (
+      image3 &&
+      image3.slice(-4) !== ".jpg" &&
+      image3.slice(-4) !== ".png" &&
+      image3.slice(-5) !== ".jpeg"
+    ) {
+      setImage3Error({
+        image3: "Image URL must end in .png, .jpg, or .jpeg",
+      });
+    }
+    if (
+      image4 &&
+      image4.slice(-4) !== ".jpg" &&
+      image4.slice(-4) !== ".png" &&
+      image4.slice(-5) !== ".jpeg"
+    ) {
+      setImage4Error({
+        image4: "Image URL must end in .png, .jpg, or .jpeg",
+      });
+    }
+    if (!country) {
+      setCountryError({ country: "Country is required" });
+    }
+    if (!address) {
+      setAddressError({ address: "Address is required" });
+    }
+    if (!city) {
+      setCityError({ city: "City is required" });
+    }
+    if (!state) {
+      setStateError({ state: "State is required" });
+    }
+    if (description.length < 30) {
+      setDescriptionError({
+        description: "Description needs a minimum of 30 characters",
+      });
+    }
+    if (!name) {
+      setNameError({ name: "Name is required" });
+    }
+    if (!price) {
+      setPriceError({ price: "Price is required" });
+    }
+
+    if (
+      previewImg &&
+      (previewImg.slice(-4) === ".jpg" ||
+        previewImg.slice(-4) === ".png" ||
+        previewImg.slice(-5) === ".jpeg") &&
       country &&
       state &&
       city &&
       name &&
       price &&
-      description.length >= 30
+      description.length >= 30 &&
+      !image1Error.image1 &&
+      !image2Error.image2 &&
+      !image3Error.image3 &&
+      !image4Error.image4
     ) {
-      return setErrorMessage({
-        url: "Image URL must end in .png, .jpg, or .jpeg",
-      });
-    } else {
       let newSpot = await dispatch(createSpot(payload, user))
         .then((res) => {
           return res;
@@ -102,10 +169,22 @@ const CreateSpotForm = () => {
 
       if (newSpot) {
         setErrorMessage({});
+        setPreviewError({});
+        setUrlError({});
+        setCountryError({});
+        setAddressError({});
+        setCityError({});
+        setStateError({});
+        setDescriptionError({});
+        setNameError({});
+        setPriceError({});
+        setImage1Error({});
+        setImage2Error({});
+        setImage3Error({});
+        setImage4Error({});
         return history.push(`/spots/${newSpot.id}`);
       }
     }
-    // }
   };
 
   return (
@@ -124,6 +203,9 @@ const CreateSpotForm = () => {
               {errorMessage?.country && (
                 <div className="errors">{errorMessage.country}</div>
               )}
+              {countryError?.country && (
+                <div className="errors">{countryError.country}</div>
+              )}
             </div>
             <input
               type="text"
@@ -138,6 +220,9 @@ const CreateSpotForm = () => {
               Street Address
               {errorMessage?.address && (
                 <div className="errors">{errorMessage.address}</div>
+              )}
+              {addressError?.address && (
+                <div className="errors">{addressError.address}</div>
               )}
             </div>
             <input
@@ -155,6 +240,9 @@ const CreateSpotForm = () => {
                 {errorMessage?.city && (
                   <div className="errors">{errorMessage.city}</div>
                 )}
+                {cityError?.city && (
+                  <div className="errors">{cityError.city}</div>
+                )}
               </div>
               <input
                 type="text"
@@ -170,6 +258,9 @@ const CreateSpotForm = () => {
                 State
                 {errorMessage?.state && (
                   <div className="errors">{errorMessage.state}</div>
+                )}
+                {stateError?.state && (
+                  <div className="errors">{stateError.state}</div>
                 )}
               </div>
               <input
@@ -198,6 +289,9 @@ const CreateSpotForm = () => {
           {errorMessage?.description && (
             <div className="errors">{errorMessage.description}</div>
           )}
+          {descriptionError?.description && (
+            <div className="errors">{descriptionError.description}</div>
+          )}
         </div>
         <div className="thirdSection">
           <h2>Create a title for your spot</h2>
@@ -216,6 +310,7 @@ const CreateSpotForm = () => {
             {errorMessage?.name && (
               <div className="errors">{errorMessage.name}</div>
             )}
+            {nameError?.name && <div className="errors">{nameError.name}</div>}
           </label>
         </div>
         <div className="fourthSection">
@@ -237,6 +332,9 @@ const CreateSpotForm = () => {
           {errorMessage?.price && (
             <div className="errors">{errorMessage.price}</div>
           )}
+          {priceError?.price && (
+            <div className="errors">{priceError.price}</div>
+          )}
         </div>
         <div className="pictureSection">
           <h2>Liven up your spot with photos</h2>
@@ -249,6 +347,10 @@ const CreateSpotForm = () => {
               onChange={(e) => setPreviewImg(e.target.value)}
               // required
             ></input>
+            {previewError?.previewImg && (
+              <div className="errors">{previewError.previewImg}</div>
+            )}
+            {urlError?.url && <div className="errors">{urlError.url}</div>}
             {errorMessage?.previewImg && (
               <div className="errors">{errorMessage.previewImg}</div>
             )}
@@ -271,8 +373,15 @@ const CreateSpotForm = () => {
               image1.slice(-4) !== ".png" &&
               image1.slice(-5) !== ".jpeg" &&
               image1.slice(-4) !== ".jpg" &&
-              errorMessage?.url(
+              errorMessage?.url && (
                 <div className="errors">{errorMessage.url}</div>
+              )}
+            {image1 &&
+              image1.slice(-4) !== ".png" &&
+              image1.slice(-5) !== ".jpeg" &&
+              image1.slice(-4) !== ".jpg" &&
+              image1Error?.image1 && (
+                <div className="errors">{image1Error.image1}</div>
               )}
           </label>
           <label>
@@ -286,8 +395,15 @@ const CreateSpotForm = () => {
               image2.slice(-4) !== ".png" &&
               image2.slice(-5) !== ".jpeg" &&
               image2.slice(-4) !== ".jpg" &&
-              errorMessage?.url(
+              errorMessage?.url && (
                 <div className="errors">{errorMessage.url}</div>
+              )}
+            {image2 &&
+              image2.slice(-4) !== ".png" &&
+              image2.slice(-5) !== ".jpeg" &&
+              image2.slice(-4) !== ".jpg" &&
+              image2Error?.image2 && (
+                <div className="errors">{image2Error.image2}</div>
               )}
           </label>
           <label>
@@ -301,8 +417,15 @@ const CreateSpotForm = () => {
               image3.slice(-4) !== ".png" &&
               image3.slice(-5) !== ".jpeg" &&
               image3.slice(-4) !== ".jpg" &&
-              errorMessage?.url(
+              errorMessage?.url && (
                 <div className="errors">{errorMessage.url}</div>
+              )}
+            {image3 &&
+              image3.slice(-4) !== ".png" &&
+              image3.slice(-5) !== ".jpeg" &&
+              image3.slice(-4) !== ".jpg" &&
+              image3Error?.image3 && (
+                <div className="errors">{image3Error.image3}</div>
               )}
           </label>
           <label>
@@ -316,8 +439,15 @@ const CreateSpotForm = () => {
               image4.slice(-4) !== ".png" &&
               image4.slice(-5) !== ".jpeg" &&
               image4.slice(-4) !== ".jpg" &&
-              errorMessage?.url(
+              errorMessage?.url && (
                 <div className="errors">{errorMessage.url}</div>
+              )}
+            {image4 &&
+              image4.slice(-4) !== ".png" &&
+              image4.slice(-5) !== ".jpeg" &&
+              image4.slice(-4) !== ".jpg" &&
+              image4Error?.image4 && (
+                <div className="errors">{image4Error.image4}</div>
               )}
           </label>
         </div>
