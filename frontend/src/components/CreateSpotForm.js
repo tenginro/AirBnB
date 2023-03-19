@@ -199,21 +199,9 @@ const CreateSpotForm = () => {
               onChange={(e) => setPreviewImg(e.target.value)}
               // required
             ></input>
-            {/* {!previewImg && (
-            <div className="errors">Preview image is required.</div>
-          )} */}
             {errorMessage?.url && (
               <div className="errors">{errorMessage.url}</div>
             )}
-            {previewImg &&
-              previewImg.slice(-4) !== ".png" &&
-              previewImg.slice(-4) !== ".jpg" &&
-              previewImg.slice(-5) !== ".jpeg" &&
-              previewImg.slice(-5) !== ".webp" && (
-                <div className="errors">
-                  Image URL must end in .png, .jpg, or .jpeg
-                </div>
-              )}
           </label>
           <label>
             <input
@@ -222,15 +210,6 @@ const CreateSpotForm = () => {
               placeholder="Image URL"
               onChange={(e) => setImage1(e.target.value)}
             ></input>
-            {image1 &&
-              image1.slice(-4) !== ".png" &&
-              image1.slice(-4) !== ".jpg" &&
-              image1.slice(-5) !== ".jpeg" &&
-              image1.slice(-5) !== ".webp" && (
-                <div className="errors">
-                  Image URL must end in .png, .jpg, or .jpeg
-                </div>
-              )}
           </label>
           <label>
             <input
@@ -239,15 +218,6 @@ const CreateSpotForm = () => {
               placeholder="Image URL"
               onChange={(e) => setImage2(e.target.value)}
             ></input>
-            {image2 &&
-              image2.slice(-4) !== ".png" &&
-              image2.slice(-4) !== ".jpg" &&
-              image2.slice(-5) !== ".jpeg" &&
-              image2.slice(-5) !== ".webp" && (
-                <div className="errors">
-                  Image URL must end in .png, .jpg, or .jpeg
-                </div>
-              )}
           </label>
           <label>
             <input
@@ -256,15 +226,6 @@ const CreateSpotForm = () => {
               placeholder="Image URL"
               onChange={(e) => setImage3(e.target.value)}
             ></input>
-            {image3 &&
-              image3.slice(-4) !== ".png" &&
-              image3.slice(-4) !== ".jpg" &&
-              image3.slice(-5) !== ".jpeg" &&
-              image3.slice(-5) !== ".webp" && (
-                <div className="errors">
-                  Image URL must end in .png, .jpg, or .jpeg
-                </div>
-              )}
           </label>
           <label>
             <input
@@ -273,15 +234,6 @@ const CreateSpotForm = () => {
               placeholder="Image URL"
               onChange={(e) => setImage4(e.target.value)}
             ></input>
-            {image4 &&
-              image4.slice(-4) !== ".png" &&
-              image4.slice(-4) !== ".jpg" &&
-              image4.slice(-5) !== ".jpeg" &&
-              image4.slice(-5) !== ".webp" && (
-                <div className="errors">
-                  Image URL must end in .png, .jpg, or .jpeg
-                </div>
-              )}
           </label>
         </div>
         <div className="createButtonContainer">
