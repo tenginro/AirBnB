@@ -168,7 +168,7 @@ export const updateSpot = (spot) => async (dispatch) => {
   });
   if (response.ok) {
     const updatedSpot = await response.json();
-    dispatch(actionEditSpot(updateSpot));
+    dispatch(actionEditSpot(updatedSpot));
     return updatedSpot;
   }
   return response.json();
