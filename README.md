@@ -14,8 +14,10 @@ Check out [HereBnB] (https://herebnb.onrender.com/)
 <img src="https://img.shields.io/badge/Python-3.9-blue?style=for-the-badge&logo=python&logoColor=white" /><img src="https://img.shields.io/badge/JavaScript-323330?style=for-the-badge&logo=javascript&logoColor=F7DF1E" /><img src="https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white" /><img src="https://img.shields.io/badge/Express.js-000000?style=for-the-badge&logo=express&logoColor=white" /><img src="https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white" /><img src="https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white" /><img src="https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white" /><img src="https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB" /><img src="https://img.shields.io/badge/Redux-593D88?style=for-the-badge&logo=redux&logoColor=white" /><img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white" /><img src="https://img.shields.io/badge/Render-41B883?style=for-the-badge&logo=render&logoColor=white)" />
 
 ## Home Page/Spots
+![Screenshot 2023-05-10 at 16 35 12](https://github.com/tenginro/AirBnB/assets/108156588/f3dee54b-c6de-49c4-b29a-4c298d443fd9)
 
 ## Spot Detail page with reviews
+![Screenshot 2023-05-10 at 16 18 59](https://github.com/tenginro/AirBnB/assets/108156588/b7f60722-28d4-44e5-a565-c485e0c96bd6)
 
 ## Getting started
 
