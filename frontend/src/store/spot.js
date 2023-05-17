@@ -168,7 +168,7 @@ export const updateSpot = (spot) => async (dispatch) => {
   });
   if (response.ok) {
     const updatedSpot = await response.json();
-    dispatch(actionEditSpot(updatedSpot));
+    dispatch(actionEditSpot(updateSpot));
     return updatedSpot;
   }
   return response.json();
@@ -176,7 +176,7 @@ export const updateSpot = (spot) => async (dispatch) => {
 
 export const deleteSpot = (spot) => async (dispatch) => {
   const response = await csrfFetch(`/api/spots/${spot.id}`, {
-    method: "DELETE",
+    method: "delete",
   });
 
   if (response.ok) {
