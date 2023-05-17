@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom/cjs/react-router-dom";
+import { useParams } from "react-router-dom";
 
 import { getAllSpots } from "../../store/spot";
 import EditSpotForm from "./EditSpotForm";
