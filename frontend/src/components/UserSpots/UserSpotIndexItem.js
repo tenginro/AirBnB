@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import { NavLink, useHistory } from "react-router-dom";
 
-import OpenModalMenuItem from "./Navigation/OpenModalMenuItem";
-import DeleteSpotModal from "./DeleteSpotModal";
+import OpenModalMenuItem from "../Navigation/OpenModalMenuItem";
+import DeleteSpotModal from "../DeleteSpotModal";
 
 const UserSpotIndexItem = ({ spot }) => {
   const history = useHistory();

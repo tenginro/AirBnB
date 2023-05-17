@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { createSpot } from "../store/spot";
-import "./CreateSpotForm.css";
+
+import { createSpot } from "../../store/spot";
+import "./CreateSpot.css";
 
 const CreateSpotForm = () => {
   const user = useSelector((state) => state.session.user);
