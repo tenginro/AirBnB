@@ -4,12 +4,13 @@ import { useDispatch } from "react-redux";
 import { Route, Switch } from "react-router-dom";
 
 import * as sessionActions from "./store/session";
+
 import Navigation from "./components/Navigation";
-import SpotsIndex from "./components/SpotsIndex";
-import SpotDetail from "./components/SpotDetail";
-import CreateSpotForm from "./components/CreateSpotForm";
-import UserSpot from "./components/UserSpot";
-import EditSpotFormWrapper from "./components/EditSpotFormWrapper";
+import SpotsIndex from "./components/AllSpots";
+import SpotDetail from "./components/SingleSpotDetail";
+import CreateSpotForm from "./components/CreateSpot";
+import UserSpot from "./components/UserSpots";
+import EditSpotFormWrapper from "./components/EditSpot";
 
 function App() {
   const dispatch = useDispatch();

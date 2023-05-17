@@ -1,9 +1,10 @@
 import { useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { actionClearSpots, getUserSpots } from "../store/spot";
-import UserSpotIndexItem from "./UserSpotIndexItem";
-import "./SpotIndex.css";
+
+import { actionClearSpots, getUserSpots } from "../../store/spot";
+import UserSpotIndexItem from "./UserSpotIndexItem.js";
+import "../AllSpots/SpotIndex.css";
 
 const UserSpot = () => {
   const spotsObj = useSelector((state) => state.spots.allSpots);

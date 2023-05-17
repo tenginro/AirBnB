@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
-import { updateSpot } from "../store/spot";
-import "./EditSpotForm.css";
+
+import { updateSpot } from "../../store/spot";
+import "./EditSpot.css";
 
 const EditSpotForm = ({ spot }) => {
   const { spotId } = useParams();

@@ -6,11 +6,11 @@ import {
   actionClearSpots,
   actionClearState,
   getSpotDetail,
-} from "../store/spot";
-import { actionClearReviewState, getReviews } from "../store/review";
-import CreateReviewModal from "./CreateReviewModal";
-import OpenModalMenuItem from "./Navigation/OpenModalMenuItem";
-import DeleteReviewModal from "./DeleteReviewModal";
+} from "../../store/spot";
+import { actionClearReviewState, getReviews } from "../../store/review";
+import CreateReviewModal from "../CreateReviewModal";
+import OpenModalMenuItem from "../Navigation/OpenModalMenuItem";
+import DeleteReviewModal from "../DeleteReviewModal";
 
 import "./spot.css";
 

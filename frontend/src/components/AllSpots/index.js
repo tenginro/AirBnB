@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { actionClearSpots, getAllSpots } from "../store/spot";
+import { actionClearSpots, getAllSpots } from "../../store/spot";
 import SpotIndexItem from "./SpotIndexItem";
 
 import "./SpotIndex.css";
