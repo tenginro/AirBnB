@@ -29,7 +29,7 @@ module.exports = {
         state: "Rhode Island",
         country: "USA",
         lat: 41.58,
-        lng: 71.24,
+        lng: -71.24,
         name: "Sitting on your deck watching spectacular sunsets",
         description:
           "Situated on premium beachfront property, this single family home has luxurious amenities like super plush towels, organic cotton bedding.",
@@ -42,7 +42,7 @@ module.exports = {
         state: "Maine",
         country: "USA",
         lat: 43.47,
-        lng: 70.39,
+        lng: -70.39,
         name: "Beautiful Oceanfront Cottage",
         description:
           "Such a gracious host! The views are unbeatable and the accommodation was so luxurious.",
@@ -55,7 +55,7 @@ module.exports = {
         state: "New Hampshire",
         country: "USA",
         lat: 42.91,
-        lng: 70.81,
+        lng: -70.81,
         name: "Sandy shores family's next ocean-front vacation",
         description:
           "This completely renovated, sunny unit boasts ocean views sitting right across the street from a resident beach. This is not your typical studio apartment, as it features a full sized kitchen and a separate living space.",
@@ -68,7 +68,7 @@ module.exports = {
         state: "New Jersey",
         country: "USA",
         lat: 40.44,
-        lng: 74.13,
+        lng: -74.13,
         name: "Perfect beach cottage",
         description:
           "Sitting right on the beach, this family home is just steps to the beach! Wake up to ocean views, enjoy the indoor swimming pool and jacuzzi complete with French doors that open to towards the ocean.",
@@ -81,7 +81,7 @@ module.exports = {
         state: "Massachusetts",
         country: "USA",
         lat: 41.64,
-        lng: 70.21,
+        lng: -70.21,
         name: "Fully Renovated Single Floor Home",
         description:
           "Stairs on the deck lead down to the south end of Cove where you can surf, boogie board or just play in the ocean. This house will not only give you a peaceful getaway but also the opportunity to discover the charming stores in downtown nearby.",

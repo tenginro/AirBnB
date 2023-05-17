@@ -65,7 +65,7 @@ const UserSpotIndexItem = ({ spot }) => {
       <div className="userSpotButtons">
         <button onClick={onClickUpdate} className="updateSpotButton">
           <NavLink exact to={`/spots/${spot.id}/edit`} spot={spot}>
-            Update
+            <div style={{ color: "white" }}>Update</div>
           </NavLink>
         </button>
         <button className="deleteSpotButton">

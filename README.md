@@ -30,7 +30,7 @@ To launch the full application locally, please perform the following steps:
    `https://github.com/tenginro/AirBnB.git`
 
 2. Install dependencies into the Backed and the Frontend by making a terminal for each one and then run the following:
-   - cd into backend foler, run `npm install`
+   - cd into backend folder, run `npm install`
    - create an .env file in the backend folder with PORT=8000,DB_FILE=db/dev.db
    - run `npm start` in the backend folder
    - cd into frontend folder, run `npm install`
