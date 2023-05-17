@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { actionClearSpots, getUserSpots } from "../../store/spot";
 import UserSpotIndexItem from "./UserSpotIndexItem.js";
-import "../AllSpots/SpotIndex.css";
+import "../AllSpots/SpotIndexItem.css";
 
 const UserSpot = () => {
   const spotsObj = useSelector((state) => state.spots.allSpots);
