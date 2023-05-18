@@ -45,6 +45,27 @@ module.exports = {
           lastName: "Song",
           hashedPassword: bcrypt.hashSync("password"),
         },
+        {
+          email: "judyming@user.io",
+          username: "JudyMing",
+          firstName: "Judy",
+          lastName: "Ming",
+          hashedPassword: bcrypt.hashSync("password"),
+        },
+        {
+          email: "lilibieber@user.io",
+          username: "LiliBieber",
+          firstName: "Lili",
+          lastName: "Bieber",
+          hashedPassword: bcrypt.hashSync("password"),
+        },
+        {
+          email: "alexmaurer@user.io",
+          username: "AlexMaurer",
+          firstName: "Alex",
+          lastName: "Maurer",
+          hashedPassword: bcrypt.hashSync("password"),
+        },
       ],
       {}
     );
@@ -62,7 +83,16 @@ module.exports = {
     await queryInterface.bulkDelete(
       options,
       {
-        username: { [Op.in]: ["Demo-lition", "JohnSmith", "MikeSong"] },
+        username: {
+          [Op.in]: [
+            "Demo-lition",
+            "JohnSmith",
+            "MikeSong",
+            "JudyMing",
+            "LiliBieber",
+            "AlexMaurer",
+          ],
+        },
       },
       {}
     );

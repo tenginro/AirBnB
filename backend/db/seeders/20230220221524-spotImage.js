@@ -147,6 +147,31 @@ module.exports = {
         url: "https://as2.ftcdn.net/v2/jpg/02/13/52/05/1000_F_213520584_03j0i0DLNze7tCMvhnl6XOJfUei1mNud.jpg",
         preview: false,
       },
+      {
+        spotId: 6,
+        url: "https://as2.ftcdn.net/v2/jpg/00/94/68/29/1000_F_94682947_mbx9YUIOPBzUhGlol1vPYelu9K7NGtHt.jpg",
+        preview: true,
+      },
+      {
+        spotId: 6,
+        url: "https://as1.ftcdn.net/v2/jpg/00/94/68/28/1000_F_94682890_mqvtjjP846NYYn4k4SJLSQdgnt4N50fi.jpg",
+        preview: false,
+      },
+      {
+        spotId: 6,
+        url: "https://as1.ftcdn.net/v2/jpg/00/94/68/28/1000_F_94682824_0zTXhirY7fFHolmnVuXfzh0IxfArecwV.jpg",
+        preview: false,
+      },
+      {
+        spotId: 6,
+        url: "https://as2.ftcdn.net/v2/jpg/02/28/59/31/1000_F_228593165_wCx7RpoM1W8skoyRn2A5Mj9lkhmTV0XH.jpg",
+        preview: false,
+      },
+      {
+        spotId: 6,
+        url: "https://as1.ftcdn.net/v2/jpg/02/20/21/72/1000_F_220217207_3COLu1o1nUOa5vj8dudK0Wl9yqjswF9q.jpg",
+        preview: false,
+      },
     ]);
   },
 
@@ -188,6 +213,11 @@ module.exports = {
             "https://as2.ftcdn.net/v2/jpg/02/13/52/05/1000_F_213520584_03j0i0DLNze7tCMvhnl6XOJfUei1mNud.jpg",
             "https://as1.ftcdn.net/v2/jpg/02/11/90/50/1000_F_211905099_dz6z2p1uoCM6jpw8fSDTwe00dg5HxheQ.jpg",
             "https://as2.ftcdn.net/v2/jpg/02/13/52/05/1000_F_213520584_03j0i0DLNze7tCMvhnl6XOJfUei1mNud.jpg",
+            "https://as2.ftcdn.net/v2/jpg/00/94/68/29/1000_F_94682947_mbx9YUIOPBzUhGlol1vPYelu9K7NGtHt.jpg",
+            "https://as1.ftcdn.net/v2/jpg/00/94/68/28/1000_F_94682890_mqvtjjP846NYYn4k4SJLSQdgnt4N50fi.jpg",
+            "https://as1.ftcdn.net/v2/jpg/00/94/68/28/1000_F_94682824_0zTXhirY7fFHolmnVuXfzh0IxfArecwV.jpg",
+            "https://as2.ftcdn.net/v2/jpg/02/28/59/31/1000_F_228593165_wCx7RpoM1W8skoyRn2A5Mj9lkhmTV0XH.jpg",
+            "https://as1.ftcdn.net/v2/jpg/02/20/21/72/1000_F_220217207_3COLu1o1nUOa5vj8dudK0Wl9yqjswF9q.jpg",
           ],
         },
       },
