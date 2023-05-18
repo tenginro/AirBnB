@@ -270,7 +270,6 @@ const SpotDetail = () => {
               showSelectionPreview={true}
               // when a user selects a start date, the end date of the range automatically adjusts to maintain the selected range.
               moveRangeOnFirstSelection={false}
-              showDateDisplay={false}
               showMonthAndYearPickers={false}
             />
           </div>
@@ -280,7 +279,6 @@ const SpotDetail = () => {
               justifyContent: "flex-end",
               textDecoration: "underline",
               cursor: "pointer",
-              width: "680px",
             }}
             onClick={resetBookingDates}
           >
@@ -322,6 +320,11 @@ const SpotDetail = () => {
                   review.User && (
                     <div key={review.id} className="individualReview">
                       <div className="toBold">{review.User.firstName}</div>
+                      <div>
+                        {" "}
+                        <i className="fas fa-sharp fa-solid fa-star"></i>
+                        {review.stars}
+                      </div>
                       <div>{`${
                         months[+review.createdAt.slice(5, 7) - 1]
                       } ${review.createdAt.slice(
