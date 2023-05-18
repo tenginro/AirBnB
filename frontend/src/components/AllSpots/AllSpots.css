@@ -47,17 +47,18 @@ img {
   margin-right: 20px;
   font-size: 15px;
   border-radius: 5px;
-  border-color: white;
 }
 
 .updateSpotButton {
   background-color: #4cb9f9;
   color: white;
+  border-color: #4cb9f9;
 }
 
 .deleteSpotButton {
   background-color: pink;
   color: white;
+  border-color: pink;
 }
 
 @media screen and (max-width: 600px) {

@@ -12,7 +12,12 @@ import CreateReviewModal from "../CreateReviewModal";
 import OpenModalMenuItem from "../Navigation/OpenModalMenuItem";
 import DeleteReviewModal from "../DeleteReviewModal";
 
+import "react-date-range/dist/styles.css"; // main style file
+import "react-date-range/dist/theme/default.css"; // theme css file
 import "./spot.css";
+
+import { DateRangePicker } from "react-date-range";
+import { addDays } from "date-fns";
 
 const months = [
   "January",
@@ -30,7 +35,11 @@ const months = [
 ];
 
 const SpotDetail = () => {
+  const dispatch = useDispatch();
+  const ulRef = useRef();
+
   const { spotId } = useParams();
+
   const spot = useSelector((state) => state.spots.singleSpot); //spot is an obj so !spot wont work
   const sessionUser = useSelector((state) => state.session.user);
 
@@ -39,15 +48,48 @@ const SpotDetail = () => {
     a.createdAt > b.createdAt ? -1 : 1
   );
 
-  const dispatch = useDispatch();
-
   const [showMenu, setShowMenu] = useState(false);
-  const ulRef = useRef();
+  const [showCalendar, setShowCalendar] = useState(false);
+
+  const [startDate, setStartDate] = useState(new Date());
+  const [endDate, setEndDate] = useState(addDays(new Date(), 1));
+
+  const handleSelect = (ranges) => {
+    setStartDate(ranges.selection.startDate);
+    setEndDate(ranges.selection.endDate);
+  };
+
+  const resetBookingDates = () => {
+    setStartDate(new Date());
+    setEndDate(addDays(new Date(), 1));
+  };
+
+  const selectionRange = {
+    startDate: startDate,
+    endDate: endDate,
+    key: "selection",
+  };
+  // const [booking, setBooking] = useState({
+  //   startDate: new Date(),
+  //   endDate: addDays(new Date(), 7),
+  //   key: "selection",
+  // });
+
+  const calendarClassName = showCalendar
+    ? "calendarContainer"
+    : "calendarContainer hidden";
+  console.log("calendarClassName", calendarClassName);
 
   const openMenu = (e) => {
     e.stopPropagation();
     if (showMenu) return;
     setShowMenu(true);
+  };
+
+  const openCalendar = (e) => {
+    e.stopPropagation();
+    if (showCalendar) return;
+    setShowCalendar(true);
   };
 
   useEffect(() => {
@@ -64,7 +106,21 @@ const SpotDetail = () => {
     };
   }, [showMenu]);
 
+  useEffect(() => {
+    if (!showCalendar) return;
+    const closeCalendar = (e) => {
+      if (!ulRef.current.contains(e.target)) {
+        setShowCalendar(false);
+      }
+    };
+    document.addEventListener("click", closeCalendar);
+    return () => {
+      document.removeEventListener("click", closeCalendar);
+    };
+  }, [showCalendar]);
+
   const closeMenu = () => setShowMenu(false);
+  const closeCalendar = () => setShowCalendar(false);
 
   useEffect(() => {
     dispatch(getSpotDetail(spotId));
@@ -152,6 +208,38 @@ const SpotDetail = () => {
                   : "New"}
               </div>
             </div>
+            <div
+              className="reserveBoxLineTwo"
+              onClick={openCalendar}
+              ref={ulRef}
+            >
+              <div className="dateInputBox">
+                <div>CHECK-IN</div>
+                <div>{startDate.toISOString().split("T")[0]}</div>
+              </div>
+              <div className="dateInputBox">
+                <div>CHECKOUT</div>
+                <div>{endDate.toISOString().split("T")[0]}</div>
+              </div>
+              <div className={calendarClassName}>
+                <DateRangePicker
+                  ranges={[selectionRange]}
+                  onChange={handleSelect}
+                  // not allow booking past dates
+                  minDate={new Date()}
+                  rangeColors={["#0052ff"]}
+                  months={2}
+                  editableDateInputs={true}
+                  direction="horizontal"
+                  // enables the preview of the selected range, showing a highlighted area for the selected dates.
+                  showSelectionPreview={true}
+                  // when a user selects a start date, the end date of the range automatically adjusts to maintain the selected range.
+                  moveRangeOnFirstSelection={false}
+                  // showDateDisplay={false}
+                  showMonthAndYearPickers={false}
+                />
+              </div>
+            </div>
             <div className="reserveButtonContainer">
               <div className="reserveButtonBox">
                 <button
@@ -163,6 +251,41 @@ const SpotDetail = () => {
               </div>
             </div>
           </div>
+        </div>
+        <div style={{ width: "820px" }}>
+          <h3 style={{ marginLeft: "10px" }}>
+            Select check-in, checkout dates
+          </h3>
+          <div className="calendarContainerFixed">
+            <DateRangePicker
+              ranges={[selectionRange]}
+              onChange={handleSelect}
+              // not allow booking past dates
+              minDate={new Date()}
+              rangeColors={["#0052ff"]}
+              months={2}
+              editableDateInputs={true}
+              direction="horizontal"
+              // enables the preview of the selected range, showing a highlighted area for the selected dates.
+              showSelectionPreview={true}
+              // when a user selects a start date, the end date of the range automatically adjusts to maintain the selected range.
+              moveRangeOnFirstSelection={false}
+              showDateDisplay={false}
+              showMonthAndYearPickers={false}
+            />
+          </div>
+          <h3
+            style={{
+              display: "flex",
+              justifyContent: "flex-end",
+              textDecoration: "underline",
+              cursor: "pointer",
+              width: "680px",
+            }}
+            onClick={resetBookingDates}
+          >
+            Clear dates
+          </h3>
         </div>
         <div className="reviewsContainer">
           <div className="reviewsFirstLine">

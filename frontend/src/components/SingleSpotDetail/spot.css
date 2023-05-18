@@ -1,5 +1,5 @@
 .spotDetailContent {
-  max-width: 1000px;
+  max-width: 1200px;
   margin: 0 auto;
 }
 .toBoldHeading {
@@ -66,6 +66,27 @@ li {
   overflow-wrap: break-word;
 }
 
+.calendarContainer {
+  display: flex;
+  justify-content: flex-start;
+  z-index: 3;
+  position: absolute;
+  top: 800px;
+  right: 100px;
+}
+.calendarContainerFixed {
+  display: flex;
+  justify-content: flex-start;
+  width: max-content;
+}
+.calendarContainer.hidden {
+  display: none;
+}
+
+.rdrDefinedRangesWrapper {
+  display: none;
+}
+
 .reserveBox {
   border: 1px solid rgb(221, 221, 221);
   box-shadow: rgba(0, 0, 0, 0.12) 0px 6px 16px;
@@ -89,6 +110,7 @@ li {
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 10px 0;
 }
 .reserveButton {
   cursor: pointer;
@@ -102,6 +124,20 @@ li {
 }
 .reserveButtonBox {
   width: 180px;
+}
+
+.reserveBoxLineTwo {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+}
+.dateInputBox {
+  width: 100%;
+  margin: 0 auto;
+  border: 1px solid lightgray;
+  text-align: center;
+  cursor: pointer;
+  padding: 10px 0;
 }
 .toCenter {
   margin: 0 auto;
@@ -185,5 +221,11 @@ li {
 
   .description {
     width: 100%;
+  }
+
+  .calendarContainer {
+    top: 1220px;
+    justify-content: flex-end;
+    right: 100px;
   }
 }
