@@ -74,11 +74,12 @@ function ProfileButton({ user }) {
               <div className="hoverEffect logInWord">
                 <OpenModalMenuItem
                   itemText="Log In"
+                  className="hoverEffect"
                   onItemClick={closeMenu}
                   modalComponent={<LoginFormModal />}
                 />
               </div>
-              <div className="hoverEffect">
+              <div className="hoverEffect logInWord">
                 <OpenModalMenuItem
                   itemText="Sign Up"
                   className="hoverEffect"

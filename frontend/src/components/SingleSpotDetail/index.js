@@ -78,13 +78,12 @@ const SpotDetail = () => {
   const calendarClassName = showCalendar
     ? "calendarContainer"
     : "calendarContainer hidden";
-  console.log("calendarClassName", calendarClassName);
 
-  const openMenu = (e) => {
-    e.stopPropagation();
-    if (showMenu) return;
-    setShowMenu(true);
-  };
+  // const openMenu = (e) => {
+  //   e.stopPropagation();
+  //   if (showMenu) return;
+  //   setShowMenu(true);
+  // };
 
   const openCalendar = (e) => {
     e.stopPropagation();
@@ -120,7 +119,7 @@ const SpotDetail = () => {
   }, [showCalendar]);
 
   const closeMenu = () => setShowMenu(false);
-  const closeCalendar = () => setShowCalendar(false);
+  // const closeCalendar = () => setShowCalendar(false);
 
   useEffect(() => {
     dispatch(getSpotDetail(spotId));
@@ -254,7 +253,7 @@ const SpotDetail = () => {
         </div>
         <div style={{ width: "820px" }}>
           <h3 style={{ marginLeft: "10px" }}>
-            Select check-in, checkout dates
+            Select or enter check-in, checkout dates
           </h3>
           <div className="calendarContainerFixed">
             <DateRangePicker
@@ -264,6 +263,7 @@ const SpotDetail = () => {
               minDate={new Date()}
               rangeColors={["#0052ff"]}
               months={2}
+              // whether dates can be edited in the Calendar's input fields
               editableDateInputs={true}
               direction="horizontal"
               // enables the preview of the selected range, showing a highlighted area for the selected dates.
