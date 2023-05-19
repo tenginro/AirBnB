@@ -33,6 +33,12 @@ const actionRemoveBooking = (id) => ({
   type: REMOVE_BOOKING,
   id,
 });
+export const actionClearSpotBookings = () => ({
+  type: CLEAR_SPOT_BOOKINGS,
+});
+export const actionClearUserBookings = () => ({
+  type: CLEAR_USER_BOOKINGS,
+});
 
 export const thunkGetSpotBookings = (spotId) => async (dispatch) => {
   const response = await csrfFetch(`/api/spots/${spotId}/bookings`);
