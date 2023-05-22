@@ -169,6 +169,9 @@ li {
 }
 .reviewSentences {
   overflow-wrap: break-word;
+  width: 300px;
+  height: 100px;
+  overflow-y: auto;
 }
 
 .postReviewButtonEffect {

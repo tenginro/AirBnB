@@ -65,13 +65,13 @@ const UserSpotIndexItem = ({ spot }) => {
       <div className="userSpotButtons">
         <button onClick={onClickUpdate} className="updateSpotButton">
           <NavLink exact to={`/spots/${spot.id}/edit`} spot={spot}>
-            <div style={{ color: "white" }}>Update</div>
+            <div style={{ color: "white" }}>Update spot</div>
           </NavLink>
         </button>
         <button className="deleteSpotButton">
           {" "}
           <OpenModalMenuItem
-            itemText="Delete"
+            itemText="Delete spot"
             onItemClick={closeMenu}
             modalComponent={<DeleteSpotModal spot={spot} />}
           />

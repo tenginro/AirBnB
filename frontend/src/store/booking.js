@@ -44,7 +44,7 @@ export const thunkGetSpotBookings = (spotId) => async (dispatch) => {
   const response = await csrfFetch(`/api/spots/${spotId}/bookings`);
   if (response.ok) {
     const bookings = await response.json();
-    await dispatch(actionLoadSpotBookings(bookings, spotId));
+    await dispatch(actionLoadSpotBookings(bookings.Bookings, spotId));
     return bookings;
   }
 };
@@ -52,7 +52,7 @@ export const thunkGetUserBookings = () => async (dispatch) => {
   const response = await csrfFetch(`/api/bookings/current`);
   if (response.ok) {
     const bookings = await response.json();
-    await dispatch(actionLoadUserBookings(bookings));
+    await dispatch(actionLoadUserBookings(bookings.Bookings));
     return bookings;
   }
 };
@@ -114,7 +114,7 @@ const bookingReducer = (state = initialState, action) => {
       });
       return {
         ...state,
-        spot: {
+        user: {
           ...userBookingsObj,
         },
       };

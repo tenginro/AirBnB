@@ -7,6 +7,7 @@ import { actionClearUserReviews, getUserReviews } from "../../store/review";
 import { actionClearSpots, getAllSpots } from "../../store/spot";
 import OpenModalMenuItem from "../Navigation/OpenModalMenuItem";
 import DeleteReviewModal from "../DeleteReviewModal";
+import UpdateReviewModal from "../UpdateReviewModal";
 
 const months = [
   "January",
@@ -61,33 +62,54 @@ const UserReviews = () => {
                   alt="previewImg"
                 />
               </div>
-              <div>{spotsObj[review.spotId].name}</div>
-              <div>
+              <div style={{ marginLeft: "10px", marginRight: "10px" }}>
+                {spotsObj[review.spotId].name}
+              </div>
+              <div style={{ marginLeft: "10px", marginRight: "10px" }}>
                 {spotsObj[review.spotId].city}, {spotsObj[review.spotId].state}
               </div>
-              <div>
-                {" "}
-                <i className="fas fa-sharp fa-solid fa-star"></i>
-                {review.stars}
-              </div>
-              <div>
-                {`${
+
+              <div style={{ marginLeft: "10px", marginRight: "10px" }}>
+                {`Review posted on: ${
                   months[+review.createdAt.slice(5, 7) - 1]
                 } ${review.createdAt.slice(8, 10)}, ${review.createdAt.slice(
                   0,
                   4
                 )}`}
               </div>
-              <div className="reviewSentences">{review.review}</div>
-              <button className="deleteReviewButtonEffect">
-                <OpenModalMenuItem
-                  itemText="Delete"
-                  //   onItemClick={closeMenu}
-                  modalComponent={
-                    <DeleteReviewModal review={review} spotId={review.spotId} />
-                  }
-                />
-              </button>
+              <div
+                className="reviewSentences"
+                style={{ marginLeft: "10px", marginRight: "10px" }}
+              >
+                <i className="fas fa-sharp fa-solid fa-star"></i>
+                {review.stars} stars: {review.review}
+              </div>
+              <div className="userSpotButtons">
+                <button className="updateSpotButton">
+                  <OpenModalMenuItem
+                    itemText="Update review"
+                    // onItemClick={closeMenu}
+                    modalComponent={
+                      <UpdateReviewModal
+                        spot={spotsObj[review.spotId]}
+                        oriReview={review}
+                      />
+                    }
+                  />
+                </button>
+                <button className="deleteSpotButton">
+                  <OpenModalMenuItem
+                    itemText="Delete review"
+                    //   onItemClick={closeMenu}
+                    modalComponent={
+                      <DeleteReviewModal
+                        review={review}
+                        spotId={review.spotId}
+                      />
+                    }
+                  />
+                </button>
+              </div>
             </div>
           ))}
       </ul>
