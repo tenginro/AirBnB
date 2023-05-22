@@ -131,6 +131,15 @@ li {
   height: 40px;
 }
 
+.bookingConfirmModal {
+  height: 200px;
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
 .reserveBoxLineTwo {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -170,7 +179,7 @@ li {
 .reviewSentences {
   overflow-wrap: break-word;
   width: 300px;
-  height: 100px;
+  height: 70px;
   overflow-y: auto;
 }
 
