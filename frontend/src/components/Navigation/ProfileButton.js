@@ -45,6 +45,7 @@ function ProfileButton({ user }) {
   };
 
   const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
+  console.log(ulClassName);
 
   return (
     <>
@@ -58,9 +59,19 @@ function ProfileButton({ user }) {
             <>
               <li>Hello, {user.firstName}</li>
               <li>{user.email}</li>
-              <li className="hoverEffect">
+              <li className="hoverEffect" onClick={closeMenu}>
                 <NavLink exact to="/spots/current" user={user}>
                   Manage Spots
+                </NavLink>
+              </li>
+              <li className="hoverEffect" onClick={closeMenu}>
+                <NavLink exact to="/reviews/current" user={user}>
+                  Manage Reviews
+                </NavLink>
+              </li>
+              <li className="hoverEffect" onClick={closeMenu}>
+                <NavLink exact to="/bookings/current" user={user}>
+                  Manage Bookings
                 </NavLink>
               </li>
               <li>
@@ -74,11 +85,12 @@ function ProfileButton({ user }) {
               <div className="hoverEffect logInWord">
                 <OpenModalMenuItem
                   itemText="Log In"
+                  className="hoverEffect"
                   onItemClick={closeMenu}
                   modalComponent={<LoginFormModal />}
                 />
               </div>
-              <div className="hoverEffect">
+              <div className="hoverEffect logInWord">
                 <OpenModalMenuItem
                   itemText="Sign Up"
                   className="hoverEffect"

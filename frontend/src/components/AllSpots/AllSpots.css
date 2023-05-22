@@ -44,15 +44,16 @@ img {
   margin-left: 10px;
 }
 .userSpotButtons button {
-  margin-right: 20px;
   font-size: 15px;
   border-radius: 5px;
+  margin-top: 5px;
 }
 
 .updateSpotButton {
   background-color: #4cb9f9;
   color: white;
-  border-color: #4cb9f9;
+  border: none;
+  margin-right: 20px;
 }
 
 .deleteSpotButton {
