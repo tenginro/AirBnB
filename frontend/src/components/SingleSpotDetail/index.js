@@ -18,6 +18,8 @@ import "./spot.css";
 
 import { DateRangePicker } from "react-date-range";
 import { addDays } from "date-fns";
+import { thunkCreateBooking } from "../../store/booking";
+import AddBookingConfirm from "./AddBookingConfirm";
 
 const months = [
   "January",
@@ -53,6 +55,7 @@ const SpotDetail = () => {
 
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(addDays(new Date(), 1));
+  const [errorMessage, setErrorMessage] = useState({});
 
   const handleSelect = (ranges) => {
     setStartDate(ranges.selection.startDate);
@@ -89,6 +92,22 @@ const SpotDetail = () => {
     e.stopPropagation();
     if (showCalendar) return;
     setShowCalendar(true);
+  };
+
+  const handleReserve = async (e) => {
+    e.preventDefault();
+    setErrorMessage({});
+    const payload = {
+      startDate,
+      endDate,
+    };
+    let newBooking = await dispatch(thunkCreateBooking(payload, spot));
+    if (newBooking.errors) {
+      setErrorMessage({ errors: newBooking.errors });
+    } else {
+      await dispatch(getSpotDetail(spotId));
+      setErrorMessage({});
+    }
   };
 
   useEffect(() => {
@@ -241,11 +260,11 @@ const SpotDetail = () => {
             </div>
             <div className="reserveButtonContainer">
               <div className="reserveButtonBox">
-                <button
-                  className="reserveButton"
-                  onClick={() => alert("Feature Coming Soon...")}
-                >
-                  Reserve
+                <button className="reserveButton" onClick={handleReserve}>
+                  <OpenModalMenuItem
+                    itemText="Reserve"
+                    modalComponent={<AddBookingConfirm />}
+                  />
                 </button>
               </div>
             </div>

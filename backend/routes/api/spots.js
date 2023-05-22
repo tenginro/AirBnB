@@ -299,7 +299,7 @@ router.post(
     let startDateTime = new Date(startDate);
     let endDateTime = new Date(endDate);
     let today = new Date();
-    // with this validation, if there is no future bookingin the seeder file, couldn't test delete booking that has been started
+    // with this validation, if there is no future booking in the seeder file, couldn't test delete booking that has been started
     if (startDateTime <= today) {
       return res.status(400).json({
         message: "Validation error",
