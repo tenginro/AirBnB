@@ -11,6 +11,7 @@ import { actionClearReviewState, getReviews } from "../../store/review";
 import CreateReviewModal from "../CreateReviewModal";
 import OpenModalMenuItem from "../Navigation/OpenModalMenuItem";
 import DeleteReviewModal from "../DeleteReviewModal";
+import UpdateReviewModal from "../UpdateReviewModal";
 
 import "react-date-range/dist/styles.css"; // main style file
 import "react-date-range/dist/theme/default.css"; // theme css file
@@ -18,8 +19,15 @@ import "./spot.css";
 
 import { DateRangePicker } from "react-date-range";
 import { addDays } from "date-fns";
-import { thunkCreateBooking } from "../../store/booking";
-import AddBookingConfirm from "./AddBookingConfirm";
+import {
+  actionClearSpotBookings,
+  actionClearUserBookings,
+  thunkCreateBooking,
+  thunkGetSpotBookings,
+  thunkGetUserBookings,
+} from "../../store/booking";
+
+import { useHistory } from "react-router-dom/cjs/react-router-dom";
 
 const months = [
   "January",
@@ -39,6 +47,7 @@ const months = [
 const SpotDetail = () => {
   const dispatch = useDispatch();
   const ulRef = useRef();
+  const history = useHistory();
 
   const { spotId } = useParams();
 
@@ -50,12 +59,26 @@ const SpotDetail = () => {
     a.createdAt > b.createdAt ? -1 : 1
   );
 
+  const spotBookingsObj = useSelector((state) => state.bookings.spot);
+  const spotBookingsArr = Object.values(spotBookingsObj);
+
   const [showMenu, setShowMenu] = useState(false);
   const [showCalendar, setShowCalendar] = useState(false);
 
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(addDays(new Date(), 1));
   const [errorMessage, setErrorMessage] = useState({});
+
+  let disabledDatesArr = [];
+  spotBookingsArr.forEach((b) => {
+    let start = new Date(b.startDate);
+    let end = new Date(b.endDate);
+    while (start <= end) {
+      disabledDatesArr.push(new Date(start));
+      start.setDate(start.getDate() + 1);
+    }
+  });
+  console.log("disabledDatesArr", disabledDatesArr);
 
   const handleSelect = (ranges) => {
     setStartDate(ranges.selection.startDate);
@@ -101,12 +124,17 @@ const SpotDetail = () => {
       startDate,
       endDate,
     };
-    let newBooking = await dispatch(thunkCreateBooking(payload, spot));
-    if (newBooking.errors) {
-      setErrorMessage({ errors: newBooking.errors });
-    } else {
-      await dispatch(getSpotDetail(spotId));
+    let newBooking = await dispatch(thunkCreateBooking(payload, spot))
+      .then(() => dispatch(getSpotDetail(spotId)))
+      .catch(async (res) => {
+        const data = await res.json();
+        if (data && data.message) {
+          await setErrorMessage({ ...data });
+        }
+      });
+    if (newBooking) {
       setErrorMessage({});
+      return history.push(`/bookings/current`);
     }
   };
 
@@ -143,10 +171,14 @@ const SpotDetail = () => {
   useEffect(() => {
     dispatch(getSpotDetail(spotId));
     dispatch(getReviews(spotId));
+    dispatch(thunkGetSpotBookings(spotId));
+    dispatch(thunkGetUserBookings());
     return () => {
       dispatch(actionClearState());
       dispatch(actionClearReviewState());
       dispatch(actionClearSpots());
+      dispatch(actionClearSpotBookings());
+      dispatch(actionClearUserBookings());
     };
   }, [dispatch, spotId]);
 
@@ -253,26 +285,26 @@ const SpotDetail = () => {
                   showSelectionPreview={true}
                   // when a user selects a start date, the end date of the range automatically adjusts to maintain the selected range.
                   moveRangeOnFirstSelection={false}
-                  // showDateDisplay={false}
                   showMonthAndYearPickers={false}
+                  disabledDates={disabledDatesArr}
                 />
               </div>
             </div>
             <div className="reserveButtonContainer">
               <div className="reserveButtonBox">
                 <button className="reserveButton" onClick={handleReserve}>
-                  <OpenModalMenuItem
-                    itemText="Reserve"
-                    modalComponent={<AddBookingConfirm />}
-                  />
+                  Reserve
                 </button>
               </div>
             </div>
           </div>
         </div>
         <div style={{ width: "820px" }}>
-          <h3 style={{ marginLeft: "10px" }}>
+          <h3 style={{ marginLeft: "10px", height: "50px" }}>
             Select or enter check-in, checkout dates
+            {Object.values(errorMessage).length ? (
+              <div style={{ color: "red" }}>{errorMessage.message}</div>
+            ) : null}
           </h3>
           <div className="calendarContainerFixed">
             <DateRangePicker
@@ -290,6 +322,7 @@ const SpotDetail = () => {
               // when a user selects a start date, the end date of the range automatically adjusts to maintain the selected range.
               moveRangeOnFirstSelection={false}
               showMonthAndYearPickers={false}
+              disabledDates={disabledDatesArr}
             />
           </div>
           <h3
@@ -353,18 +386,35 @@ const SpotDetail = () => {
                       <div className="reviewSentences">{review.review}</div>
                       {sessionUser !== null &&
                         review.User.id === sessionUser.id && (
-                          <button className="deleteReviewButtonEffect">
-                            <OpenModalMenuItem
-                              itemText="Delete"
-                              onItemClick={closeMenu}
-                              modalComponent={
-                                <DeleteReviewModal
-                                  review={review}
-                                  spotId={spotId}
-                                />
-                              }
-                            />
-                          </button>
+                          <div
+                            className="userSpotButtons"
+                            style={{ marginLeft: "0" }}
+                          >
+                            <button className="updateSpotButton">
+                              <OpenModalMenuItem
+                                itemText="Update"
+                                // onItemClick={closeMenu}
+                                modalComponent={
+                                  <UpdateReviewModal
+                                    spot={spot}
+                                    oriReview={review}
+                                  />
+                                }
+                              />
+                            </button>
+                            <button className="deleteReviewButtonEffect">
+                              <OpenModalMenuItem
+                                itemText="Delete"
+                                onItemClick={closeMenu}
+                                modalComponent={
+                                  <DeleteReviewModal
+                                    review={review}
+                                    spotId={spotId}
+                                  />
+                                }
+                              />
+                            </button>
+                          </div>
                         )}
                     </div>
                   )

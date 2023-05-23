@@ -13,12 +13,12 @@ export default function CreateReviewModal({ spot }) {
   const [review, setReview] = useState("");
   const [activeRating, setActiveRating] = useState(0);
   const [realRating, setRealRating] = useState(0);
-  const [errors, setErrors] = useState([]);
+  const [errors, setErrors] = useState("");
   const history = useHistory();
 
   const onClick = async (e) => {
     e.preventDefault();
-    setErrors([]);
+    setErrors("");
     const payload = {
       review,
       stars: realRating,
@@ -32,7 +32,7 @@ export default function CreateReviewModal({ spot }) {
         if (data && data.message) setErrors(data.message);
       });
     if (newReview) {
-      setErrors({});
+      setErrors("");
       return history.push(`/spots/${spot.id}`);
     }
   };

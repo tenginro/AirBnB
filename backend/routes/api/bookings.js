@@ -119,16 +119,16 @@ router.put("/:bookingId", requireAuth, async (req, res) => {
 
   if (startDateTime <= now) {
     return res.status(400).json({
-      message: "Validation error",
+      message: "Validation error - startDate cannot be on or before today",
       statusCode: 400,
       errors: {
-        endDate: "startDate cannot be on or before today",
+        startDate: "startDate cannot be on or before today",
       },
     });
   }
   if (endDateTime <= startDateTime) {
     return res.status(400).json({
-      message: "Validation error",
+      message: "Validation error - endDate cannot come before startDate",
       statusCode: 400,
       errors: {
         endDate: "endDate cannot come before startDate",
@@ -149,7 +149,7 @@ router.put("/:bookingId", requireAuth, async (req, res) => {
   }
   if (booking.userId !== userId) {
     return res.status(403).json({
-      message: "Forbidden",
+      message: "Forbidden - this is your spot",
       statusCode: 403,
     });
   }
