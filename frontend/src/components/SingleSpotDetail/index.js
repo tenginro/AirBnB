@@ -26,7 +26,7 @@ import {
   thunkGetSpotBookings,
   thunkGetUserBookings,
 } from "../../store/booking";
-import AddBookingConfirm from "./AddBookingConfirm";
+
 import { useHistory } from "react-router-dom/cjs/react-router-dom";
 
 const months = [
@@ -59,12 +59,27 @@ const SpotDetail = () => {
     a.createdAt > b.createdAt ? -1 : 1
   );
 
+  const spotBookingsObj = useSelector((state) => state.bookings.spot);
+  const spotBookingsArr = Object.values(spotBookingsObj);
+
   const [showMenu, setShowMenu] = useState(false);
   const [showCalendar, setShowCalendar] = useState(false);
 
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(addDays(new Date(), 1));
   const [errorMessage, setErrorMessage] = useState({});
+
+  let disabledDatesArr = [];
+  spotBookingsArr.forEach((b) => {
+    let start = new Date(b.startDate);
+    let end = new Date(b.endDate);
+    while (start <= end) {
+      disabledDatesArr.push(new Date(start));
+      start.setDate(start.getDate() + 1);
+    }
+  });
+  console.log("disabledDatesArr", disabledDatesArr);
+
   const handleSelect = (ranges) => {
     setStartDate(ranges.selection.startDate);
     setEndDate(ranges.selection.endDate);
@@ -270,8 +285,8 @@ const SpotDetail = () => {
                   showSelectionPreview={true}
                   // when a user selects a start date, the end date of the range automatically adjusts to maintain the selected range.
                   moveRangeOnFirstSelection={false}
-                  // showDateDisplay={false}
                   showMonthAndYearPickers={false}
+                  disabledDates={disabledDatesArr}
                 />
               </div>
             </div>
@@ -307,6 +322,7 @@ const SpotDetail = () => {
               // when a user selects a start date, the end date of the range automatically adjusts to maintain the selected range.
               moveRangeOnFirstSelection={false}
               showMonthAndYearPickers={false}
+              disabledDates={disabledDatesArr}
             />
           </div>
           <h3
