@@ -44,6 +44,7 @@ export const thunkGetSpotBookings = (spotId) => async (dispatch) => {
   const response = await csrfFetch(`/api/spots/${spotId}/bookings`);
   if (response.ok) {
     const bookings = await response.json();
+
     await dispatch(actionLoadSpotBookings(bookings.Bookings, spotId));
     return bookings;
   }
@@ -66,7 +67,6 @@ export const thunkCreateBooking = (booking, spot) => async (dispatch) => {
     dispatch(actionCreateBooking(newBooking, spot));
     return newBooking;
   }
-  console.log("bad response from backend", response.json());
 
   return await response.json();
 };

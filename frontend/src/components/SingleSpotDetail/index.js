@@ -19,7 +19,13 @@ import "./spot.css";
 
 import { DateRangePicker } from "react-date-range";
 import { addDays } from "date-fns";
-import { thunkCreateBooking } from "../../store/booking";
+import {
+  actionClearSpotBookings,
+  actionClearUserBookings,
+  thunkCreateBooking,
+  thunkGetSpotBookings,
+  thunkGetUserBookings,
+} from "../../store/booking";
 import AddBookingConfirm from "./AddBookingConfirm";
 import { useHistory } from "react-router-dom/cjs/react-router-dom";
 
@@ -109,7 +115,6 @@ const SpotDetail = () => {
         const data = await res.json();
         if (data && data.message) {
           await setErrorMessage({ ...data });
-          console.log("error error", errorMessage);
         }
       });
     if (newBooking) {
@@ -151,10 +156,14 @@ const SpotDetail = () => {
   useEffect(() => {
     dispatch(getSpotDetail(spotId));
     dispatch(getReviews(spotId));
+    dispatch(thunkGetSpotBookings(spotId));
+    dispatch(thunkGetUserBookings());
     return () => {
       dispatch(actionClearState());
       dispatch(actionClearReviewState());
       dispatch(actionClearSpots());
+      dispatch(actionClearSpotBookings());
+      dispatch(actionClearUserBookings());
     };
   }, [dispatch, spotId]);
 

@@ -494,6 +494,7 @@ router.get("/:spotId/bookings", requireAuth, async (req, res) => {
       });
     } else {
       arr.push({
+        id: booking.id,
         spotId: booking.spotId,
         startDate: dateFormat(booking.startDate).split(" ")[0],
         endDate: dateFormat(booking.endDate).split(" ")[0],
