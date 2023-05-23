@@ -79,7 +79,12 @@ const UserReviews = () => {
               </div>
               <div
                 className="reviewSentences"
-                style={{ marginLeft: "10px", marginRight: "10px" }}
+                style={{
+                  marginLeft: "10px",
+                  marginRight: "10px",
+                  width: "300px",
+                  height: "70px",
+                }}
               >
                 <i className="fas fa-sharp fa-solid fa-star"></i>
                 {review.stars} stars: {review.review}

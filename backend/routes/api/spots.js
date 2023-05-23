@@ -302,16 +302,16 @@ router.post(
     // with this validation, if there is no future booking in the seeder file, couldn't test delete booking that has been started
     if (startDateTime <= today) {
       return res.status(400).json({
-        message: "Validation error",
+        message: "Validation error - startDate cannot be on or before today",
         statusCode: 400,
         errors: {
-          endDate: "startDate cannot be on or before today",
+          startDate: "startDate cannot be on or before today",
         },
       });
     }
     if (endDateTime.getTime() <= startDateTime.getTime()) {
       return res.status(400).json({
-        message: "Validation error",
+        message: "Validation error - endDate cannot be on or before startDate",
         statusCode: 400,
         errors: {
           endDate: "endDate cannot be on or before startDate",
@@ -336,7 +336,7 @@ router.post(
     // check authorization
     if (spot.ownerId === userId) {
       return res.status(403).json({
-        message: "Forbidden",
+        message: "Forbidden - this is your spot",
         statusCode: 403,
       });
     }

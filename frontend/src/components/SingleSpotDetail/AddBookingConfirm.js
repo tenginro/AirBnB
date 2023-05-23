@@ -1,7 +1,8 @@
-export default function AddBookingConfirm() {
+export default function AddBookingConfirm({ errorMessage }) {
+  console.log("error in modal", errorMessage);
   return (
     <div className="bookingConfirmModal">
-      <h3>Booking Added!</h3>
+      <h3>{errorMessage}</h3>
     </div>
   );
 }
