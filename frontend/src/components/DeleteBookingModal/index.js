@@ -1,13 +1,12 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
-
-import { deleteReview, getReviews } from "../../store/review";
 import { useHistory } from "react-router-dom";
-import { getSpotDetail } from "../../store/spot";
-import "./DeleteReviewModal.css";
 
-export default function DeleteReviewModal({ review, spotId }) {
+import "../DeleteReviewModal/DeleteReviewModal.css";
+import { thunkDeleteBooking, thunkGetUserBookings } from "../../store/booking";
+
+export default function DeleteBookingModal({ booking }) {
   const dispatch = useDispatch();
   const { closeModal } = useModal();
   const [errors, setErrors] = useState([]);
@@ -15,10 +14,9 @@ export default function DeleteReviewModal({ review, spotId }) {
 
   const onClick = async (e) => {
     e.preventDefault();
-    await dispatch(deleteReview(review))
+    await dispatch(thunkDeleteBooking(booking))
       .then(closeModal)
-      .then(() => dispatch(getSpotDetail(spotId)))
-      .then(() => dispatch(getReviews(spotId)))
+      .then(() => dispatch(thunkGetUserBookings()))
       .catch(async (res) => {
         const data = await res.json();
         if (data && data.errors) {
@@ -26,19 +24,19 @@ export default function DeleteReviewModal({ review, spotId }) {
         }
       });
 
-    return history.push(`/spots/${spotId}`);
+    return history.push(`/bookings/current`);
   };
 
   return (
     <>
       <h2>Confirm Delete</h2>
-      <h3>Are you sure you want to delete this review?</h3>
+      <h3>Are you sure you want to delete this booking?</h3>
       <div className="reviewModalButton">
         <button className="yesButton" type="button" onClick={onClick}>
-          Yes (Delete Review)
+          Yes (Delete Booking)
         </button>
         <button className="noButton" type="button" onClick={closeModal}>
-          No (Keep Review)
+          No (Keep Booking)
         </button>
       </div>
     </>

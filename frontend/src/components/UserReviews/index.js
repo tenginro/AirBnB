@@ -92,7 +92,7 @@ const UserReviews = () => {
               <div className="userSpotButtons">
                 <button className="updateSpotButton">
                   <OpenModalMenuItem
-                    itemText="Update review"
+                    itemText="Update Review"
                     // onItemClick={closeMenu}
                     modalComponent={
                       <UpdateReviewModal
@@ -104,7 +104,7 @@ const UserReviews = () => {
                 </button>
                 <button className="deleteSpotButton">
                   <OpenModalMenuItem
-                    itemText="Delete review"
+                    itemText="Delete Review"
                     //   onItemClick={closeMenu}
                     modalComponent={
                       <DeleteReviewModal

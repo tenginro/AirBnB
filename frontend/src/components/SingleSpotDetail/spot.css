@@ -90,7 +90,7 @@ li {
   display: none;
 }
 
-.rdrDayDisabled {
+.rdrDayDisabled .rdrDayNumber span {
   text-decoration: line-through;
 }
 
