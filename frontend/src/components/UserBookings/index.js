@@ -7,9 +7,15 @@ import { actionClearSpots, getAllSpots } from "../../store/spot";
 import OpenModalMenuItem from "../Navigation/OpenModalMenuItem";
 import DeleteReviewModal from "../DeleteReviewModal";
 import {
+  actionClearBookingToEdit,
   actionClearUserBookings,
+  thunkGetBookingToEdit,
+  thunkGetSpotBookings,
   thunkGetUserBookings,
 } from "../../store/booking";
+import DeleteBookingModal from "../DeleteBookingModal";
+import { NavLink } from "react-router-dom";
+import UpdateBookingModal from "../UpdateBookingModal";
 
 const months = [
   "January",
@@ -33,7 +39,8 @@ const UserBookings = () => {
   function compareToToday(dateStr) {
     let date = new Date(dateStr);
     let today = new Date();
-    return date < today;
+    today.setDate(today.getDate() + 1);
+    return date <= today;
   }
 
   const userBookingsObj = useSelector((state) => state.bookings.user);
@@ -61,42 +68,72 @@ const UserBookings = () => {
       <h2 className="manageSpotsLine">Manage Bookings</h2>
       <ul className="spots">
         {userBookingsArr.length &&
-          userBookingsArr.map((booking) => (
-            <div key={booking.id} className="individualReview">
-              <div
-                style={{ cursor: "pointer" }}
-                onClick={() => {
-                  history.push(`/spots/${booking.spotId}`);
-                }}
-              >
-                <img
-                  src={spotsObj[booking.spotId].previewImage}
-                  alt="previewImg"
-                />
-              </div>
-              <div>{spotsObj[booking.spotId].name}</div>
-              <div>
-                {spotsObj[booking.spotId].city},{" "}
-                {spotsObj[booking.spotId].state}
-              </div>
-              <div>
-                {compareToToday(booking.endDate)
-                  ? "Past booking"
-                  : "Upcoming booking"}
-              </div>
-              <div>Start Date: {booking.startDate}</div>
-              <div>End Date: {booking.endDate}</div>
-              {/* <button className="deleteReviewButtonEffect">
-                <OpenModalMenuItem
-                  itemText="Delete"
-                  //   onItemClick={closeMenu}
-                  modalComponent={
-                    <DeleteReviewModal review={booking} spotId={booking.spotId} />
-                  }
-                />
-              </button> */}
-            </div>
-          ))}
+          userBookingsArr.map((booking) => {
+            if (spotsObj[booking.spotId]) {
+              return (
+                <div key={booking.id} className="individualReview">
+                  <div
+                    style={{ cursor: "pointer" }}
+                    onClick={() => {
+                      history.push(`/spots/${booking.spotId}`);
+                    }}
+                  >
+                    <img
+                      src={spotsObj[booking.spotId].previewImage}
+                      alt="previewImg"
+                    />
+                  </div>
+                  <div style={{ marginLeft: "10px", marginRight: "10px" }}>
+                    {spotsObj[booking.spotId].name}
+                  </div>
+                  <div style={{ marginLeft: "10px", marginRight: "10px" }}>
+                    {spotsObj[booking.spotId].city},{" "}
+                    {spotsObj[booking.spotId].state}
+                  </div>
+                  <div style={{ marginLeft: "10px", marginRight: "10px" }}>
+                    {compareToToday(booking.startDate)
+                      ? "Past booking"
+                      : "Upcoming booking"}
+                  </div>
+                  <div style={{ marginLeft: "10px", marginRight: "10px" }}>
+                    Start Date: {booking.startDate}
+                  </div>
+                  <div style={{ marginLeft: "10px", marginRight: "10px" }}>
+                    End Date: {booking.endDate}
+                  </div>
+
+                  {compareToToday(booking.startDate) ? null : (
+                    <div className="userSpotButtons">
+                      <button
+                        className="updateSpotButton"
+                        // onClick={(e) => {
+                        //   e.preventDefault();
+                        //   dispatch(thunkGetBookingToEdit(booking.id));
+                        // }}
+                      >
+                        <OpenModalMenuItem
+                          itemText="Update Booking"
+                          //   onItemClick={closeMenu}
+                          modalComponent={
+                            <UpdateBookingModal booking={booking} />
+                          }
+                        />
+                      </button>
+                      <button className="deleteSpotButton">
+                        <OpenModalMenuItem
+                          itemText="Delete Booking"
+                          //   onItemClick={closeMenu}
+                          modalComponent={
+                            <DeleteBookingModal booking={booking} />
+                          }
+                        />
+                      </button>
+                    </div>
+                  )}
+                </div>
+              );
+            } else return null;
+          })}
       </ul>
     </>
   );

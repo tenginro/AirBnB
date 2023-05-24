@@ -27,7 +27,7 @@ import {
   thunkGetUserBookings,
 } from "../../store/booking";
 
-import { useHistory } from "react-router-dom/cjs/react-router-dom";
+import { useHistory } from "react-router-dom";
 
 const months = [
   "January",
@@ -78,7 +78,6 @@ const SpotDetail = () => {
       start.setDate(start.getDate() + 1);
     }
   });
-  console.log("disabledDatesArr", disabledDatesArr);
 
   const handleSelect = (ranges) => {
     setStartDate(ranges.selection.startDate);

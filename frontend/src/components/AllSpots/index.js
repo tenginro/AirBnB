@@ -5,6 +5,7 @@ import { actionClearSpots, getAllSpots } from "../../store/spot";
 import SpotIndexItem from "./SpotIndexItem";
 
 import "./AllSpots.css";
+import { actionClearBookingToEdit } from "../../store/booking";
 
 const SpotsIndex = () => {
   const spotsObj = useSelector((state) => state.spots.allSpots);
@@ -13,7 +14,9 @@ const SpotsIndex = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getAllSpots());
-    return () => dispatch(actionClearSpots());
+    return () => {
+      dispatch(actionClearSpots());
+    };
   }, [dispatch]);
 
   return (

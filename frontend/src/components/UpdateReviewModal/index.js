@@ -25,7 +25,7 @@ export default function UpdateReviewModal({ spot, oriReview }) {
       stars: realRating,
     };
 
-    let newReview = await dispatch(updateReview(payload, spot))
+    let updatedReview = await dispatch(updateReview(payload, spot))
       .then(closeModal)
       .then(() => dispatch(getSpotDetail(spot.id)))
       .then(() => dispatch(getReviews(spot.id)))
@@ -33,9 +33,8 @@ export default function UpdateReviewModal({ spot, oriReview }) {
         const data = await res.json();
         if (data && data.message) setErrors(data.message);
       });
-    if (newReview) {
+    if (updatedReview) {
       setErrors({});
-      //   return history.push(`/spots/${spot.id}`);
     }
   };
 
