@@ -308,7 +308,29 @@ const SpotDetail = () => {
                 />
               </div>
             </div>
-            <div className="reserveButtonContainer">
+            <div
+              className="reserveButtonContainer"
+              style={{ display: "flex", flexDirection: "column" }}
+            >
+              <div>
+                Total Price: $
+                {spot.price *
+                  (
+                    (new Date(endDate) - new Date(startDate)) /
+                    (1000 * 60 * 60 * 24)
+                  ).toFixed(0)}{" "}
+                for{" "}
+                {(
+                  (new Date(endDate) - new Date(startDate)) /
+                  (1000 * 60 * 60 * 24)
+                ).toFixed(0)}{" "}
+                {(
+                  (new Date(endDate) - new Date(startDate)) /
+                  (1000 * 60 * 60 * 24)
+                ).toFixed(0) > 1
+                  ? "nights"
+                  : "night"}
+              </div>
               <div className="reserveButtonBox">
                 <button className="reserveButton" onClick={handleReserve}>
                   Reserve

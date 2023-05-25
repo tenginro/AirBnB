@@ -121,6 +121,23 @@ const UserBookings = () => {
                   <div style={{ marginLeft: "10px", marginRight: "10px" }}>
                     End Date: {booking.endDate}
                   </div>
+                  <div style={{ marginLeft: "10px", marginRight: "10px" }}>
+                    Price per night: $
+                    {spotsObj[booking.spotId].price.toFixed(0)}
+                  </div>
+                  <div style={{ marginLeft: "10px", marginRight: "10px" }}>
+                    Total Price: $
+                    {spotsObj[booking.spotId].price *
+                      (
+                        (new Date(booking.endDate) -
+                          new Date(booking.startDate)) /
+                        (1000 * 60 * 60 * 24)
+                      ).toFixed(0)}{" "}
+                    -{" "}
+                    {(new Date(booking.endDate) - new Date(booking.startDate)) /
+                      (1000 * 60 * 60 * 24).toFixed(0)}{" "}
+                    nights
+                  </div>
 
                   {compareToToday(booking.startDate) ? null : (
                     <div className="userSpotButtons">
