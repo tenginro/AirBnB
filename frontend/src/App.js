@@ -14,6 +14,7 @@ import EditSpotFormWrapper from "./components/EditSpot";
 import UserReviews from "./components/UserReviews";
 import UserBookings from "./components/UserBookings";
 import NotFound from "./components/NotFound";
+import Footer from "./components/Footer";
 
 function App() {
   const dispatch = useDispatch();
@@ -54,6 +55,7 @@ function App() {
           </Route>
         </Switch>
       )}
+      <Footer />
     </>
   );
 }
