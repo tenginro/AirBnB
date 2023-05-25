@@ -42,7 +42,27 @@ const UserReviews = () => {
     };
   }, [dispatch]);
 
-  if (!Object.values(spotsObj).length) return <div>Loading</div>;
+  if (!Object.values(spotsObj).length)
+    return (
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+          margin: "80px",
+        }}
+      >
+        <div>
+          <img
+            style={{ width: "300px", height: "300px" }}
+            src="https://cdn.dribbble.com/users/44323/screenshots/1655310/loadinganimation.gif"
+            alt="loadingGif"
+          />
+        </div>
+        <h1>Loading...</h1>
+      </div>
+    );
 
   return (
     <>

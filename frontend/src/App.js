@@ -13,6 +13,7 @@ import UserSpot from "./components/UserSpots";
 import EditSpotFormWrapper from "./components/EditSpot";
 import UserReviews from "./components/UserReviews";
 import UserBookings from "./components/UserBookings";
+import NotFound from "./components/NotFound";
 
 function App() {
   const dispatch = useDispatch();
@@ -49,7 +50,7 @@ function App() {
             <SpotDetail />
           </Route>
           <Route>
-            <h1>404: Page not found</h1>
+            <NotFound />
           </Route>
         </Switch>
       )}
