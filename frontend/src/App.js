@@ -15,6 +15,7 @@ import UserReviews from "./components/UserReviews";
 import UserBookings from "./components/UserBookings";
 import NotFound from "./components/NotFound";
 import Footer from "./components/Footer";
+import MapPage from "./components/Map";
 
 function App() {
   const dispatch = useDispatch();
@@ -40,6 +41,9 @@ function App() {
           </Route>
           <Route exact path="/spots/current">
             <UserSpot />
+          </Route>
+          <Route exact path="/maps/spots">
+            <MapPage />
           </Route>
           <Route exact path="/reviews/current">
             <UserReviews />
