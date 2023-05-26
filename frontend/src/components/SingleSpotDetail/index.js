@@ -183,7 +183,26 @@ const SpotDetail = () => {
 
   // conditionally render
   if (!spot.SpotImages && !spot.Owner) {
-    return <div>Loading</div>;
+    return (
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+          margin: "80px",
+        }}
+      >
+        <div>
+          <img
+            style={{ width: "300px", height: "300px" }}
+            src="https://cdn.dribbble.com/users/44323/screenshots/1655310/loadinganimation.gif"
+            alt="loadingGif"
+          />
+        </div>
+        <h1>Loading...</h1>
+      </div>
+    );
   }
 
   return (
@@ -289,7 +308,29 @@ const SpotDetail = () => {
                 />
               </div>
             </div>
-            <div className="reserveButtonContainer">
+            <div
+              className="reserveButtonContainer"
+              style={{ display: "flex", flexDirection: "column" }}
+            >
+              <div>
+                Total Price: $
+                {spot.price *
+                  (
+                    (new Date(endDate) - new Date(startDate)) /
+                    (1000 * 60 * 60 * 24)
+                  ).toFixed(0)}{" "}
+                for{" "}
+                {(
+                  (new Date(endDate) - new Date(startDate)) /
+                  (1000 * 60 * 60 * 24)
+                ).toFixed(0)}{" "}
+                {(
+                  (new Date(endDate) - new Date(startDate)) /
+                  (1000 * 60 * 60 * 24)
+                ).toFixed(0) > 1
+                  ? "nights"
+                  : "night"}
+              </div>
               <div className="reserveButtonBox">
                 <button className="reserveButton" onClick={handleReserve}>
                   Reserve

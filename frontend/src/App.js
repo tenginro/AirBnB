@@ -13,6 +13,9 @@ import UserSpot from "./components/UserSpots";
 import EditSpotFormWrapper from "./components/EditSpot";
 import UserReviews from "./components/UserReviews";
 import UserBookings from "./components/UserBookings";
+import NotFound from "./components/NotFound";
+import Footer from "./components/Footer";
+import MapPage from "./components/Map";
 
 function App() {
   const dispatch = useDispatch();
@@ -39,6 +42,9 @@ function App() {
           <Route exact path="/spots/current">
             <UserSpot />
           </Route>
+          <Route exact path="/maps/spots">
+            <MapPage />
+          </Route>
           <Route exact path="/reviews/current">
             <UserReviews />
           </Route>
@@ -49,10 +55,11 @@ function App() {
             <SpotDetail />
           </Route>
           <Route>
-            <h1>404: Page not found</h1>
+            <NotFound />
           </Route>
         </Switch>
       )}
+      <Footer />
     </>
   );
 }
