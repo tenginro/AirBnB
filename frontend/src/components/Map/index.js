@@ -1,12 +1,12 @@
 import React, { useState, useCallback, useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import {
   GoogleMap,
   useJsApiLoader,
   Marker,
   InfoWindow,
 } from "@react-google-maps/api";
-import { useDispatch, useSelector } from "react-redux";
 import { actionClearSpots, getAllSpots } from "../../store/spot";
 
 const MapPage = () => {
@@ -68,6 +68,12 @@ const MapPage = () => {
               onUnmount={onUnmount}
               onClick={() => setSelectedPlace({})}
             >
+              {/* <Marker
+                position={currentPosition}
+                title="Current"
+                // icon={iconCurrent}
+                streetView={false}
+              ></Marker> */}
               {spotsArr?.length &&
                 spotsArr?.map((spot) => (
                   <Marker
@@ -83,7 +89,10 @@ const MapPage = () => {
                       selectedPlace.lat &&
                       selectedPlace.lng && (
                         <InfoWindow
-                          position={{ lat: +spot.lat, lng: +spot.lng }}
+                          position={{
+                            lat: +spot.lat || 33.570574,
+                            lng: +spot.lng || -101.8894984,
+                          }}
                           // options={{ closeBox: false }}
                         >
                           <div className="spot">
