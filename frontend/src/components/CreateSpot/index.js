@@ -12,6 +12,8 @@ const CreateSpotForm = () => {
   const [address, setAddress] = useState("");
   const [city, setCity] = useState("");
   const [state, setState] = useState("");
+  const [lat, setLat] = useState(0);
+  const [lng, setLng] = useState(0);
   const [description, setDescription] = useState("");
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
@@ -29,6 +31,8 @@ const CreateSpotForm = () => {
   const [countryError, setCountryError] = useState({});
   const [addressError, setAddressError] = useState({});
   const [nameError, setNameError] = useState({});
+  const [latError, setLatError] = useState({});
+  const [lngError, setLngError] = useState({});
   const [descriptionError, setDescriptionError] = useState({});
   const [priceError, setPriceError] = useState({});
   const [image1Error, setImage1Error] = useState({});
@@ -48,6 +52,8 @@ const CreateSpotForm = () => {
     setAddressError({});
     setCityError({});
     setStateError({});
+    setLatError({});
+    setLngError({});
     setDescriptionError({});
     setNameError({});
     setPriceError({});
@@ -61,6 +67,8 @@ const CreateSpotForm = () => {
       city,
       state,
       country,
+      lat,
+      lng,
       name,
       description,
       price,
@@ -132,7 +140,13 @@ const CreateSpotForm = () => {
     if (!state) {
       setStateError({ state: "State is required" });
     }
-    if (description.length < 30) {
+    if (!lat || lat < -90 || lat > 90) {
+      setLatError({ lat: "between -90 and 90" });
+    }
+    if (!lng || lng < -180 || lng > 180) {
+      setLngError({ lng: "between -180 and 180" });
+    }
+    if (!description || description.length < 30) {
       setDescriptionError({
         description: "Description needs a minimum of 30 characters",
       });
@@ -149,6 +163,8 @@ const CreateSpotForm = () => {
       addressError.address ||
       cityError.city ||
       stateError.state ||
+      latError.lat ||
+      lngError.lng ||
       descriptionError.description ||
       nameError.name ||
       priceError.price ||
@@ -170,6 +186,12 @@ const CreateSpotForm = () => {
       country &&
       state &&
       city &&
+      lat &&
+      lat > -90 &&
+      lat < 90 &&
+      lng &&
+      lng > -180 &&
+      lng < 180 &&
       name &&
       price &&
       description.length >= 30 &&
@@ -195,6 +217,8 @@ const CreateSpotForm = () => {
         setAddressError({});
         setCityError({});
         setStateError({});
+        setLatError({});
+        setLngError({});
         setDescriptionError({});
         setNameError({});
         setPriceError({});
@@ -230,7 +254,7 @@ const CreateSpotForm = () => {
             <input
               type="text"
               value={country}
-              placeholder="country"
+              placeholder="Country"
               onChange={(e) => setCountry(e.target.value)}
               // required
             ></input>
@@ -271,9 +295,8 @@ const CreateSpotForm = () => {
                 onChange={(e) => setCity(e.target.value)}
                 // required
               ></input>
-              {", "}
             </label>
-            <label>
+            <label style={{ marginLeft: "9px" }}>
               <div className="inputLabel">
                 State
                 {errorMessage?.state && (
@@ -286,8 +309,43 @@ const CreateSpotForm = () => {
               <input
                 type="text"
                 value={state}
-                placeholder="STATE"
+                placeholder="State"
                 onChange={(e) => setState(e.target.value)}
+                // required
+              ></input>
+            </label>
+          </div>
+          <div className="cityState">
+            <label>
+              <div className="inputLabel">
+                Latitude
+                {errorMessage?.lat && (
+                  <div className="errors">{errorMessage.lat}</div>
+                )}
+                {latError?.lat && <div className="errors">{latError.lat}</div>}
+              </div>
+              <input
+                type="text"
+                value={lat}
+                placeholder="Latitude should be between -90 and 90"
+                onChange={(e) => setLat(e.target.value)}
+                // required
+              ></input>
+            </label>
+
+            <label style={{ marginLeft: "9px" }}>
+              <div className="inputLabel">
+                Longitude
+                {errorMessage?.lng && (
+                  <div className="errors">{errorMessage.lng}</div>
+                )}
+                {lngError?.lng && <div className="errors">{lngError.lng}</div>}
+              </div>
+              <input
+                type="text"
+                value={lng}
+                placeholder="Longitude should be between -180 and 180"
+                onChange={(e) => setLng(e.target.value)}
                 // required
               ></input>
             </label>
