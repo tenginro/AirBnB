@@ -31,8 +31,8 @@ const SpotsIndex = () => {
         style={{
           position: "sticky",
           bottom: "150px",
-          width: "100px",
-          height: "20px",
+          width: "140px",
+          height: "40px",
           display: "flex",
           flexDirection: "row",
           justifyContent: "center",
