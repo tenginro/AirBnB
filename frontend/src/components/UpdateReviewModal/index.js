@@ -136,7 +136,7 @@ export default function UpdateReviewModal({ spot, oriReview }) {
         <div className="submitReview">
           <button
             className={
-              review.length <= 10 && realRating < 1
+              review.length <= 10 || realRating < 1
                 ? "submitReviewButtonDisabled"
                 : "submitReviewButton"
             }

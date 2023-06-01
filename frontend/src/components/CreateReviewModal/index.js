@@ -135,7 +135,7 @@ export default function CreateReviewModal({ spot }) {
         <div className="submitReview">
           <button
             className={
-              review.length <= 10 && realRating < 1
+              review.length <= 10 || realRating < 1
                 ? "submitReviewButtonDisabled"
                 : "submitReviewButton"
             }
