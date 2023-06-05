@@ -33,8 +33,8 @@ const MapPage = () => {
 
   //This sets the center of the map. This must be set BEFORE the map loads
   const [currentPosition, setCurrentPosition] = useState({
-    lat: 33.570574,
-    lng: -101.8894984,
+    lat: 38.0278698,
+    lng: -84.80121,
   });
 
   // This is the equivalent to a script tag
@@ -47,6 +47,7 @@ const MapPage = () => {
   const containerStyle = {
     width: "100vw",
     height: "100%",
+    margin: "0 auto",
   };
 
   const [map, setMap] = useState(null);
@@ -63,7 +64,7 @@ const MapPage = () => {
           {isLoaded && (
             <GoogleMap
               mapContainerStyle={containerStyle}
-              zoom={5}
+              zoom={4}
               center={currentPosition}
               onUnmount={onUnmount}
               onClick={() => setSelectedPlace({})}
