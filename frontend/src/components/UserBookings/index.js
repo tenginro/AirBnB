@@ -36,6 +36,17 @@ const UserBookings = () => {
   const dispatch = useDispatch();
   const history = useHistory();
 
+  useEffect(() => {
+    // Whenever a route change occurs (including redirects), the callback function inside the useEffect will be triggered, and it will scroll the window to the top using window.scrollTo(0, 0). This ensures that the page is scrolled to the top
+    const unListen = history.listen(() => {
+      window.scrollTo(0, 0);
+    });
+
+    return () => {
+      unListen();
+    };
+  }, [history]);
+
   function compareToToday(dateStr) {
     let date = new Date(dateStr);
     let today = new Date();
@@ -103,17 +114,23 @@ const UserBookings = () => {
                       alt="previewImg"
                     />
                   </div>
+                  <div
+                    style={{
+                      marginLeft: "10px",
+                      marginRight: "10px",
+                      fontWeight: "bold",
+                    }}
+                  >
+                    {compareToToday(booking.startDate)
+                      ? "Past booking"
+                      : "Upcoming booking"}
+                  </div>
                   <div style={{ marginLeft: "10px", marginRight: "10px" }}>
                     {spotsObj[booking.spotId].name}
                   </div>
                   <div style={{ marginLeft: "10px", marginRight: "10px" }}>
                     {spotsObj[booking.spotId].city},{" "}
                     {spotsObj[booking.spotId].state}
-                  </div>
-                  <div style={{ marginLeft: "10px", marginRight: "10px" }}>
-                    {compareToToday(booking.startDate)
-                      ? "Past booking"
-                      : "Upcoming booking"}
                   </div>
                   <div style={{ marginLeft: "10px", marginRight: "10px" }}>
                     Start Date: {booking.startDate}
@@ -133,10 +150,14 @@ const UserBookings = () => {
                           new Date(booking.startDate)) /
                         (1000 * 60 * 60 * 24)
                       ).toFixed(0)}{" "}
-                    -{" "}
+                    for{" "}
                     {(new Date(booking.endDate) - new Date(booking.startDate)) /
                       (1000 * 60 * 60 * 24).toFixed(0)}{" "}
-                    nights
+                    {(new Date(booking.endDate) - new Date(booking.startDate)) /
+                      (1000 * 60 * 60 * 24) <=
+                    1
+                      ? "night"
+                      : "nights"}
                   </div>
 
                   {compareToToday(booking.startDate) ? null : (

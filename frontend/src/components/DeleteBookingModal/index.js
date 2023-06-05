@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
 import { useHistory } from "react-router-dom";
@@ -11,6 +11,17 @@ export default function DeleteBookingModal({ booking }) {
   const { closeModal } = useModal();
   const [errors, setErrors] = useState([]);
   const history = useHistory();
+
+  useEffect(() => {
+    // Whenever a route change occurs (including redirects), the callback function inside the useEffect will be triggered, and it will scroll the window to the top using window.scrollTo(0, 0). This ensures that the page is scrolled to the top
+    const unListen = history.listen(() => {
+      window.scrollTo(0, 0);
+    });
+
+    return () => {
+      unListen();
+    };
+  }, [history]);
 
   const onClick = async (e) => {
     e.preventDefault();

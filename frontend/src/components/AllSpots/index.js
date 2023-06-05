@@ -9,6 +9,18 @@ import "./AllSpots.css";
 
 const SpotsIndex = () => {
   const history = useHistory();
+
+  useEffect(() => {
+    // Whenever a route change occurs (including redirects), the callback function inside the useEffect will be triggered, and it will scroll the window to the top using window.scrollTo(0, 0). This ensures that the page is scrolled to the top
+    const unListen = history.listen(() => {
+      window.scrollTo(0, 0);
+    });
+
+    return () => {
+      unListen();
+    };
+  }, [history]);
+
   const spotsObj = useSelector((state) => state.spots.allSpots);
   const spots = Object.values(spotsObj);
 

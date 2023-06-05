@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 
@@ -42,6 +42,17 @@ const CreateSpotForm = () => {
 
   const dispatch = useDispatch();
   const history = useHistory();
+
+  useEffect(() => {
+    // Whenever a route change occurs (including redirects), the callback function inside the useEffect will be triggered, and it will scroll the window to the top using window.scrollTo(0, 0). This ensures that the page is scrolled to the top
+    const unListen = history.listen(() => {
+      window.scrollTo(0, 0);
+    });
+
+    return () => {
+      unListen();
+    };
+  }, [history]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
