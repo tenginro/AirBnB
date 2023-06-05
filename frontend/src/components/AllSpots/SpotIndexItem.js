@@ -25,7 +25,7 @@ const SpotIndexItem = ({ spot }) => {
                   : "New"}
               </div>
             </div>
-            <div className="spotLineTwo">${spot.price} night</div>
+            <div className="spotLineTwo">${spot.price} per night</div>
           </div>
         </div>
       </Link>

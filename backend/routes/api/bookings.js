@@ -149,7 +149,7 @@ router.put("/:bookingId", requireAuth, async (req, res) => {
   }
   if (booking.userId !== userId) {
     return res.status(403).json({
-      message: "Forbidden - this is your spot",
+      message: "You are unable to reserve this spot since you own it",
       statusCode: 403,
     });
   }
