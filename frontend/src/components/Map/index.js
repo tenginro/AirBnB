@@ -18,7 +18,7 @@ const MapPage = () => {
 
   // Function to generate an SVG icon with a custom price
   const generateIcon = (price) => ({
-    url: `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="40" height="20"><rect x="0" y="0" width="40" height="20" style="fill:%23000000;stroke:%2374E39A;stroke-width:1" /><text fill="%230000ff" font-size="12" x="50%" y="50%" dominant-baseline="central" text-anchor="middle">$${price}</text></svg>`,
+    url: `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="40" height="20"><rect x="0" y="0" width="40" height="20" style="fill:%23006400;stroke:%2374E39A;stroke-width:1" /><text fill="%23FFFFFF" font-size="12" x="50%" y="50%" dominant-baseline="central" text-anchor="middle">$${price}</text></svg>`,
     scaledSize: { width: 40, height: 20 },
   });
 
