@@ -1,8 +1,22 @@
+import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Link, NavLink, useHistory } from "react-router-dom";
 
 const SpotIndexItem = ({ spot }) => {
   const sessionUser = useSelector((state) => state.session.user);
+
+  const history = useHistory();
+
+  useEffect(() => {
+    // Whenever a route change occurs (including redirects), the callback function inside the useEffect will be triggered, and it will scroll the window to the top using window.scrollTo(0, 0). This ensures that the page is scrolled to the top
+    const unListen = history.listen(() => {
+      window.scrollTo(0, 0);
+    });
+
+    return () => {
+      unListen();
+    };
+  }, [history]);
 
   return (
     <li className="spot">

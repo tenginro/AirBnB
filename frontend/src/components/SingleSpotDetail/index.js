@@ -49,6 +49,17 @@ const SpotDetail = () => {
   const ulRef = useRef();
   const history = useHistory();
 
+  useEffect(() => {
+    // Whenever a route change occurs (including redirects), the callback function inside the useEffect will be triggered, and it will scroll the window to the top using window.scrollTo(0, 0). This ensures that the page is scrolled to the top
+    const unListen = history.listen(() => {
+      window.scrollTo(0, 0);
+    });
+
+    return () => {
+      unListen();
+    };
+  }, [history]);
+
   const { spotId } = useParams();
 
   const spot = useSelector((state) => state.spots.singleSpot); //spot is an obj so !spot wont work
@@ -223,31 +234,55 @@ const SpotDetail = () => {
             )}
           </div>
           <div className="otherImages">
-            {spot.SpotImages[1] && (
+            {spot.SpotImages[1] ? (
               <img
                 className="smallerImages image1"
                 src={spot.SpotImages[1].url}
                 alt="imageTwo"
               ></img>
+            ) : (
+              <img
+                className="smallerImages image1"
+                src={spot.SpotImages[0].url}
+                alt="imageTwo"
+              ></img>
             )}
-            {spot.SpotImages[2] && (
+            {spot.SpotImages[2] ? (
               <img
                 className="smallerImages image2"
                 src={spot.SpotImages[2].url}
                 alt="imageThree"
               ></img>
+            ) : (
+              <img
+                className="smallerImages image2"
+                src={spot.SpotImages[0].url}
+                alt="imageThree"
+              ></img>
             )}
-            {spot.SpotImages[3] && (
+            {spot.SpotImages[3] ? (
               <img
                 className="smallerImages image3"
                 src={spot.SpotImages[3].url}
                 alt="imageFour"
               ></img>
+            ) : (
+              <img
+                className="smallerImages image3"
+                src={spot.SpotImages[0].url}
+                alt="imageFour"
+              ></img>
             )}
-            {spot.SpotImages[4] && (
+            {spot.SpotImages[4] ? (
               <img
                 className="smallerImages image4"
                 src={spot.SpotImages[4].url}
+                alt="imageFive"
+              ></img>
+            ) : (
+              <img
+                className="smallerImages image4"
+                src={spot.SpotImages[0].url}
                 alt="imageFive"
               ></img>
             )}
