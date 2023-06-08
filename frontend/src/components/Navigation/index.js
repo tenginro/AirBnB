@@ -1,13 +1,24 @@
 // frontend/src/components/Navigation/index.js
-import React from "react";
-import { NavLink } from "react-router-dom";
-import { useSelector } from "react-redux";
+import React, { useEffect } from "react";
+import { NavLink, useHistory } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import ProfileButton from "./ProfileButton";
 
 import "./Navigation.css";
 
-function Navigation({ isLoaded }) {
+function Navigation({ isLoaded, searchQuery, setSearchQuery }) {
+  const dispatch = useDispatch();
+  const history = useHistory();
+
   const sessionUser = useSelector((state) => state.session.user);
+
+  // useEffect(() => {
+  //   setSearchQuery("");
+  // }, [dispatch]);
+
+  // useEffect(() => {
+  //   setSearchQuery("");
+  // }, []);
 
   return (
     <div className="navBar">
@@ -24,6 +35,25 @@ function Navigation({ isLoaded }) {
               HereBnB
             </div>
           </NavLink>
+        </li>
+        <li className="searchBar">
+          <input
+            type="search"
+            className="searchInput"
+            placeholder="Search"
+            spellCheck={true}
+            // value={searchQuery}
+            // onChange={(e) => setSearchQuery(e.target.value)}
+            // onKeyDown={(e) => {
+            //   if (e.key === "Enter") {
+            //     e.preventDefault();
+            //     setSearchQuery(e.target.value);
+            //     if (searchQuery.length) {
+            //       history.push(`/spots/search/${searchQuery}`);
+            //     }
+            //   }
+            // }}
+          ></input>
         </li>
         <div className="rightSide">
           {sessionUser && (

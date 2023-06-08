@@ -59,59 +59,57 @@ function ProfileButton({ user }) {
 
   return (
     <>
-      <div className="profile div">
-        <button className="profile button" onClick={openMenu}>
-          <i className="fas fa-solid fa-bars fa-lg" />
-          <i className="fas fa-user-circle fa-lg" />
-        </button>
-        <ul className={ulClassName} ref={ulRef}>
-          {user ? (
-            <>
-              <li>Hello, {user.firstName}</li>
-              <li>{user.email}</li>
-              <li className="hoverEffect" onClick={closeMenu}>
-                <NavLink exact to="/spots/current" user={user}>
-                  Manage Spots
-                </NavLink>
-              </li>
-              <li className="hoverEffect" onClick={closeMenu}>
-                <NavLink exact to="/reviews/current" user={user}>
-                  Manage Reviews
-                </NavLink>
-              </li>
-              <li className="hoverEffect" onClick={closeMenu}>
-                <NavLink exact to="/bookings/current" user={user}>
-                  Manage Bookings
-                </NavLink>
-              </li>
-              <li>
-                <button className="logoutButton" onClick={logout}>
-                  Log Out
-                </button>
-              </li>
-            </>
-          ) : (
-            <>
-              <div className="hoverEffect logInWord">
-                <OpenModalMenuItem
-                  itemText="Log In"
-                  className="hoverEffect"
-                  onItemClick={closeMenu}
-                  modalComponent={<LoginFormModal />}
-                />
-              </div>
-              <div className="hoverEffect logInWord">
-                <OpenModalMenuItem
-                  itemText="Sign Up"
-                  className="hoverEffect"
-                  onItemClick={closeMenu}
-                  modalComponent={<SignupFormModal />}
-                />
-              </div>
-            </>
-          )}
-        </ul>
-      </div>
+      {user ? (
+        <div className="profile div">
+          <button className="profile button" onClick={openMenu}>
+            <i className="fas fa-solid fa-bars fa-lg" />
+            <i className="fas fa-user-circle fa-lg" />
+          </button>
+          <ul className={ulClassName} ref={ulRef}>
+            <li>Hello, {user.firstName}</li>
+            <li>{user.email}</li>
+            <li className="hoverEffect" onClick={closeMenu}>
+              <NavLink exact to="/spots/current" user={user}>
+                Manage Spots
+              </NavLink>
+            </li>
+            <li className="hoverEffect" onClick={closeMenu}>
+              <NavLink exact to="/reviews/current" user={user}>
+                Manage Reviews
+              </NavLink>
+            </li>
+            <li className="hoverEffect" onClick={closeMenu}>
+              <NavLink exact to="/bookings/current" user={user}>
+                Manage Bookings
+              </NavLink>
+            </li>
+            <li>
+              <button className="logoutButton" onClick={logout}>
+                Log Out
+              </button>
+            </li>
+          </ul>
+        </div>
+      ) : (
+        <div className="loginSignUpButtons">
+          <button>
+            <OpenModalMenuItem
+              itemText="Log In"
+              className="hoverEffect"
+              onItemClick={closeMenu}
+              modalComponent={<LoginFormModal />}
+            />
+          </button>
+          <button>
+            <OpenModalMenuItem
+              itemText="Sign Up"
+              className="hoverEffect"
+              onItemClick={closeMenu}
+              modalComponent={<SignupFormModal />}
+            />
+          </button>
+        </div>
+      )}
     </>
   );
 }
