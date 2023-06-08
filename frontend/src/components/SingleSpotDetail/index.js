@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useParams, NavLink } from "react-router-dom";
 
 import {
   actionClearSpots,
@@ -28,6 +28,8 @@ import {
 } from "../../store/booking";
 
 import { useHistory } from "react-router-dom";
+import ReserveResponseModal from "../ReserveResponseModal";
+import { useModal } from "../../context/Modal";
 
 const months = [
   "January",
@@ -48,6 +50,7 @@ const SpotDetail = () => {
   const dispatch = useDispatch();
   const ulRef = useRef();
   const history = useHistory();
+  const { closeModal } = useModal();
 
   useEffect(() => {
     // Whenever a route change occurs (including redirects), the callback function inside the useEffect will be triggered, and it will scroll the window to the top using window.scrollTo(0, 0). This ensures that the page is scrolled to the top
@@ -75,6 +78,7 @@ const SpotDetail = () => {
 
   const [showMenu, setShowMenu] = useState(false);
   const [showCalendar, setShowCalendar] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(addDays(new Date(), 1));
@@ -82,8 +86,10 @@ const SpotDetail = () => {
 
   let disabledDatesArr = [];
   spotBookingsArr.forEach((b) => {
-    let start = new Date(b.startDate);
-    let end = new Date(b.endDate);
+    console.log(b.startDate);
+    let start = addDays(new Date(b.startDate), 1);
+    console.log(start);
+    let end = addDays(new Date(b.endDate), 1);
     while (start <= end) {
       disabledDatesArr.push(new Date(start));
       start.setDate(start.getDate() + 1);
@@ -144,7 +150,8 @@ const SpotDetail = () => {
       });
     if (newBooking) {
       setErrorMessage({});
-      return history.push(`/bookings/current`);
+      setShowModal(true);
+      // return history.push(`/bookings/current`);
     }
   };
 
@@ -379,6 +386,17 @@ const SpotDetail = () => {
             Select or enter check-in, checkout dates
             {Object.values(errorMessage).length ? (
               <div style={{ color: "red" }}>{errorMessage.message}</div>
+            ) : null}
+            {showModal && !Object.values(errorMessage).length ? (
+              <div style={{ color: "blue" }}>
+                Booking is reserved! Go to{" "}
+                <span style={{ textDecoration: "underline" }}>
+                  <NavLink exact to="/bookings/current">
+                    Manage Bookings
+                  </NavLink>{" "}
+                </span>
+                to view it.
+              </div>
             ) : null}
           </h3>
           <div className="calendarContainerFixed">
