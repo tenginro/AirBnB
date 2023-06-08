@@ -16,10 +16,13 @@ import UserBookings from "./components/UserBookings";
 import NotFound from "./components/NotFound";
 import Footer from "./components/Footer";
 import MapPage from "./components/Map";
+import SearchSpots from "./components/SearchSpots";
 
 function App() {
   const dispatch = useDispatch();
+
   const [isLoaded, setIsLoaded] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
     dispatch(sessionActions.restoreUser()).then(() => setIsLoaded(true));
@@ -27,11 +30,18 @@ function App() {
 
   return (
     <>
-      <Navigation isLoaded={isLoaded} />
+      <Navigation
+        isLoaded={isLoaded}
+        searchQuery={searchQuery}
+        setSearchQuery={setSearchQuery}
+      />
       {isLoaded && (
         <Switch>
           <Route exact path="/">
             <SpotsIndex />
+          </Route>
+          <Route exact path="/spots/search/:searchInput">
+            <SearchSpots />
           </Route>
           <Route exact path="/spots/:spotId/edit">
             <EditSpotFormWrapper />

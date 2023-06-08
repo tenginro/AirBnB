@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
-import { Link, NavLink, useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 const SpotIndexItem = ({ spot }) => {
   const sessionUser = useSelector((state) => state.session.user);

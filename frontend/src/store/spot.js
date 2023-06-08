@@ -55,6 +55,25 @@ export const getAllSpots = () => async (dispatch) => {
   }
 };
 
+export const getSearchedSpots = (searchQuery) => async (dispatch) => {
+  const response = await csrfFetch("/api/spots");
+
+  if (response.ok) {
+    const spots = await response.json();
+    let spotsArr = spots.Spots.filter(
+      (spot) =>
+        spot.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        spot.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        spot.city.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        spot.state.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        spot.country.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        spot.address.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+    await dispatch(actionLoadSpots(spotsArr));
+    return spotsArr;
+  }
+};
+
 export const getSpotDetail = (id) => async (dispatch) => {
   const response = await csrfFetch(`/api/spots/${id}`);
 

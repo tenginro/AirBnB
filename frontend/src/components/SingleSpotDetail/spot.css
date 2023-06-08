@@ -2,6 +2,8 @@
   max-width: 1000px;
   margin: 0 auto;
   height: 1800px;
+  overflow-y: scroll;
+  padding-bottom: 50px;
 }
 
 .toBoldHeading {
@@ -152,7 +154,8 @@ li {
 .dateInputBox {
   width: 100%;
   margin: 0 auto;
-  border: 1px solid lightgray;
+  border-top: 1px solid lightgray;
+  border-bottom: 1px solid lightgray;
   text-align: center;
   cursor: pointer;
   padding: 10px 0;
