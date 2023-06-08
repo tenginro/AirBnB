@@ -12,13 +12,13 @@ function Navigation({ isLoaded, searchQuery, setSearchQuery }) {
 
   const sessionUser = useSelector((state) => state.session.user);
 
-  // useEffect(() => {
-  //   setSearchQuery("");
-  // }, [dispatch]);
+  useEffect(() => {
+    setSearchQuery("");
+  }, [dispatch]);
 
-  // useEffect(() => {
-  //   setSearchQuery("");
-  // }, []);
+  useEffect(() => {
+    setSearchQuery("");
+  }, []);
 
   return (
     <div className="navBar">
@@ -42,17 +42,17 @@ function Navigation({ isLoaded, searchQuery, setSearchQuery }) {
             className="searchInput"
             placeholder="Search"
             spellCheck={true}
-            // value={searchQuery}
-            // onChange={(e) => setSearchQuery(e.target.value)}
-            // onKeyDown={(e) => {
-            //   if (e.key === "Enter") {
-            //     e.preventDefault();
-            //     setSearchQuery(e.target.value);
-            //     if (searchQuery.length) {
-            //       history.push(`/spots/search/${searchQuery}`);
-            //     }
-            //   }
-            // }}
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                e.preventDefault();
+                setSearchQuery(e.target.value);
+                if (searchQuery.length) {
+                  history.push(`/spots/search/${searchQuery}`);
+                }
+              }
+            }}
           ></input>
         </li>
         <div className="rightSide">

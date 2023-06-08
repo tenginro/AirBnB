@@ -25,6 +25,7 @@ const SpotsIndex = () => {
   const spots = Object.values(spotsObj);
 
   const dispatch = useDispatch();
+
   useEffect(() => {
     dispatch(getAllSpots());
     return () => {

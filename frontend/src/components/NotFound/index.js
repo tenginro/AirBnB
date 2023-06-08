@@ -1,3 +1,5 @@
+import { NavLink } from "react-router-dom";
+
 export default function NotFound() {
   return (
     <div
@@ -11,8 +13,12 @@ export default function NotFound() {
       <div>
         <h1>We can't seem to find the page you're looking for</h1>
         <h2>Here are some helpful links instead:</h2>
-        <h2 style={{ textDecoration: "underline" }}>Home</h2>
-        <h2 style={{ textDecoration: "underline" }}>Manage Spots</h2>
+        <h2 style={{ textDecoration: "underline" }}>
+          <NavLink to="/">Home</NavLink>
+        </h2>
+        <h2 style={{ textDecoration: "underline" }}>
+          <NavLink to="/maps/spots">Map</NavLink>
+        </h2>
       </div>
       <div>
         <img
