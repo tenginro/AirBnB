@@ -35,6 +35,80 @@ const SpotsIndex = () => {
 
   return (
     <>
+      <div className="filters">
+        <div
+          className="category"
+          onClick={(e) => {
+            e.preventDefault();
+            history.push("/spots/search/tree");
+          }}
+        >
+          <div>
+            <i className="fa-solid fa-tree fa-2x"></i>
+          </div>
+          <div>Treehouses</div>
+        </div>
+        <div
+          className="category"
+          onClick={(e) => {
+            e.preventDefault();
+            history.push("/spots/search/beach");
+          }}
+        >
+          <div>
+            <i className="fa-solid fa-umbrella-beach fa-2x"></i>
+          </div>
+          <div>Beachfront</div>
+        </div>
+        <div
+          className="category"
+          onClick={(e) => {
+            e.preventDefault();
+            history.push("/spots/search/city");
+          }}
+        >
+          <div>
+            <i className="fa-solid fa-city fa-2x"></i>
+          </div>
+          <div>Cityview</div>
+        </div>
+        <div
+          className="category"
+          onClick={(e) => {
+            e.preventDefault();
+            history.push("/spots/search/house");
+          }}
+        >
+          <div>
+            <i className="fa-solid fa-house fa-2x"></i>
+          </div>
+          <div>Houses</div>
+        </div>
+        <div
+          className="category"
+          onClick={(e) => {
+            e.preventDefault();
+            history.push("/spots/search/design");
+          }}
+        >
+          <div>
+            <i className="fa-solid fa-swatchbook fa-2x"></i>
+          </div>
+          <div>Design</div>
+        </div>
+        <div
+          className="category"
+          onClick={(e) => {
+            e.preventDefault();
+            history.push("/spots/search/pool");
+          }}
+        >
+          <div>
+            <i class="fa-solid fa-person-swimming fa-2x"></i>
+          </div>
+          <div>Pools</div>
+        </div>
+      </div>
       <ul className="spots">
         {spots.map((spot) => (
           <SpotIndexItem spot={spot} key={spot.id} />
