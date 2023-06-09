@@ -38,18 +38,7 @@ export default function SearchSpots() {
             <SpotIndexItem spot={spot} key={spot.id} />
           ))}
         </ul>
-      ) : (
-        <h4
-          style={{
-            paddingTop: "30px",
-            fontSize: "25px",
-            textAlign: "center",
-            color: "blue",
-          }}
-        >
-          No results found at this moment.
-        </h4>
-      )}
+      ) : null}
     </>
   );
 }
