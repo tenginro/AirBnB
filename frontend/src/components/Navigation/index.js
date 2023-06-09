@@ -24,9 +24,8 @@ function Navigation({ isLoaded, searchQuery, setSearchQuery }) {
     <div className="navBar">
       <ul className="nav ul">
         <li className="home li">
-          {/* to render an image, need this format */}
           <NavLink exact to="/">
-            <div className="logoLine">
+            <div className="logoLine" onClick={() => setSearchQuery("")}>
               <img
                 className="logo"
                 src={require("./icon1.png")}
