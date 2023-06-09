@@ -20,32 +20,6 @@ export default function SearchSpots() {
     };
   }, [dispatch, searchInput]);
 
-  if (!spots.length)
-    return (
-      <>
-        <h3
-          style={{
-            paddingTop: "30px",
-            fontSize: "30px",
-            textAlign: "center",
-            color: "blue",
-          }}
-        >
-          View all spots related to {searchInput}
-        </h3>
-        <h4
-          style={{
-            paddingTop: "30px",
-            fontSize: "25px",
-            textAlign: "center",
-            color: "blue",
-          }}
-        >
-          No results found at this moment.
-        </h4>
-      </>
-    );
-
   return (
     <>
       <h3
@@ -58,11 +32,13 @@ export default function SearchSpots() {
       >
         View all spots related to {searchInput}
       </h3>
-      <ul className="spots">
-        {spots.map((spot) => (
-          <SpotIndexItem spot={spot} key={spot.id} />
-        ))}
-      </ul>
+      {spots.length ? (
+        <ul className="spots">
+          {spots.map((spot) => (
+            <SpotIndexItem spot={spot} key={spot.id} />
+          ))}
+        </ul>
+      ) : null}
     </>
   );
 }
