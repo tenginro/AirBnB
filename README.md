@@ -15,11 +15,11 @@ Check out [HereBnB] (https://herebnb.onrender.com/)
 
 ## Home Page/Spots
 
-![Screenshot 2023-05-10 at 16 35 12](https://github.com/tenginro/AirBnB/assets/108156588/f3dee54b-c6de-49c4-b29a-4c298d443fd9)
+![Screenshot 2023-06-09 at 12 05 09](https://github.com/tenginro/AirBnB/assets/108156588/73a3d301-2a7e-4dba-a530-7aa778a5f259)
 
-## Spot Detail page with reviews
+## Spot Detail page
 
-![Screenshot 2023-05-10 at 16 18 59](https://github.com/tenginro/AirBnB/assets/108156588/b7f60722-28d4-44e5-a565-c485e0c96bd6)
+![Screenshot 2023-06-09 at 13 21 13](https://github.com/tenginro/AirBnB/assets/108156588/c60acd08-dca7-482e-96b6-6501b45f4156)
 
 ## Getting started
 
