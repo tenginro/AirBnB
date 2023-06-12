@@ -7,7 +7,7 @@ export default function Footer() {
         <div id="footerPart">
           <div className="footerSection">
             <h3>About Me</h3>
-            <div>
+            <div style={{ cursor: "pointer" }}>
               <a
                 href="https://github.com/tenginro"
                 target="_blank"
@@ -16,7 +16,7 @@ export default function Footer() {
                 <i className="fa-brands fa-github fa-2x"></i> GitHub
               </a>
             </div>
-            <div>
+            <div style={{ cursor: "pointer" }}>
               <a
                 href="https://www.linkedin.com/in/luotengzhong/"
                 target="_blank"
@@ -25,7 +25,7 @@ export default function Footer() {
                 <i className="fa-brands fa-linkedin fa-2x"></i> LinkedIn
               </a>
             </div>
-            <div>
+            <div style={{ cursor: "pointer" }}>
               <a
                 href="http://tenginro.me/"
                 target="_blank"

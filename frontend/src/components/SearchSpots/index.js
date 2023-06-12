@@ -1,13 +1,12 @@
-import React, { useEffect, useState } from "react";
-import { useParams, useLocation, useHistory } from "react-router-dom";
+import React, { useEffect } from "react";
+import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+
 import { actionClearSpots, getSearchedSpots } from "../../store/spot";
 import SpotIndexItem from "../AllSpots/SpotIndexItem";
-import NotFound from "../NotFound";
 
 export default function SearchSpots() {
   const dispatch = useDispatch();
-  const history = useHistory();
   const { searchInput } = useParams();
 
   const spotsObj = useSelector((state) => state.spots.allSpots);
@@ -38,7 +37,9 @@ export default function SearchSpots() {
             <SpotIndexItem spot={spot} key={spot.id} />
           ))}
         </ul>
-      ) : null}
+      ) : (
+        <ul className="spots"></ul>
+      )}
     </>
   );
 }
