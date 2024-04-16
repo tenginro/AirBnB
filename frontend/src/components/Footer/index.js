@@ -5,7 +5,7 @@ export default function Footer() {
     <footer id="footer">
       <div className="footerContainer">
         <div className="copyrightLine">
-          Copyright © 2023 HereBnB Inc. HereBnB, HereBnB logo and related marks
+          Copyright © 2024 HereBnB Inc. HereBnB, HereBnB logo and related marks
           are registered trademarks of HereBnB.
         </div>
         <div className="footerLinks">
@@ -29,7 +29,7 @@ export default function Footer() {
           </div>
           <div style={{ cursor: "pointer" }}>
             <a
-              href="http://tenginro.me/"
+              href="https://tenginro.github.io/"
               target="_blank"
               rel="noreferrer noopener"
             >
