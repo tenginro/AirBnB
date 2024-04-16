@@ -29,7 +29,7 @@ export default function SearchSpots() {
           color: "blue",
         }}
       >
-        View all spots related to {searchInput}
+        View all spots related to "{searchInput}"
       </h3>
       {spots.length ? (
         <ul className="spots">

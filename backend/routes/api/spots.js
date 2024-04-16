@@ -17,6 +17,7 @@ const { handleValidationErrors } = require("../../utils/validation");
 require("dotenv").config();
 const { Op } = require("sequelize");
 
+// using express-validator library
 const validateNewSpot = [
   check("address")
     .exists({ checkFalsy: true })
@@ -162,7 +163,7 @@ const spotsWithRatingImg = async (spots, arr) => {
     });
     let avgRating = spotReviews[0].toJSON().avgRating;
     // convert string to number
-    // Interesting - postgre wrap number in string
+    // Interesting - postgre wrap number in string, use plus + sign to convert to number
     if (+avgRating === 0) arr[i].avgRating = "No reviews yet";
     else arr[i].avgRating = +(+avgRating).toFixed(1);
 
